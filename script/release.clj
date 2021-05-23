@@ -5,7 +5,15 @@
 
 (fs/copy "resources/public/index.html" "gh-pages"
          {:replace-existing true})
-(shell "clojure -M:dev -m shadow.cljs.devtools.cli release main")
+
+(def js-source-dir (fs/file "resources" "public" "js"))
+(def js-target-dir (fs/file "gh-pages" "js"))
+(fs/create-dirs js-target-dir)
+
+(when (seq (fs/modified-since js-target-dir "src"))
+  (println "Compiling CLJS")
+  (shell "clojure -M:dev -m shadow.cljs.devtools.cli release main"))
+
 (def index-file (fs/file "gh-pages" "index.html"))
 
 (def cljs-source-dir (fs/file "resources" "public" "cljs"))
@@ -18,10 +26,6 @@
                  cljs-target-dir
                  {:replace-existing true}))
       (fs/glob cljs-source-dir "*.cljs"))
-
-(def js-source-dir (fs/file "resources" "public" "js"))
-(def js-target-dir (fs/file "gh-pages" "js"))
-(fs/create-dirs js-target-dir)
 
 (run! (fn [f]
         (println "Copying" (str f))
