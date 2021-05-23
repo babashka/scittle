@@ -1,0 +1,12 @@
+{:deps
+ {:aliases [:dev]}
+
+ :dev-http
+ {8000 "classpath:public"}
+
+ :builds
+ {:main
+  {:target     :browser
+   :modules    {:main {:entries [sci.script-tag]}}
+   :output-dir "resources/public/js"
+   :devtools   {:repl-pprint true}}}}

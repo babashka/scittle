@@ -1,0 +1,15 @@
+{:paths ["src" "resources"]
+
+ :deps
+ {org.clojure/clojure {:mvn/version "1.10.3"}
+  borkdude/sci        {:git/url "https://github.com/borkdude/sci"
+                       :sha "4de7c78024bfdb5c52e273be372144d46228939a"}}
+
+ :aliases
+ {:dev
+  {:extra-paths ["dev"]
+   :extra-deps  {thheller/shadow-cljs {:mvn/version "2.12.5"}}}
+
+  :test
+  {:extra-paths ["test"]
+   :extra-deps  {lambdaisland/kaocha {:mvn/version "1.0.829"}}}}}

@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+clojure -A:dev -m shadow.cljs.devtools.cli release main
+cp resources/public/index.html gh-pages
+cp resources/public/xterm.css gh-pages
+
+mkdir -p gh-pages/ui
+cp resources/public/ui/main.js gh-pages/ui/main.js
+
+cd gh-pages
+git add .
+git commit -m "update build"
+git push origin gh-pages
