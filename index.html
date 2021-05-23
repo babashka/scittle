@@ -1,12 +1,27 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="js/sci_script_tag.js" type="application/javascript"></script>
+    <script src="js/sci-script-tag.js" type="application/javascript"></script>
+    <script src="js/sci-script-tag-plugin-reagent.js" type="application/javascript"></script>
 
     <script type="application/x-sci">
       (defn my-alert []
        (js/alert "alert!"))
+
+      (require '[reagent.core :as r]
+               '[reagent.dom :as rdom])
+
+      (def state (r/atom {:clicks 0}))
+
+      (defn my-component []
+        [:div
+          [:p "Clicks: " (:clicks @state)]
+          [:p [:button {:on-click #(swap! state update :clicks inc)}
+            "Click me!"]]])
+
+      (rdom/render [my-component] (.getElementById js/document "app"))
     </script>
+
 
   </head>
   <body>
@@ -20,16 +35,16 @@
       bound to happen. Feedback is welcome on <a href="https://github.com/borkdude/sci-script-tag">Github</a>.</p>
     <p>
       You can get a copy
-    of <tt>sci_script_tag.js</tt> <a href="https://borkdude.github.io/sci-script-tag/js/sci_script_tag.js">here</a>. If
-    you want a pinned version of <tt>sci_script_tag.js</tt>, your best bet is to
+    of <tt>sci-script-tag.js</tt> <a href="https://borkdude.github.io/sci-script-tag/js/sci-script-tag.js">here</a>. If
+    you want a pinned version of <tt>sci-script-tag.js</tt>, your best bet is to
     download your own copy and host it yourself.
     </p>
 
-    <h2>Example usage</h2>
+    <h2><a href="#usage">Usage</a></h2>
 
     <pre>
       &lt;head&gt;
-        &lt;script src=&quot;https://borkdude.github.io/sci-script-tag/js/sci_script_tag.js&quot; type=&quot;application/javascript&quot;&gt;&lt;/script&gt;
+        &lt;script src=&quot;https://borkdude.github.io/sci-script-tag/js/sci-script-tag.js&quot; type=&quot;application/javascript&quot;&gt;&lt;/script&gt;
         &lt;script type=&quot;application/x-sci&quot;&gt;
           (defn my-alert []
            (js/alert &quot;alert!&quot;))
@@ -46,5 +61,30 @@
     <button onclick="user.myAlert()">
       Click me
     </button>
+
+    <h2><a href="#reagent">Reagent plugin<a/></h2>
+
+    To enable <a href="https://github.com/reagent-project/reagent">reagent</a>,
+    in addition to <tt>sci-script-tag.js</tt>, you need to include <tt>sci-script-tag-plugin-reagent.js</tt>.
+
+    <pre>
+        &lt;script src=&quot;https://borkdude.github.io/sci-script-tag/js/sci-script-tag-plugin-reagent.js&quot; type=&quot;application/javascript&quot;&gt;&lt;/script&gt;
+        &lt;script type=&quot;application/x-sci&quot;&gt;
+          (require '[reagent.core :as r]
+                   '[reagent.dom :as rdom])
+
+          (def state (r/atom {:clicks 0}))
+
+          (defn my-component []
+            [:div
+            [:p "Clicks: " (:clicks @state)]
+            [:p [:button {:on-click #(swap! state update :clicks inc)}
+              "Click me!"]]])
+
+          (rdom/render [my-component] (.getElementById js/document "app"))
+        &lt;/script&gt;
+    </pre>
+
+    <div id="app"></div>
   </body>
 </html>
