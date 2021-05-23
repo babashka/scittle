@@ -44,10 +44,23 @@
 (defn merge-ctx [opts]
   (swap! ctx sci/merge-opts opts))
 
+(defn- load-contents [script-tags]
+  (when-first [tag script-tags]
+    (if-let [text (not-empty (gobject/get tag "textContent"))]
+      (do (eval-string text)
+          (load-contents (rest script-tags)))
+      (let [src (.getAttribute tag "src")
+            req (js/XMLHttpRequest.)
+            _ (.open req "GET" src true)
+            _ (gobject/set req "onload"
+                           (fn [] (this-as this
+                                    (let [response (gobject/get this "response")]
+                                      (eval-string response))
+                                    (load-contents (rest script-tags)))))]
+        (.send req)))))
+
 (js/document.addEventListener
  "DOMContentLoaded"
  (fn []
    (let [script-tags (js/document.querySelectorAll "script[type='application/x-sci']")]
-     (run! (fn [script-tag]
-             (let [text (gobject/get script-tag "textContent")]
-               (eval-string text))) script-tags))), false)
+     (load-contents script-tags))), false)
