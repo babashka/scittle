@@ -9,7 +9,7 @@
 (def index-file (fs/file "gh-pages" "index.html"))
 
 (def cljs-source-dir (fs/file "resources" "public" "cljs"))
-(def cljs-target-dir (fs/file "resources" "public" "cljs"))
+(def cljs-target-dir (fs/file "gh-pages" "cljs"))
 (fs/create-dirs cljs-target-dir)
 
 (run! (fn [f]
