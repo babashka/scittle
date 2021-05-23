@@ -1,0 +1,2 @@
+(defn foo []
+  (println :foo))
