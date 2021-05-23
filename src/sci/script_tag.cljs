@@ -12,7 +12,6 @@
 (defn defn-macro [_ _ fn-name & args]
   `(let [ns# (ns-name *ns*)]
      (clojure.core/defn ~fn-name ~@args)
-     (println (str ns# "." '~fn-name))
      (sci.script-tag/-export ~fn-name (str ns# "." '~fn-name))))
 
 (def ctx (sci/init {:namespaces {'sci.script-tag
