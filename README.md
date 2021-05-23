@@ -2,7 +2,7 @@
 
 The [Small Clojure Interpreter](https://github.com/borkdude/sci) exposed for usage in script tags.
 
-See [Github pages](https://borkdude.github.io/sci-script-tag) for example usage.
+See [Github pages](https://borkdude.github.io/sci-script-tag) for usage.
 
 ## Dev
 
