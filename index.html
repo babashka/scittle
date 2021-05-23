@@ -54,7 +54,7 @@
 
       &lt;body&gt;
         &lt;button onclick=&quot;user.myAlert()&quot;&gt;
-          Click me
+          Click me!
         &lt;/button&gt;
       &lt;/body&gt;
     </pre>
@@ -62,6 +62,14 @@
     <button onclick="user.myAlert()">
       Click me
     </button>
+
+    <h2><a href="#src">Source from file</a></h2>
+
+    When you have a file on your server, say <tt>cljs/script.cljs</tt>, you can load it using the <tt>src</tt> attribute:
+
+    <pre>
+      &lt;script src=&quot;cljs/script.cljs&quot; type=&quot;application/x-sci&quot;&gt;&lt;/script&gt;
+    </pre>
 
     <h2><a href="#reagent">Reagent plugin<a/></h2>
 
