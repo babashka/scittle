@@ -2,6 +2,8 @@
 
 Interpret Clojure directly in your browser using [SCI](https://github.com/borkdude/sci).
 
+See [Github pages](https://borkdude.github.io/sci-script-tag) for example usage.
+
 ## Dev
 
 ```
