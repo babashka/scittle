@@ -1,6 +1,6 @@
 # sci.script-tag
 
-Interpret Clojure directly in your browser using [SCI](https://github.com/borkdude/sci).
+The [Small Clojure Interpreter](https://github.com/borkdude/sci) exposed for usage in script tags.
 
 See [Github pages](https://borkdude.github.io/sci-script-tag) for example usage.
 
