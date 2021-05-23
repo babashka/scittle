@@ -7,6 +7,9 @@
  :builds
  {:main
   {:target     :browser
-   :modules    {:main {:entries [sci.script-tag]}}
+   :modules
+   {:sci-script-tag {:entries [sci.script-tag]}
+    :sci-script-tag-plugin-reagent {:entries [sci.script-tag.plugin-reagent]
+                                    :depends-on #{:sci-script-tag}}}
    :output-dir "resources/public/js"
    :devtools   {:repl-pprint true}}}}
