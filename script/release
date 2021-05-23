@@ -2,12 +2,12 @@
 
 set -eo pipefail
 
-clojure -A:dev -m shadow.cljs.devtools.cli release main
+clojure -M:dev -m shadow.cljs.devtools.cli release main
 cp resources/public/index.html gh-pages
-cp resources/public/xterm.css gh-pages
+sed -i 's/main.js/sci_script_tag.js/' gh-pages/index.html
 
-mkdir -p gh-pages/ui
-cp resources/public/ui/main.js gh-pages/ui/main.js
+mkdir -p gh-pages/js
+cp resources/public/js/main.js gh-pages/js/sci_script_tag.js
 
 cd gh-pages
 git add .
