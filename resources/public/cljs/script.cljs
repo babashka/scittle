@@ -1,2 +1,2 @@
-(defn foo []
-  (println :foo))
+(defn my-alert2 []
+  (js/alert "My alert 2!"))
