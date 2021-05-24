@@ -3,8 +3,6 @@
   (:require [reagent.core :as r]
             [reagent.dom :as rdom]))
 
-(defn foo [] (< 1 2))
-
 (def empty-board [[\- \- \-]
                   [\- \- \-]
                   [\- \- \-]])
