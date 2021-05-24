@@ -30,7 +30,7 @@
   </head>
   <body>
     <h1>SCI script tag</h1>
-    <h2>What is this</h2>
+    <h2>What is this?</h2>
     <p>This project exposes the <a href="https://github.com/borkdude/sci">Small Clojure Interpreter</a> in the
     browser in such a way that you can use it with the <tt>script</tt> tag.</p>
     <h2>Project status</h2>
@@ -54,9 +54,7 @@
 
     <pre>
       <code class="html">&lt;head&gt;
-  &lt;script src=&quot;https://borkdude.github.io/sci-script-tag/js/sci-script-tag.js&quot;
-        type=&quot;application/javascript&quot;&gt;
-  &lt;/script&gt;
+  &lt;script src=&quot;https://borkdude.github.io/sci-script-tag/js/sci-script-tag.js&quot; type=&quot;application/javascript&quot;&gt;&lt;/script&gt;
 
   &lt;script type=&quot;application/x-sci&quot;&gt;
     (defn ^:export my-alert []
@@ -70,8 +68,6 @@
     Click me!
   &lt;/button&gt;
 &lt;/body&gt;</code></pre>
-
-    <script type="text/javascript">hljs.highlightAll();</script>
 
     <button onclick="my_alert()">
       Click me!
@@ -109,5 +105,7 @@
     </code></pre>
 
     <div id="app"></div>
+    <script type="text/javascript">hljs.highlightAll();</script>
+
   </body>
 </html>
