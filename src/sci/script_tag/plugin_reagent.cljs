@@ -14,7 +14,7 @@
 (def reagent-dom-namespace
   {'render (sci/copy-var rdom/render rdns)})
 
-(println :merging)
-(st/merge-ctx {:namespaces {'reagent.core reagent-namespace
-                            'reagent.dom reagent-dom-namespace}})
-(println :done-merging)
+(st/register-plugin!
+ ::reagent
+ {:namespaces {'reagent.core reagent-namespace
+               'reagent.dom reagent-dom-namespace}})

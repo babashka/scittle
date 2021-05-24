@@ -50,8 +50,9 @@
                     (str "(require '[sci.script-tag :refer :all])"
                          s)))
 
-(c/defn merge-ctx [opts]
-  (swap! ctx sci/merge-opts opts))
+(c/defn register-plugin! [plug-in-name sci-opts]
+  plug-in-name ;; unused for now
+  (swap! ctx sci/merge-opts sci-opts))
 
 (c/defn- load-contents [script-tags]
   (when-first [tag script-tags]
