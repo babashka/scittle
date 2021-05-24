@@ -6,6 +6,9 @@
 (fs/copy "resources/public/index.html" "gh-pages"
          {:replace-existing true})
 
+(fs/copy "resources/public/tictactoe.html" "gh-pages"
+         {:replace-existing true})
+
 (def js-source-dir (fs/file "resources" "public" "js"))
 (def js-target-dir (fs/file "gh-pages" "js"))
 (fs/create-dirs js-target-dir)
