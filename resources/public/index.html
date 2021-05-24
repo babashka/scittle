@@ -5,8 +5,8 @@
     <script src="js/sci-script-tag-plugin-reagent.js" type="application/javascript"></script>
 
     <script type="application/x-sci">
-      (defn my-alert []
-       (js/alert "alert!"))
+      (defn ^:export my-alert []
+       (js/alert "You clicked!"))
 
       (require '[reagent.core :as r]
                '[reagent.dom :as rdom])
@@ -23,11 +23,14 @@
     </script>
 
     <script src="cljs/script.cljs" type="application/x-sci"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/languages/clojure.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/zenburn.min.css" integrity="sha512-JPxjD2t82edI35nXydY/erE9jVPpqxEJ++6nYEoZEpX2TRsmp2FpZuQqZa+wBCen5U16QZOkMadGXHCfp+tUdg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   </head>
   <body>
     <h1>SCI script tag</h1>
-    <h2>What is this</h2>
+    <h2>What is this?</h2>
     <p>This project exposes the <a href="https://github.com/borkdude/sci">Small Clojure Interpreter</a> in the
     browser in such a way that you can use it with the <tt>script</tt> tag.</p>
     <h2>Project status</h2>
@@ -43,56 +46,67 @@
 
     <h2><a href="#usage">Usage</a></h2>
 
+    Include <tt>sci-script-tag.js</tt> and write a <tt>script</tt> tag
+    where <tt>type</tt> is set
+    to <tt>application/x-sci</tt>. Use <tt>:export</tt> to make the function
+    available in the JavaScript environment. The name is processed
+    using <tt>munge</tt>.
+
     <pre>
-      &lt;head&gt;
-        &lt;script src=&quot;https://borkdude.github.io/sci-script-tag/js/sci-script-tag.js&quot; type=&quot;application/javascript&quot;&gt;&lt;/script&gt;
-        &lt;script type=&quot;application/x-sci&quot;&gt;
-          (defn my-alert []
-           (js/alert &quot;alert!&quot;))
-        &lt;/script&gt;
-      &lt;/head&gt;
+      <code class="html">&lt;head&gt;
+  &lt;script src=&quot;https://borkdude.github.io/sci-script-tag/js/sci-script-tag.js&quot;
+          type=&quot;application/javascript&quot;&gt;
+  &lt;/script&gt;
 
-      &lt;body&gt;
-        &lt;button onclick=&quot;user.myAlert()&quot;&gt;
-          Click me!
-        &lt;/button&gt;
-      &lt;/body&gt;
-    </pre>
+  &lt;script type=&quot;application/x-sci&quot;&gt;
+    (defn ^:export my-alert []
+      (js/alert &quot;You clicked!&quot;))
+  &lt;/script&gt;
 
-    <button onclick="user.myAlert()">
-      Click me
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;button onclick=&quot;my_alert()&quot;&gt;
+    Click me!
+  &lt;/button&gt;
+&lt;/body&gt;</code></pre>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+    <button onclick="my_alert()">
+      Click me!
     </button>
 
     <h2><a href="#src">Source from file</a></h2>
 
     When you have a file on your server, say <tt>cljs/script.cljs</tt>, you can load it using the <tt>src</tt> attribute:
 
-    <pre>
-      &lt;script src=&quot;cljs/script.cljs&quot; type=&quot;application/x-sci&quot;&gt;&lt;/script&gt;
-    </pre>
+    <pre><code class="html">
+&lt;script src=&quot;cljs/script.cljs&quot; type=&quot;application/x-sci&quot;&gt;&lt;/script&gt;
+    </code></pre>
 
     <h2><a href="#reagent">Reagent plugin<a/></h2>
 
     To enable <a href="https://github.com/reagent-project/reagent">reagent</a>,
     in addition to <tt>sci-script-tag.js</tt>, you need to include <tt>sci-script-tag-plugin-reagent.js</tt>.
 
-    <pre>
-      &lt;script src=&quot;https://borkdude.github.io/sci-script-tag/js/sci-script-tag-plugin-reagent.js&quot; type=&quot;application/javascript&quot;&gt;&lt;/script&gt;
-      &lt;script type=&quot;application/x-sci&quot;&gt;
-        (require '[reagent.core :as r]
-                 '[reagent.dom :as rdom])
+    <pre><code class="html">
+&lt;script src=&quot;https://borkdude.github.io/sci-script-tag/js/sci-script-tag-plugin-reagent.js&quot; type=&quot;application/javascript&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;application/x-sci&quot;&gt;
+  (require '[reagent.core :as r]
+           '[reagent.dom :as rdom])
 
-        (def state (r/atom {:clicks 0}))
+  (def state (r/atom {:clicks 0}))
 
-        (defn my-component []
-          [:div
-           [:p "Clicks: " (:clicks @state)]
-           [:p [:button {:on-click #(swap! state update :clicks inc)}
-            "Click me!"]]])
+  (defn my-component []
+    [:div
+      [:p "Clicks: " (:clicks @state)]
+      [:p [:button {:on-click #(swap! state update :clicks inc)}
+       "Click me!"]]])
 
-        (rdom/render [my-component] (.getElementById js/document "app"))
-      &lt;/script&gt;
-    </pre>
+  (rdom/render [my-component] (.getElementById js/document "app"))
+&lt;/script&gt;
+    </code></pre>
 
     <div id="app"></div>
   </body>

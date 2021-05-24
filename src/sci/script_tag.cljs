@@ -1,50 +1,59 @@
 (ns sci.script-tag
-  (:require [clojure.string :as str]
+  (:refer-clojure :exclude [defn])
+  (:require [clojure.core :as c]
+            [clojure.string :as str]
             [goog.object :as gobject]
             [goog.string]
             [sci.core :as sci]))
 
-(defn kebab->camel [s]
-  (str/replace s #"-[a-zA-Z0-9]"
-               (fn [s]
-                 (str/upper-case (.charAt s 1)))))
+(c/defmacro defn [fn-name & args]
+  (let [ns-sym (gensym "ns")]
+    `(let [~ns-sym (ns-name *ns*)]
+       (clojure.core/defn ~fn-name ~@args)
+       ~(when (:export (meta fn-name))
+          `(sci.script-tag/-export ~fn-name (str ~ns-sym "." '~fn-name))))))
 
-(defn- defn-macro [_ _ fn-name & args]
-  `(let [ns# (ns-name *ns*)]
-     (clojure.core/defn ~fn-name ~@args)
-     (sci.script-tag/-export ~fn-name (str ns# "." '~fn-name))))
+(c/defn -export [f k]
+  (let [k (munge k)
+        parts (str/split k #"\.")]
+    (loop [parts parts
+           prev js/window]
+      (let [fpart (first parts)]
+        (cond (= "user" fpart)
+              (recur (rest parts) prev)
+              (= 1 (count parts))
+              (gobject/set prev fpart f)
+              :else
+              (if-let [obj (gobject/get prev fpart)]
+                (recur (rest parts) obj)
+                (let [obj #js {}]
+                  (gobject/set prev fpart obj)
+                  (recur (rest parts)
+                         obj))))))
+    (gobject/set js/window k f)))
 
-(def ctx (atom (sci/init {:namespaces {'sci.script-tag
-                                       {'defn (with-meta defn-macro
-                                                {:sci/macro true})
-                                        '-export (fn [f k]
-                                                   (let [parts (str/split k #"\.")]
-                                                     (loop [parts parts
-                                                            prev js/window]
-                                                       (let [fpart (first parts)
-                                                             fpart (kebab->camel fpart)]
-                                                         (if (= 1 (count parts))
-                                                           (gobject/set prev fpart f)
-                                                           (if-let [obj (gobject/get prev fpart)]
-                                                             (recur (rest parts) obj)
-                                                             (let [obj #js {}]
-                                                               (gobject/set prev fpart obj)
-                                                               (recur (rest parts)
-                                                                      obj))))))
-                                                     (gobject/set js/window k f)))}
-                                       'clojure.core {'println println}}
+(def stns (sci/create-ns 'sci.script-tag nil))
+
+(def namespaces
+  {'sci.script-tag
+   {'defn (sci/copy-var defn stns)
+    '-export (sci/copy-var -export stns)}
+   'clojure.core {'println (sci/copy-var println stns)
+                  'prn     (sci/copy-var prn stns)}})
+
+(def ctx (atom (sci/init {:namespaces namespaces
                           :classes {'js js/window
                                     :allow :all}})))
 
-(defn eval-string [s]
+(c/defn eval-string [s]
   (sci/eval-string* @ctx
                     (str "(require '[sci.script-tag :refer :all])"
                          s)))
 
-(defn merge-ctx [opts]
+(c/defn merge-ctx [opts]
   (swap! ctx sci/merge-opts opts))
 
-(defn- load-contents [script-tags]
+(c/defn- load-contents [script-tags]
   (when-first [tag script-tags]
     (if-let [text (not-empty (gobject/get tag "textContent"))]
       (do (eval-string text)
