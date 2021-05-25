@@ -1,11 +1,7 @@
-body
-{
-  font-family: Arial;
-}
-
 div#app
 {
   color:#666;
+  font-family: Arial;
 }
 
 div#app td
