@@ -3,7 +3,7 @@
  :deps
  {org.clojure/clojure {:mvn/version "1.10.3"}
   borkdude/sci        {:git/url "https://github.com/borkdude/sci"
-                       :sha "4de7c78024bfdb5c52e273be372144d46228939a"}
+                       :sha "02733a591bfa2f425b8abe0377d6668559ac278a"}
   reagent/reagent {:mvn/version "1.0.0"}
   cljsjs/react {:mvn/version "17.0.2-0"}
   cljsjs/react-dom {:mvn/version "17.0.2-0"}
