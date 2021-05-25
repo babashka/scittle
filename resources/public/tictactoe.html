@@ -48,15 +48,15 @@
       <pre><code class="html">&lt;script type=&quot;application/x-sci&quot; src=&quot;cljs/tictactoe.cljs&quot;&gt;&lt;/script&gt;</code></pre>
     </p>
     <pre><code class="language-clojure" id="cljs"></code></pre>
-    <script type="text/javascript">
-      function setText () {
-        document.getElementById("cljs").innerHTML = (this.responseText);
-        hljs.highlightAll();
-      }
-      var oReq = new XMLHttpRequest();
-      oReq.addEventListener("load", setText);
-      oReq.open("GET", "cljs/tictactoe.cljs");
-      oReq.send();
+    <script type="application/x-sci">
+      (defn set-text [progress-event]
+        (let [elt (.getElementById js/document "cljs")]
+          (set! (.-innerHTML elt) (.. progress-event -srcElement -responseText))
+          (.highlightAll js/hljs)))
+      (def oreq (js/XMLHttpRequest.))
+      (.addEventListener oreq "load" set-text)
+      (.open oreq "GET" "cljs/tictactoe.cljs")
+      (.send oreq)
     </script>
   </body>
 </html>

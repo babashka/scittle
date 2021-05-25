@@ -13,9 +13,8 @@
 (def js-target-dir (fs/file "gh-pages" "js"))
 (fs/create-dirs js-target-dir)
 
-(when (seq (fs/modified-since js-target-dir "src"))
-  (println "Compiling CLJS")
-  (shell "clojure -M:dev -m shadow.cljs.devtools.cli release main"))
+(println "Compiling CLJS")
+(shell "clojure -M:dev -m shadow.cljs.devtools.cli release main")
 
 (def index-file (fs/file "gh-pages" "index.html"))
 
