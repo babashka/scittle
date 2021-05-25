@@ -5,8 +5,10 @@
     <script src="js/sci-script-tag-plugin-reagent.js" type="application/javascript"></script>
 
     <script type="application/x-sci">
-      (defn ^:export my-alert []
+      (defn my-alert []
        (js/alert "You clicked!"))
+
+      (set! (.-my_alert js/window) my-alert)
 
       (require '[reagent.core :as r]
                '[reagent.dom :as rdom])
@@ -47,17 +49,18 @@
 
     Include <tt>sci-script-tag.js</tt> and write a <tt>script</tt> tag
     where <tt>type</tt> is set
-    to <tt>application/x-sci</tt>. Use <tt>:export</tt> to make the function
-    available in the JavaScript environment. The name is processed
-    using <tt>munge</tt>.
+    to <tt>application/x-sci</tt>.
 
     <pre>
       <code class="html">&lt;head&gt;
   &lt;script src=&quot;https://borkdude.github.io/sci-script-tag/js/sci-script-tag.js&quot; type=&quot;application/javascript&quot;&gt;&lt;/script&gt;
 
   &lt;script type=&quot;application/x-sci&quot;&gt;
-    (defn ^:export my-alert []
+    (defn my-alert []
       (js/alert &quot;You clicked!&quot;))
+
+    ;; export function to use from JavaScript:
+    (set! (.-my_alert js/window) my-alert)
   &lt;/script&gt;
 
 &lt;/head&gt;
