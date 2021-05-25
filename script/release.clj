@@ -9,6 +9,12 @@
 (fs/copy "resources/public/tictactoe.html" "gh-pages"
          {:replace-existing true})
 
+(def style-source-dir (fs/file "resources" "public" "css"))
+(def style-target-dir (fs/file "gh-pages" "css"))
+(fs/create-dirs style-target-dir)
+(fs/copy "resources/public/css/style.css" style-target-dir
+         {:replace-existing true})
+
 (def js-source-dir (fs/file "resources" "public" "js"))
 (def js-target-dir (fs/file "gh-pages" "js"))
 (fs/create-dirs js-target-dir)
