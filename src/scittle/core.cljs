@@ -29,7 +29,7 @@
                           :classes {'js js/window
                                     :allow :all}})))
 
-(c/defn eval-string [s]
+(c/defn ^:export eval-string [s]
   (sci/eval-string* @ctx s))
 
 (c/defn register-plugin! [plug-in-name sci-opts]
