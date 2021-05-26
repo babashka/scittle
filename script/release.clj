@@ -25,6 +25,9 @@
 (println "Compiling CLJS")
 (shell "clojure -M:dev -m shadow.cljs.devtools.cli release main")
 
+(fs/copy "resources/public/js/report.html" "gh-pages"
+         {:replace-existing true})
+
 (def index-file (fs/file "gh-pages" "index.html"))
 
 (def cljs-source-dir (fs/file "resources" "public" "cljs"))
