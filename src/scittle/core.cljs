@@ -58,5 +58,5 @@
 (js/document.addEventListener
  "DOMContentLoaded"
  (fn []
-   (let [script-tags (js/document.querySelectorAll "script[type='application/x-sci']")]
+   (let [script-tags (js/document.querySelectorAll "script[type='application/x-scittle']")]
      (load-contents script-tags))), false)
