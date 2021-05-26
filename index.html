@@ -3,6 +3,8 @@
   <head>
     <link rel="stylesheet" href="css/style.css">
     <script src="js/sci-script-tag.js" type="application/javascript"></script>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
     <script src="js/sci-script-tag-plugin-reagent.js" type="application/javascript"></script>
     <script type="application/x-sci">
       (defn my-alert []
@@ -89,10 +91,14 @@
     <h2><a href="#reagent">Reagent plugin</a></h2>
 
     To enable <a href="https://github.com/reagent-project/reagent">reagent</a>,
-    in addition to <tt>sci-script-tag.js</tt>, you need to include <tt>sci-script-tag-plugin-reagent.js</tt>.
+    in addition to <tt>sci-script-tag.js</tt>, you need to include React
+    and <tt>sci-script-tag-plugin-reagent.js</tt>:
 
     <pre><code class="html">
+&lt;script crossorigin src=&quot;https://unpkg.com/react@17/umd/react.production.min.js&quot;&gt;&lt;/script&gt;
+&lt;script crossorigin src=&quot;https://unpkg.com/react-dom@17/umd/react-dom.production.min.js&quot;&gt;&lt;/script&gt;
 &lt;script src=&quot;https://borkdude.github.io/sci-script-tag/js/sci-script-tag-plugin-reagent.js&quot; type=&quot;application/javascript&quot;&gt;&lt;/script&gt;
+
 &lt;script type=&quot;application/x-sci&quot;&gt;
   (require '[reagent.core :as r]
            '[reagent.dom :as rdom])
