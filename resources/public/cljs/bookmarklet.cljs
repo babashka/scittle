@@ -18,10 +18,14 @@
 
 (defn bookmarklet-href [code]
   (str "javascript:(function(){"
+       "var code='" code "';"
+       "if(typeof scittle === 'undefined'){"
        (append-tag :script {:src "https://borkdude.github.io/scittle/js/scittle.js"
                             :onerror "function(){alert('Error loading ' + this.src)}"
-                            :onload (str "function(){scittle.core.eval_string('" code "')}")
+                            :onload (str "function(){scittle.core.eval_string(code)}")
                             })
+       "} else { 
+         scittle.core.eval_string(code) }"
        "})();"))
 
 (defn workspace []
