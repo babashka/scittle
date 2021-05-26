@@ -16,5 +16,6 @@
    {:sci-script-tag {:entries [sci.script-tag]}
     :sci-script-tag-plugin-reagent {:entries [sci.script-tag.plugin-reagent]
                                     :depends-on #{:sci-script-tag}}}
+   :build-hooks [(shadow.cljs.build-report/hook)]
    :output-dir "resources/public/js"
    :devtools   {:repl-pprint true}}}}

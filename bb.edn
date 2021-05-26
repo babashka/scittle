@@ -1,4 +1,10 @@
-{:tasks {:requires ([babashka.fs :as fs])
-         clean (run! fs/delete (fs/list-dir (fs/file "resources" "public" "js") "**.*"))
-         dev (clojure "-M:dev -m shadow.cljs.devtools.cli watch main")
-         release (clojure "-M:dev -m shadow.cljs.devtools.cli release main")}}
+{:tasks
+ {:requires ([babashka.fs :as fs])
+  clean {:doc "Start from clean slate."
+         :task (run! fs/delete (fs/list-dir (fs/file "resources" "public" "js") "**.*"))}
+  build:dev {:doc "Development build. Starts webserver and watches for changes."
+             :task (clojure "-M:dev -m shadow.cljs.devtools.cli watch main")}
+  build:release {:doc "Builds release artifacts."
+                 :task (clojure "-M:dev -m shadow.cljs.devtools.cli release main")}
+  release {:doc "Updates Github pages with new release build."
+           :task (shell "script/release.clj")}}}

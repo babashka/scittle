@@ -4,10 +4,18 @@ The [Small Clojure Interpreter](https://github.com/borkdude/sci) exposed for usa
 
 See [Github pages](https://borkdude.github.io/sci-script-tag) for usage.
 
-## Dev
+## Tasks
+
+Run `bb tasks` to see all available tasks:
 
 ```
-$ clojure -M:dev -m shadow.cljs.devtools.cli watch main
+$ bb tasks
+The following tasks are available:
+
+clean         Start from clean slate.
+build:dev     Development build. Starts webserver and watches for changes.
+build:release Builds release artifacts.
+release       Updates Github pages with new release build.
 ```
 
 ## Credits
