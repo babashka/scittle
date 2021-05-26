@@ -23,7 +23,7 @@
 (fs/create-dirs js-target-dir)
 
 (println "Compiling CLJS")
-(shell "clojure -M:dev -m shadow.cljs.devtools.cli release main")
+(shell "bb prod")
 
 (fs/copy "resources/public/js/report.html" "gh-pages"
          {:replace-existing true})
