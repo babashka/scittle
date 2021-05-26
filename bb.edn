@@ -1,0 +1,4 @@
+{:tasks {:requires ([babashka.fs :as fs])
+         clean (run! fs/delete (fs/list-dir (fs/file "resources" "public" "js") "**.*"))
+         dev (clojure "-M:dev -m shadow.cljs.devtools.cli watch main")
+         release (clojure "-M:dev -m shadow.cljs.devtools.cli release main")}}
