@@ -7,6 +7,11 @@
  :builds
  {:main
   {:target     :browser
+   :js-options
+   {:resolve {"react" {:target :global
+                       :global "React"}
+              "react-dom" {:target :global
+                           :global "ReactDOM"}}}
    :modules
    {:sci-script-tag {:entries [sci.script-tag]}
     :sci-script-tag-plugin-reagent {:entries [sci.script-tag.plugin-reagent]
