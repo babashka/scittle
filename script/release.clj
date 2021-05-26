@@ -6,6 +6,9 @@
 (fs/copy "resources/public/index.html" "gh-pages"
          {:replace-existing true})
 
+(fs/copy "resources/public/base.html" "gh-pages"
+         {:replace-existing true})
+
 (fs/copy "resources/public/tictactoe.html" "gh-pages"
          {:replace-existing true})
 
@@ -40,7 +43,7 @@
         (fs/copy f
                  js-target-dir
                  {:replace-existing true}))
-      (fs/glob js-source-dir "sci-script-tag*.js"))
+      (fs/glob js-source-dir "scittle*.js"))
 
 (def with-gh-pages (partial shell {:dir "gh-pages"}))
 (with-gh-pages "git add .")

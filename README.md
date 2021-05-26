@@ -1,8 +1,8 @@
-# sci.script-tag
+# Scittle
 
 The [Small Clojure Interpreter](https://github.com/borkdude/sci) exposed for usage in script tags.
 
-See [Github pages](https://borkdude.github.io/sci-script-tag) for usage.
+See [Github pages](https://borkdude.github.io/scittle) for usage.
 
 ## Tasks
 
@@ -12,10 +12,10 @@ Run `bb tasks` to see all available tasks:
 $ bb tasks
 The following tasks are available:
 
-clean         Start from clean slate.
-build:dev     Development build. Starts webserver and watches for changes.
-build:release Builds release artifacts.
-release       Updates Github pages with new release build.
+clean   Start from clean slate.
+dev     Development build. Starts webserver and watches for changes.
+prod    Builds production artifacts.
+release Updates Github pages with new release build.
 ```
 
 ## Credits

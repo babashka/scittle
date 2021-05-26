@@ -1,4 +1,4 @@
-(ns sci.script-tag
+(ns scittle.core
   (:refer-clojure :exclude [defn time])
   (:require [clojure.core :as c]
             [goog.object :as gobject]

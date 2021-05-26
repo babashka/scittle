@@ -1,8 +1,8 @@
-(ns sci.script-tag.plugin-reagent
+(ns scittle.reagent
   (:require [reagent.core :as r]
             [reagent.dom :as rdom]
             [sci.core :as sci]
-            [sci.script-tag :as st]))
+            [scittle.core :as scittle]))
 
 (def rns (sci/create-ns 'reagent.core nil))
 
@@ -14,7 +14,7 @@
 (def reagent-dom-namespace
   {'render (sci/copy-var rdom/render rdns)})
 
-(st/register-plugin!
+(scittle/register-plugin!
  ::reagent
  {:namespaces {'reagent.core reagent-namespace
                'reagent.dom reagent-dom-namespace}})

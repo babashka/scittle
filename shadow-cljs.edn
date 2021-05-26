@@ -13,9 +13,9 @@
               "react-dom" {:target :global
                            :global "ReactDOM"}}}
    :modules
-   {:sci-script-tag {:entries [sci.script-tag]}
-    :sci-script-tag-plugin-reagent {:entries [sci.script-tag.plugin-reagent]
-                                    :depends-on #{:sci-script-tag}}}
+   {:scittle {:entries [scittle.core]}
+    :scittle.reagent {:entries [scittle.reagent]
+                      :depends-on #{:scittle}}}
    :build-hooks [(shadow.cljs.build-report/hook)]
    :output-dir "resources/public/js"
    :devtools   {:repl-pprint true}}}}
