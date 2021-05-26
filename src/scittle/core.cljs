@@ -1,11 +1,10 @@
 (ns scittle.core
-  (:refer-clojure :exclude [defn time])
-  (:require [clojure.core :as c]
-            [goog.object :as gobject]
+  (:refer-clojure :exclude [time])
+  (:require [goog.object :as gobject]
             [goog.string]
             [sci.core :as sci]))
 
-(c/defmacro time
+(defmacro time
   "Evaluates expr and prints the time it took. Returns the value of expr."
   [expr]
   `(let [start# (cljs.core/system-time)
@@ -29,14 +28,14 @@
                           :classes {'js js/window
                                     :allow :all}})))
 
-(c/defn ^:export eval-string [s]
+(defn ^:export eval-string [s]
   (sci/eval-string* @ctx s))
 
-(c/defn register-plugin! [plug-in-name sci-opts]
+(defn register-plugin! [plug-in-name sci-opts]
   plug-in-name ;; unused for now
   (swap! ctx sci/merge-opts sci-opts))
 
-(c/defn- load-contents [script-tags]
+(defn load-contents [script-tags]
   (when-let [tag (first script-tags)]
     (if-let [text (not-empty (gobject/get tag "textContent"))]
       (do (eval-string text)
