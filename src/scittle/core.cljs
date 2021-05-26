@@ -4,7 +4,7 @@
             [goog.string]
             [sci.core :as sci]))
 
-(defmacro time
+(clojure.core/defmacro time
   "Evaluates expr and prints the time it took. Returns the value of expr."
   [expr]
   `(let [start# (cljs.core/system-time)
