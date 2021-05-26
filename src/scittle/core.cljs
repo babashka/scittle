@@ -36,10 +36,6 @@
   plug-in-name ;; unused for now
   (swap! ctx sci/merge-opts sci-opts))
 
-(def built-in (-> (eval-string "(map ns-name (all-ns))")
-                  set
-                  (disj 'user)))
-
 (c/defn- load-contents [script-tags]
   (when-let [tag (first script-tags)]
     (if-let [text (not-empty (gobject/get tag "textContent"))]
