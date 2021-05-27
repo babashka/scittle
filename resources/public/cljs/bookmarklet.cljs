@@ -13,8 +13,6 @@
          (str ";s.onerror=" onerror))
        ";document.body.appendChild(s);"))
 
-(defn append-script-tag [url]
-  (append-tag :script {:type "application/javascript" :src url}))
 
 (defn bookmarklet-href [code]
   (str "javascript:(function(){"
