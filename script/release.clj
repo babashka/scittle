@@ -15,6 +15,9 @@
 (fs/copy "resources/public/bookmarklet.html" "gh-pages"
          {:replace-existing true})
 
+(fs/copy "resources/public/disable_auto_eval.html" "gh-pages"
+         {:replace-existing true})
+
 (def style-source-dir (fs/file "resources" "public" "css"))
 (def style-target-dir (fs/file "gh-pages" "css"))
 (fs/create-dirs style-target-dir)

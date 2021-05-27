@@ -35,11 +35,11 @@
   plug-in-name ;; unused for now
   (swap! ctx sci/merge-opts sci-opts))
 
-(defn load-contents [script-tags]
+(defn- eval-script-tags* [script-tags]
   (when-let [tag (first script-tags)]
     (if-let [text (not-empty (gobject/get tag "textContent"))]
       (do (eval-string text)
-          (load-contents (rest script-tags)))
+          (eval-script-tags* (rest script-tags)))
       (let [src (.getAttribute tag "src")
             req (js/XMLHttpRequest.)
             _ (.open req "GET" src true)
@@ -47,11 +47,22 @@
                            (fn [] (this-as this
                                     (let [response (gobject/get this "response")]
                                       (eval-string response))
-                                    (load-contents (rest script-tags)))))]
+                                    (eval-script-tags* (rest script-tags)))))]
         (.send req)))))
+
+(defn ^:export eval-script-tags []
+  (let [script-tags (js/document.querySelectorAll "script[type='application/x-scittle']")]
+    (eval-script-tags* script-tags)))
+
+(def auto-load-disabled? (volatile! false))
+
+(defn ^:export disable-auto-eval
+  "By default, scittle evaluates script nodes on the DOMContentLoaded
+  event using the eval-script-tags function. This function disables
+  that behavior."
+  []
+  (vreset! auto-load-disabled? true))
 
 (js/document.addEventListener
  "DOMContentLoaded"
- (fn []
-   (let [script-tags (js/document.querySelectorAll "script[type='application/x-scittle']")]
-     (load-contents script-tags))), false)
+ (fn [] (when-not @auto-load-disabled? (eval-script-tags))), false)
