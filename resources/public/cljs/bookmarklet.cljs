@@ -14,14 +14,12 @@
        ";document.body.appendChild(s);"))
 
 (defn pr-code [code-str]
-  (let [s (pr-str (str "#_CODE_" code-str "#_CODE_"))]
-    (str "\"" (subs s 1 (dec (count s))) "\"")))
+  (pr-str (str "#_CODE_" code-str "#_CODE_")))
 
-(defn read-code [code]
-  (read-string (str "\"" code "\"")))
-
-(defn extract-code [code-str]
-  (second (re-find #"#_CODE_(.+)#_CODE_" code-str)))
+(defn read-code [code-str]
+  (when-let [raw-code (second (re-find #"#_CODE_(.+)#_CODE_" code-str))]
+    ;; Use read-string to undo escaping of characters by pr-str (e.g. newlines)
+    (read-string (str "\"" raw-code "\""))))
 
 (defn bookmarklet-href [code-str]
   (str "javascript:(function(){"
@@ -63,8 +61,7 @@
      [:textarea {:rows 10 :cols 80
                  :on-drop (fn [e]
                             (let [bookmarklet (js/decodeURIComponent (.. e -dataTransfer (getData "text")))
-                                  cljs-snippet (some-> (extract-code bookmarklet)
-                                                       read-code)
+                                  cljs-snippet (read-code bookmarklet)
                                   new-code (if cljs-snippet
                                          (str "; Extracted snippet\n" cljs-snippet)
                                          (str "; Failed to extract snippet\n" bookmarklet))]
