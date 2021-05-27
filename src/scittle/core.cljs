@@ -2,7 +2,8 @@
   (:refer-clojure :exclude [time])
   (:require [goog.object :as gobject]
             [goog.string]
-            [sci.core :as sci]))
+            [sci.core :as sci]
+            [scittle.impl.error :as error]))
 
 (clojure.core/defmacro time
   "Evaluates expr and prints the time it took. Returns the value of expr."
@@ -29,7 +30,13 @@
                                     :allow :all}})))
 
 (defn ^:export eval-string [s]
-  (sci/eval-string* @ctx s))
+  (try (sci/eval-string* @ctx s)
+       (catch :default e
+         (error/error-handler e (:src @ctx))
+         (let [sci-error? (isa? (:type (ex-data e)) :sci/error)]
+           (throw (if sci-error?
+                    (or (ex-cause e) e)
+                    e))))))
 
 (defn register-plugin! [plug-in-name sci-opts]
   plug-in-name ;; unused for now
@@ -38,15 +45,23 @@
 (defn- eval-script-tags* [script-tags]
   (when-let [tag (first script-tags)]
     (if-let [text (not-empty (gobject/get tag "textContent"))]
-      (do (eval-string text)
-          (eval-script-tags* (rest script-tags)))
+      (let [scittle-id (str (gensym "scittle-tag-"))]
+        (gobject/set tag "scittle_id" scittle-id)
+        (swap! ctx assoc-in [:src scittle-id] text)
+        (sci/binding [sci/file scittle-id]
+          (eval-string text))
+        (eval-script-tags* (rest script-tags)))
       (let [src (.getAttribute tag "src")
             req (js/XMLHttpRequest.)
             _ (.open req "GET" src true)
             _ (gobject/set req "onload"
                            (fn [] (this-as this
                                     (let [response (gobject/get this "response")]
-                                      (eval-string response))
+                                      (gobject/set tag "scittle_id" src)
+                                      ;; save source for error messages
+                                      (swap! ctx assoc-in [:src src] response)
+                                      (sci/binding [sci/file src]
+                                        (eval-string response)))
                                     (eval-script-tags* (rest script-tags)))))]
         (.send req)))))
 
