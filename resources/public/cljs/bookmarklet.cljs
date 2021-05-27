@@ -15,7 +15,7 @@
 
 (defn pr-code [code-str]
   (let [s (pr-str (str "#_CODE_" code-str "#_CODE_"))]
-    (subs s 1 (dec (count s)))))
+    (str "\"" (subs s 1 (dec (count s))) "\"")))
 
 (defn read-code [code]
   (read-string (str "\"" code "\"")))
@@ -27,7 +27,7 @@
   (str "javascript:(function(){"
        "var runCode = function() {
           try {
-            scittle.core.eval_string(\"" (pr-code code-str) "\")
+            scittle.core.eval_string(" (pr-code code-str) ")
           } catch (error) {
             console.log('Error in code', error);
             alert('Error running code, see console')
