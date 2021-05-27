@@ -13,27 +13,35 @@
          (str ";s.onerror=" onerror))
        ";document.body.appendChild(s);"))
 
-(defn append-script-tag [url]
-  (append-tag :script {:type "application/javascript" :src url}))
+(defn pr-code [code-str]
+  (let [s (pr-str (str "#_CODE_" code-str "#_CODE_"))]
+    (str "\"" (subs s 1 (dec (count s))) "\"")))
 
-(defn bookmarklet-href [code]
+(defn read-code [code]
+  (read-string (str "\"" code "\"")))
+
+(defn extract-code [code-str]
+  (second (re-find #"#_CODE_(.+)#_CODE_" code-str)))
+
+(defn bookmarklet-href [code-str]
   (str "javascript:(function(){"
        "var runCode = function() {
           try {
-            scittle.core.eval_string('" code "')
+            scittle.core.eval_string(" (pr-code code-str) ")
           } catch (error) {
             console.log('Error in code', error);
-            alert('Error running code, see console')          
+            alert('Error running code, see console')
           }
-        };"       
+        };"
        "if(typeof scittle === 'undefined'){"
        (append-tag :script {:src "https://borkdude.github.io/scittle/js/scittle.js"
                             :onerror "function(){alert('Error loading ' + this.src)}"
                             :onload (str "runCode")
                             })
-       "} else { 
+       "} else {
          runCode() }"
        "})();"))
+
 
 (defn workspace []
   (let [value (str "; This is the code of your bookmarklet\n"
@@ -41,18 +49,29 @@
         *code (r/atom value)
         bookmark-name "Bookmark"
         *bookmark-name (r/atom bookmark-name)]
-        
-   [:div  
-     [:input {:type "text" 
-              :placeholder bookmark-name 
-              :on-change (fn [e] 
+
+   [:div
+     [:input {:type "text"
+              :placeholder bookmark-name
+              :on-change (fn [e]
                            (let [v (.. e -target -value)]
-                             (reset! *bookmark-name 
+                             (reset! *bookmark-name
                                      (if (clojure.string/blank? v)
                                          bookmark-name
                                          v))))}]
-     [:br]       
+     [:br]
      [:textarea {:rows 10 :cols 80
+                 :on-drop (fn [e]
+                            (let [bookmarklet (js/decodeURIComponent (.. e -dataTransfer (getData "text")))
+                                  cljs-snippet (some-> (extract-code bookmarklet)
+                                                       read-code)
+                                  new-code (if cljs-snippet
+                                         (str "; Extracted snippet\n" cljs-snippet)
+                                         (str "; Failed to extract snippet\n" bookmarklet))]
+                              (js/console.log "Dropped" bookmarklet)
+                              (set! (.. e -target -value) new-code)
+                              (reset! *code new-code)
+                              (.preventDefault e)))
                  :on-change (fn [e] (reset! *code (.. e -target -value)))}
                 value]
      [:br]
@@ -61,10 +80,8 @@
      "or"[:br]
      "Drag the link to the bookmarks bar" [:br]
      [(fn []
-        (let [sanitized (->> (clojure.string/split-lines @*code) (remove #(re-find #"\s*;"%)) (clojure.string/join "\n"))]
-          (js/console.log "Loaded", sanitized)
-          [(fn [] [:a {:href (bookmarklet-href sanitized)} @*bookmark-name])]              
-          
-          )) *code]]))
+        (js/console.log "Loaded", @*code)
+        [(fn [] [:a {:href (bookmarklet-href @*code)} @*bookmark-name])])
+      *code]]))
 
 (rdom/render [workspace] (.getElementById js/document "app"))
