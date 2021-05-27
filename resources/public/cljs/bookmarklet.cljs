@@ -34,8 +34,7 @@
        "if(typeof scittle === 'undefined'){"
        (append-tag :script {:src "https://borkdude.github.io/scittle/js/scittle.js"
                             :onerror "function(){alert('Error loading ' + this.src)}"
-                            :onload (str "runCode")
-                            })
+                            :onload "runCode"})
        "} else {
          runCode() }"
        "})();"))
