@@ -27,7 +27,8 @@
 
 (def ctx (atom (sci/init {:namespaces namespaces
                           :classes {'js js/window
-                                    :allow :all}})))
+                                    :allow :all}
+                          :disable-arity-checks true})))
 
 (defn ^:export eval-string [s]
   (try (sci/eval-string* @ctx s)
