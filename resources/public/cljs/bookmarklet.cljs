@@ -62,7 +62,7 @@
 (def *initial-code (r/atom nil))
 
 ;; Initialize code
-(let [{:keys [gist]} (query-params)]
+(let [{:keys [gist code name]} (query-params)]
   (cond gist
         (do
           (reset! *initial-name "---")
@@ -74,7 +74,10 @@
                               (when bookmark-name
                                 (reset! *initial-name bookmark-name))
                               (reset! *initial-code code)))))
-
+        code
+        (do
+          (reset! *initial-name (or name "My first bookmarklet"))
+          (reset! *initial-code code))
         :else
         (do
           (reset! *initial-name "My first bookmarklet")
@@ -124,11 +127,13 @@
      [editor *code]
      [:br]
      [:br]
-     "Click the link below"[:br]
-     "or"[:br]
-     "Drag the link to the bookmarks bar" [:br]
+     "Click the following link or drag it to the bookmarks bar: "
      [(fn []
         [(fn [] [:a {:href (bookmarklet-href @*code)} @*bookmark-name])])
-      *code]]))
+      *code]
+     [:br]
+     [(fn []
+        [:a {:href (str "?name=" (js/encodeURIComponent @*bookmark-name)
+                        "&code=" (js/encodeURIComponent @*code))} "Copy this link to share ⤴️"])]]))
 
 (rdom/render [workspace] (.getElementById js/document "app"))
