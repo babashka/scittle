@@ -24,6 +24,20 @@
             "Click me!"]]])
 
       (rdom/render [my-component] (.getElementById js/document "app"))
+
+      (def code-tags (.querySelectorAll js/document "code[data-type='scittle']"))
+
+      (require '[goog.object :as gobject])
+      (doseq [code code-tags]
+        (let [src (.getAttribute code "data-src")
+              req (js/XMLHttpRequest.)]
+          (.open req "GET" src true)
+          (set! (.-onload req)
+            (fn []
+              (let [response (gobject/get req "response")]
+                (set! (.-innerText code) response)
+                (.highlightElement js/hljs code))))
+          (.send req)))
     </script>
 
     <script src="cljs/script.cljs" type="application/x-scittle"></script>
@@ -57,26 +71,7 @@
     where <tt>type</tt> is set
     to <tt>application/x-scittle</tt>.
 
-    <pre>
-      <code class="html">&lt;head&gt;
-  &lt;script src=&quot;https://borkdude.github.io/scittle/js/scittle.js&quot; type=&quot;application/javascript&quot;&gt;&lt;/script&gt;
-
-  &lt;script type=&quot;application/x-scittle&quot;&gt;
-    (defn my-alert []
-      (js/alert &quot;You clicked!&quot;))
-
-    ;; export function to use from JavaScript:
-    (set! (.-my_alert js/window) my-alert)
-  &lt;/script&gt;
-
-&lt;/head&gt;
-
-&lt;body&gt;
-  &lt;button onclick=&quot;my_alert()&quot;&gt;
-    Click me!
-  &lt;/button&gt;
-&lt;/body&gt;</code></pre>
-
+    <pre><code data-type="scittle" data-src="html/export.html" class="html"></code></pre>
     <button onclick="my_alert()">
       Click me!
     </button>
@@ -86,9 +81,11 @@
 
     When you have a file on your server, say <tt>cljs/script.cljs</tt>, you can load it using the <tt>src</tt> attribute:
 
-    <pre><code class="html">
+    <pre><code id="scittle-tag-example" class="html">
 &lt;script src=&quot;cljs/script.cljs&quot; type=&quot;application/x-scittle&quot;&gt;&lt;/script&gt;
     </code></pre>
+
+    <script type="text/javascript">hljs.highlightElement(document.getElementById("scittle-tag-example"));</script>
 
     <a name="reagent"></a>
     <h2><a href="#reagent">Reagent plugin</a></h2>
@@ -97,27 +94,7 @@
     in addition to <tt>scittle.js</tt>, you need to include React
     and <tt>scittle.reagent.js</tt>:
 
-    <pre><code class="html">
-&lt;script src=&quot;https://borkdude.github.io/scittle/js/scittle.js&quot; type=&quot;application/javascript&quot;&gt;&lt;/script&gt;
-&lt;script crossorigin src=&quot;https://unpkg.com/react@17/umd/react.production.min.js&quot;&gt;&lt;/script&gt;
-&lt;script crossorigin src=&quot;https://unpkg.com/react-dom@17/umd/react-dom.production.min.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;https://borkdude.github.io/scittle/js/scittle.reagent.js&quot; type=&quot;application/javascript&quot;&gt;&lt;/script&gt;
-
-&lt;script type=&quot;application/x-scittle&quot;&gt;
-  (require '[reagent.core :as r]
-           '[reagent.dom :as rdom])
-
-  (def state (r/atom {:clicks 0}))
-
-  (defn my-component []
-    [:div
-      [:p "Clicks: " (:clicks @state)]
-      [:p [:button {:on-click #(swap! state update :clicks inc)}
-       "Click me!"]]])
-
-  (rdom/render [my-component] (.getElementById js/document "app"))
-&lt;/script&gt;
-    </code></pre>
+    <pre><code data-type="scittle" data-src="html/reagent.html" class="html"></code></pre>
 
     <div id="app"></div>
 
@@ -127,8 +104,6 @@
       <li><a href="tictactoe.html">Tic-tac-toe</a></li>
       <li><a href="bookmarklet.html">Bookmarklet</a></li>
     </ul>
-
-    <script type="text/javascript">hljs.highlightAll();</script>
 
   </body>
 </html>
