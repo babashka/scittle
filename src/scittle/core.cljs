@@ -20,10 +20,12 @@
 
 (def namespaces
   {'clojure.core
-   {'println     (sci/copy-var println cljns)
-    'prn         (sci/copy-var prn cljns)
-    'system-time (sci/copy-var system-time cljns)
-    'time        (sci/copy-var time cljns)}})
+   {'println     println
+    'prn         prn
+    'system-time system-time
+    'time        (sci/copy-var time cljns)}
+   'goog.object {'set gobject/set
+                 'get gobject/get}})
 
 (def ctx (atom (sci/init {:namespaces namespaces
                           :classes {'js js/window
