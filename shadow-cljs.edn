@@ -15,7 +15,9 @@
    :modules
    {:scittle {:entries [scittle.core]}
     :scittle.reagent {:entries [scittle.reagent]
-                      :depends-on #{:scittle}}}
+                      :depends-on #{:scittle}}
+    :scittle.makro-plugin {:entries [scittle.makro-plugin]
+                           :depends-on #{:scittle}}}
    :build-hooks [(shadow.cljs.build-report/hook)]
    :output-dir "resources/public/js"
    :devtools   {:repl-pprint true}}}}
