@@ -5,11 +5,8 @@
     <script type="application/x-scittle">
      (require '[makro-plugin.core :as m])
       (defn my-alert []
-          (.log js/console (m/add-low-fn 1 2 3 4 5 6))
-     ;; shows as expected in console: ["cljs.core/str", "__", 3, 4, [5, 6]]
-          (.log js/console (m/add-low-makro 1 2 3 4 5 6)))
-     ;; shows unexpectedly the same ["cljs.core/str", "__", 3, 4, [5, 6]]
-     ;; instead of "__34[56]"
+          (.log js/console (m/add-low-fn 1 2 5 6))
+          (.log js/console (m/add-low-makro 7 8)))
       (set! (.-my_alert js/window) my-alert)
     </script>
   </head>

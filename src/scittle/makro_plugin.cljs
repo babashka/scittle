@@ -3,8 +3,8 @@
    [sci.core :as sci]
    [scittle.core :as scittle]))
 
-(defn add-low-fn [_env _form x y & zs] `(str "__" ~x ~y ~zs))
-(def add-low-makro (with-meta add-low-fn {:sci/macro true}))
+(defn add-low-fn [_env _form x y] `(str "_" ~x ~y))
+(defn ^:macro add-low-makro [_env _form x y] (add-low-fn _env _form x y))
 
 (def rns (sci/create-ns 'makro-plugin.core nil))
 
