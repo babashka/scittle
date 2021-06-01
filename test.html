@@ -8,7 +8,7 @@
           (.log js/console (m/add-low-fn 1 2 5 6))
           (.log js/console (m/add-low-sci-makro 7 8))
           (.log js/console (m/add-slash-sci-makro 1 2))
-          (.log js/console (m/add-c-sci-makro 3 4))
+          (.log js/console (m/add-c-sci-makro 3 (ns-name *ns*)))
       )
       (set! (.-my_alert js/window) my-alert)
     </script>
