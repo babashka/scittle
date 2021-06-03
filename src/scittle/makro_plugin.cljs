@@ -1,6 +1,6 @@
 (ns scittle.makro-plugin
   (:require-macros [scittle.makros :refer
-                    [add-slash-makro add-c-makro]])
+                   [add-slash-makro add-c-makro]])
   (:require
    [sci.core :as sci]
    [scittle.core :as scittle]

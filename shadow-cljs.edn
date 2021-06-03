@@ -11,7 +11,9 @@
    {:resolve {"react" {:target :global
                        :global "React"}
               "react-dom" {:target :global
-                           :global "ReactDOM"}}}
+                           :global "ReactDOM"}
+              "create-react-class" {:target :global
+                                    :global "createReactClass"}}}
    :modules
    {:scittle {:entries [scittle.core]}
     :scittle.reagent {:entries [scittle.reagent]
@@ -19,7 +21,9 @@
     :scittle.ajax {:entries [scittle.ajax]
                    :depends-on #{:scittle}}
     :scittle.makro-plugin {:entries [scittle.makro-plugin]
-                           :depends-on #{:scittle}}}
+                           :depends-on #{:scittle}}
+    :scittle.qlkit {:entries [scittle.qlkit]
+                    :depends-on #{:scittle}}}
    :build-hooks [(shadow.cljs.build-report/hook)]
    :output-dir "resources/public/js"
    :devtools   {:repl-pprint true}}}}
