@@ -1,34 +1,18 @@
 (ns scittle.qlkit
-  (:require [qlkit.core :as ql :refer-macros [defcomponent*]]
-            [create-react-class :refer [createReactClass]]
-            [sci.core :as sci]
-            [scittle.core :as scittle]
-            [sablono.core :as html :refer-macros [html html*]]
+  (:require [qlkit.core :as ql]
             [sablono.interpreter :as si]
-            [cljs.reader :refer [read-string]]))
+            [cljs.reader :refer [read-string]]
+            [sci.core :as sci]
+            [scittle.core :as scittle]))
 
 (def qns (sci/create-ns 'qlkit.core nil))
 
-(defn ^:macro defcomponent-fn [_form _env comp-name [_ q] [_ [_ m _] [_ h]]]
-  `(defcomponent* ~comp-name
-    (query ~q)
-    (render [this ~m state]
-            (html ~h)))
-
-  #_(defcomponent* comp-name (query q) (render r (html [:p "hu"])))
-
-  )
-
-(defn ^:macro defcomponent+ [form env nam & bodies]
+(defn ^:macro defcomponent* [form env nam & bodies]
   (apply ql/defcomponent+ form env nam bodies))
-
-(defn random-uuid-fn []
-  (random-uuid))
 
 (def qlkit-namespace
   {'add-class (sci/copy-var ql/add-class qns)
-   ;; 'defcomponent* (sci/copy-var defcomponent-fn qns)
-   'defcomponent* (sci/copy-var defcomponent+ qns)
+   'defcomponent* (sci/copy-var defcomponent* qns)
    'transact!* (sci/copy-var ql/transact!* qns)
    'update-state!* (sci/copy-var ql/update-state!* qns)
    'create-instance (sci/copy-var ql/create-instance qns)
@@ -38,17 +22,8 @@
    'parse-children-sync (sci/copy-var ql/parse-children-sync qns)
    'mount (sci/copy-var ql/mount qns)
 
-   'classes (sci/copy-var ql/classes qns)
-   'random-uuid (sci/copy-var random-uuid-fn qns)
+   'random-uuid (sci/copy-var random-uuid qns)
    'read-string (sci/copy-var read-string qns)})
-
-(def sns (sci/create-ns 'sablono.core nil))
-
-(defn ^:macro html+ [form env html-form]
-  (html* [:p "in sablono"]))
-
-(def sablono-core-namespace
-  {'html (sci/copy-var html+ sns)})
 
 (def sins (sci/create-ns 'sablono.interpreter nil))
 
@@ -58,5 +33,4 @@
 (scittle/register-plugin!
   ::qlkit
   {:namespaces {'qlkit.core qlkit-namespace
-                'sablono.core sablono-core-namespace
                 'sablono.interpreter sablono-interpreter-ns}})
