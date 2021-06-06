@@ -1,9 +1,11 @@
 (ns scittle.qlkit
   (:require [qlkit.core :as ql :refer-macros [defcomponent*]]
+            [create-react-class :refer [createReactClass]]
             [sci.core :as sci]
             [scittle.core :as scittle]
             [sablono.core :as html :refer-macros [html html*]]
-            [sablono.interpreter :as si]))
+            [sablono.interpreter :as si]
+            [cljs.reader :refer [read-string]]))
 
 (def qns (sci/create-ns 'qlkit.core nil))
 
@@ -37,7 +39,8 @@
    'mount (sci/copy-var ql/mount qns)
 
    'classes (sci/copy-var ql/classes qns)
-   'random-uuid (sci/copy-var random-uuid-fn qns)})
+   'random-uuid (sci/copy-var random-uuid-fn qns)
+   'read-string (sci/copy-var read-string qns)})
 
 (def sns (sci/create-ns 'sablono.core nil))
 
