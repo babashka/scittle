@@ -1,6 +1,6 @@
 (ns scittle.qlkit
   (:require [qlkit.core :as ql]
-            [sablono.interpreter :as si]
+            [daiquiri.interpreter :as di]
             [cljs.reader :refer [read-string]]
             [sci.core :as sci]
             [scittle.core :as scittle]))
@@ -25,12 +25,12 @@
    'random-uuid (sci/copy-var random-uuid qns)
    'read-string (sci/copy-var read-string qns)})
 
-(def sins (sci/create-ns 'sablono.interpreter nil))
+(def dins (sci/create-ns 'daiquiri.interpreter nil))
 
-(def sablono-interpreter-ns
-  {'interpret (sci/copy-var si/interpret sins)})
+(def daiquiri-interpreter-ns
+  {'interpret (sci/copy-var di/interpret dins)})
 
 (scittle/register-plugin!
   ::qlkit
   {:namespaces {'qlkit.core qlkit-namespace
-                'sablono.interpreter sablono-interpreter-ns}})
+                'daiquiri.interpreter daiquiri-interpreter-ns}})

@@ -12,7 +12,7 @@
   cljs-ajax/cljs-ajax {:mvn/version "0.8.3"}
   qlkit/qlkit {:git/url "https://github.com/kloimhardt/qlkit"
                :sha "fc925a96af4d5460470414ea9bab83ff0548fe62"}
-  sablono/sablono {:mvn/version "0.8.6"}}
+  rum/rum {:mvn/version "0.12.6"}}
 
  :aliases
  {:dev
