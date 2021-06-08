@@ -1,7 +1,5 @@
 (ns scittle.qlkit
   (:require [qlkit.core :as ql]
-            [daiquiri.interpreter :as di]
-            [cljs.reader :refer [read-string]]
             [sci.core :as sci]
             [scittle.core :as scittle]))
 
@@ -20,17 +18,8 @@
    'parse-children (sci/copy-var ql/parse-children qns)
    'parse-children-remote (sci/copy-var ql/parse-children-remote qns)
    'parse-children-sync (sci/copy-var ql/parse-children-sync qns)
-   'mount (sci/copy-var ql/mount qns)
-
-   'random-uuid (sci/copy-var random-uuid qns)
-   'read-string (sci/copy-var read-string qns)})
-
-(def dins (sci/create-ns 'daiquiri.interpreter nil))
-
-(def daiquiri-interpreter-ns
-  {'interpret (sci/copy-var di/interpret dins)})
+   'mount (sci/copy-var ql/mount qns)})
 
 (scittle/register-plugin!
   ::qlkit
-  {:namespaces {'qlkit.core qlkit-namespace
-                'daiquiri.interpreter daiquiri-interpreter-ns}})
+  {:namespaces {'qlkit.core qlkit-namespace}})

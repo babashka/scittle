@@ -23,7 +23,8 @@
    {'println     println
     'prn         prn
     'system-time system-time
-    'time        (sci/copy-var time cljns)}
+    'time        (sci/copy-var time cljns)
+    'random-uuid random-uuid}
    'goog.object {'set gobject/set
                  'get gobject/get}})
 
