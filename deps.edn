@@ -5,14 +5,12 @@
   borkdude/sci        {:git/url "https://github.com/borkdude/sci"
                        :sha "a8505dd4ee0b5cc7e6f6215f1bbc136c6d4ae7ee"}
   reagent/reagent {:mvn/version "1.0.0"}
-  cljsjs/create-react-class {:mvn/version "15.6.3-1"}
   cljsjs/react {:mvn/version "17.0.2-0"}
   cljsjs/react-dom {:mvn/version "17.0.2-0"}
   cljsjs/react-dom-server {:mvn/version "17.0.2-0"}
+  cljsjs/create-react-class {:mvn/version "15.6.3-1"}
   cljs-ajax/cljs-ajax {:mvn/version "0.8.3"}
-  qlkit/qlkit {:git/url "https://github.com/kloimhardt/qlkit"
-               :sha "fc925a96af4d5460470414ea9bab83ff0548fe62"}
-  }
+  qlkit/qlkit {:mvn/version "0.5.0-SNAPSHOT"}}
 
  :aliases
  {:dev

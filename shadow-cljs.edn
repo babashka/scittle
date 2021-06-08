@@ -27,11 +27,4 @@
    :build-hooks [(shadow.cljs.build-report/hook)]
    :output-dir "resources/public/js"
    :devtools   {:repl-pprint true}
-   :compiler-options {:optimizations :advanced
-                      :pseudo-names false}}}}
-
-;; simple optimization because sablono.interpreter line 22
-;; cljs: (.setState component next-state)
-;; simple: a.setState(f)
-;; advanced: a.Ci(f)
-;; and this Ci throws a "not defined" error
+   :compiler-options {:externs ["src/scittle/qlkit-externs.js"]}}}}
