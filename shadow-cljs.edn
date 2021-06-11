@@ -11,9 +11,7 @@
    {:resolve {"react" {:target :global
                        :global "React"}
               "react-dom" {:target :global
-                           :global "ReactDOM"}
-              "create-react-class" {:target :global
-                                    :global "createReactClass"}}}
+                           :global "ReactDOM"}}}
    :modules
    {:scittle {:entries [scittle.core]}
     :scittle.reagent {:entries [scittle.reagent]
