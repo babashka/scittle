@@ -6,6 +6,7 @@
     <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
     <script src="js/scittle.reagent.js" type="application/javascript"></script>
+    <script src="js/scittle.cljs-ajax.js" type="application/javascript"></script>
     <script type="application/x-scittle">
       (defn my-alert []
        (js/alert "You clicked!"))
@@ -25,6 +26,17 @@
 
       (rdom/render [my-component] (.getElementById js/document "app"))
 
+      (require '[ajax.core :refer [GET]])
+
+      (defn handler [response]
+        (js/alert (str response)))
+
+      (defn make-request []
+       (GET "html/cljs-ajax.html" {:handler handler}))
+
+      ;; export function to use from JavaScript:
+      (set! (.-make_request js/window) make-request)
+
       (def code-tags (.querySelectorAll js/document "code[data-type='scittle']"))
 
       (require '[goog.object :as gobject])
@@ -38,6 +50,7 @@
                 (set! (.-innerText code) response)
                 (.highlightElement js/hljs code))))
           (.send req)))
+
     </script>
 
     <script src="cljs/script.cljs" type="application/x-scittle"></script>
@@ -97,6 +110,18 @@
     <pre><code data-type="scittle" data-src="html/reagent.html" class="html"></code></pre>
 
     <div id="app"></div>
+
+    <a name="cljs-ajax"></a>
+    <h2><a href="#cljs-ajax">Cljs-ajax plugin</a></h2>
+
+    To enable <a href="https://github.com/JulianBirch/cljs-ajax">cljs-ajax</a>,
+    in addition to <tt>scittle.js</tt>, you need to include <tt>scittle.cljs-ajax.js</tt>:
+
+    <pre><code data-type="scittle" data-src="html/cljs-ajax.html" class="html"></code></pre>
+
+    <button onclick="make_request()">
+      Click me!
+    </button>
 
     <a name="examples"></a>
     <h2><a href="#examples">Examples</a></h2>
