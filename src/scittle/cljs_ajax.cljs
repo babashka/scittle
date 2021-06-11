@@ -1,4 +1,4 @@
-(ns scittle.ajax
+(ns scittle.cljs-ajax
   (:require [ajax.core :as ajx]
             [sci.core :as sci]
             [scittle.core :as scittle]))

@@ -18,12 +18,10 @@
    {:scittle {:entries [scittle.core]}
     :scittle.reagent {:entries [scittle.reagent]
                       :depends-on #{:scittle}}
-    :scittle.ajax {:entries [scittle.ajax]
-                   :depends-on #{:scittle}}
+    :scittle.cljs-ajax {:entries [scittle.cljs-ajax]
+                        :depends-on #{:scittle}}
     :scittle.qlkit {:entries [scittle.qlkit]
-                    :depends-on #{:scittle}}
-    :scittle.cljs {:entries [scittle.cljs]
-                   :depends-on #{:scittle}}}
+                    :depends-on #{:scittle}}}
    :build-hooks [(shadow.cljs.build-report/hook)]
    :output-dir "resources/public/js"
    :devtools   {:repl-pprint true}
