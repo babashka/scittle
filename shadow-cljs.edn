@@ -19,10 +19,7 @@
     :scittle.reagent {:entries [scittle.reagent]
                       :depends-on #{:scittle}}
     :scittle.cljs-ajax {:entries [scittle.cljs-ajax]
-                        :depends-on #{:scittle}}
-    :scittle.qlkit {:entries [scittle.qlkit]
-                    :depends-on #{:scittle}}}
+                        :depends-on #{:scittle}}}
    :build-hooks [(shadow.cljs.build-report/hook)]
    :output-dir "resources/public/js"
-   :devtools   {:repl-pprint true}
-   :compiler-options {:externs ["src/scittle/qlkit-externs.js"]}}}}
+   :devtools   {:repl-pprint true}}}}
