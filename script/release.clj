@@ -21,8 +21,9 @@
 (def html-source-dir (fs/file "resources" "public" "html"))
 (def html-target-dir (fs/file "gh-pages" "html"))
 (fs/create-dirs html-target-dir)
-(doseq [html ["export.html" "reagent.html"]]
-  (fs/copy (fs/file html-source-dir html) html-target-dir))
+(doseq [html ["export.html" "reagent.html" "cljs-ajax.html"]]
+  (fs/copy (fs/file html-source-dir html) html-target-dir
+           {:replace-existing true}))
 
 (def style-source-dir (fs/file "resources" "public" "css"))
 (def style-target-dir (fs/file "gh-pages" "css"))
