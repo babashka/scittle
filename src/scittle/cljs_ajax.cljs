@@ -3,11 +3,11 @@
             [sci.core :as sci]
             [scittle.core :as scittle]))
 
-(def rns (sci/create-ns 'ajax.core nil))
+(def ans (sci/create-ns 'ajax.core nil))
 
 (def ajax-namespace
-  {'GET (sci/copy-var ajx/GET rns)
-   'POST (sci/copy-var ajx/POST rns)})
+  {'GET (sci/copy-var ajx/GET ans)
+   'POST (sci/copy-var ajx/POST ans)})
 
 (scittle/register-plugin!
  ::ajax
