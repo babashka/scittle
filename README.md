@@ -4,6 +4,10 @@ The [Small Clojure Interpreter](https://github.com/borkdude/sci) exposed for usa
 
 See [Github pages](https://borkdude.github.io/scittle) for usage.
 
+See
+[babashka-scittle-guestbook](https://github.com/kloimhardt/babashka-scittle-guestbook)
+for a minimal full stack web application.
+
 ## Tasks
 
 Run `bb tasks` to see all available tasks:
