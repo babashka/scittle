@@ -8,6 +8,9 @@ See
 [babashka-scittle-guestbook](https://github.com/kloimhardt/babashka-scittle-guestbook)
 for a minimal full stack web application.
 
+See [releases](https://github.com/borkdude/scittle/releases) for links to
+[JSDelivr](https://jsdelivr.net) to get versioned artifacts.
+
 ## Tasks
 
 Run `bb tasks` to see all available tasks:
