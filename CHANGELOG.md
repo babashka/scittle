@@ -1,7 +1,9 @@
-# Unreleased
+# Changelog
 
-## Added
+## v0.0.2
 
-## Fixed
+- Fixes for `try/catch`
 
-## Changed
+## v0.0.1
+
+Initial release.
