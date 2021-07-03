@@ -1,7 +1,9 @@
 {:tasks
  {:requires ([babashka.fs :as fs])
   clean {:doc "Start from clean slate."
-         :task (run! fs/delete (fs/list-dir (fs/file "resources" "public" "js") "**.*"))}
+         :task (do (run! fs/delete (fs/list-dir (fs/file "resources" "public" "js") "**.*"))
+                   (fs/delete-tree ".cpcache")
+                   (fs/delete-tree ".shadow-cljs"))}
   dev {:doc "Development build. Starts webserver and watches for changes."
        :task (clojure "-M:dev -m shadow.cljs.devtools.cli watch main")}
   prod {:doc "Builds production artifacts."
