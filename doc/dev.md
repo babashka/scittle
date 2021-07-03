@@ -41,3 +41,13 @@ To deploy to Github Pages:
 ```
 script/release
 ```
+
+To create a new release:
+
+```
+cd gh-pages
+git checkout -b v0.0.2
+git push --set-upstream origin v0.0.2
+```
+
+Then make a new release on Github with the `v0.0.2` tag.
