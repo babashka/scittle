@@ -52,6 +52,8 @@ bb release
 cd gh-pages
 git checkout -b v0.0.2
 git push --set-upstream origin v0.0.2
+git checkout gh-pages
+cd ..
 ```
 
 Then make a new release on Github with the `v0.0.2` tag.
