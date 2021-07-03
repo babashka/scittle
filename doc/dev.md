@@ -51,3 +51,9 @@ git push --set-upstream origin v0.0.2
 ```
 
 Then make a new release on Github with the `v0.0.2` tag.
+
+To upgrade examples:
+
+```
+rg '0.0.1' --files-with-matches | xargs sed -i '' 's/0.0.1/0.0.2/g'
+```
