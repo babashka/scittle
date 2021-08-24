@@ -1,10 +1,12 @@
 (ns scittle.core
   (:refer-clojure :exclude [time])
-  (:require [goog.object :as gobject]
+  (:require [cljs.reader :refer [read-string]]
+            [goog.object :as gobject]
             [goog.string]
             [sci.core :as sci]
+            [scittle.impl.common :refer [cljns]]
             [scittle.impl.error :as error]
-            [cljs.reader :refer [read-string]]))
+            [scittle.impl.io :as io]))
 
 (clojure.core/defmacro time
   "Evaluates expr and prints the time it took. Returns the value of expr."
@@ -17,15 +19,20 @@
      ret#))
 
 (def stns (sci/create-ns 'sci.script-tag nil))
-(def cljns (sci/create-ns 'clojure.core nil))
 (def rns (sci/create-ns 'cljs.reader nil))
+
+'clojure.core {}
 
 (def namespaces
   {'clojure.core
-   {'println     println
-    'prn         prn
-    'system-time system-time
-    'time        (sci/copy-var time cljns)
+   {'*print-fn* io/print-fn
+    '*print-newline* io/print-newline
+    ;; 'with-out-str (sci/copy-var io/with-out-str cljns)
+    'prn (sci/copy-var io/prn cljns)
+    'print (sci/copy-var io/print cljns)
+    'println (sci/copy-var io/println cljns)
+    'time (sci/copy-var time cljns)
+    'system-time (sci/copy-var system-time cljns)
     'random-uuid random-uuid
     'read-string (sci/copy-var read-string rns)}
    'goog.object {'set gobject/set
