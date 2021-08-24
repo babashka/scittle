@@ -47,13 +47,13 @@ To create a new release:
 To upgrade examples:
 
 ```
-rg '0.0.1' --files-with-matches | xargs sed -i '' 's/0.0.1/0.0.2/g'
+rg '0.0.1' --files-with-matches | xargs sed -i '' 's/0.0.1/0.0.3/g'
 bb release
 cd gh-pages
-git checkout -b v0.0.2
-git push --set-upstream origin v0.0.2
+git checkout -b v0.0.3
+git push --set-upstream origin v0.0.3
 git checkout gh-pages
 cd ..
 ```
 
-Then make a new release on Github with the `v0.0.2` tag.
+Then make a new release on Github with the `v0.0.3` tag.
