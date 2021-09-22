@@ -1,6 +1,7 @@
 {:tasks
  {:requires ([babashka.fs :as fs]
-             [cheshire.core :as json])
+             [cheshire.core :as json]
+             [babashka.process :as p :refer [process]])
 
   clean {:doc "Start from clean slate."
          :task (do (run! fs/delete (fs/list-dir (fs/file "resources" "public" "js") "**.*"))
@@ -33,4 +34,13 @@
                          (shell "npm publish"))}
 
   gh-pages {:doc "Updates Github pages with new release build."
-            :task (shell "script/release.clj")}}}
+            :task (shell "script/release.clj")}
+
+  replace-version {:doc "Ported from bash one-liners. Expects two versions. TODO: port to Clojure."
+                   :task
+                   (let [[prev next] *command-line-args*]
+                     (-> (process ["bash" "-c"
+                                   (format "rg %s --files-with-matches | xargs sed -i '' 's/%s/%s/g'"
+                                           prev prev next)]
+                                  {:inherit true})
+                         p/check))}}}
