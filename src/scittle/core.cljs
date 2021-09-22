@@ -5,8 +5,7 @@
             [goog.string]
             [sci.core :as sci]
             [scittle.impl.common :refer [cljns]]
-            [scittle.impl.error :as error]
-            [scittle.impl.io :as io]))
+            [scittle.impl.error :as error]))
 
 (clojure.core/defmacro time
   "Evaluates expr and prints the time it took. Returns the value of expr."
@@ -21,17 +20,9 @@
 (def stns (sci/create-ns 'sci.script-tag nil))
 (def rns (sci/create-ns 'cljs.reader nil))
 
-'clojure.core {}
-
 (def namespaces
   {'clojure.core
-   {'*print-fn* io/print-fn
-    '*print-newline* io/print-newline
-    ;; 'with-out-str (sci/copy-var io/with-out-str cljns)
-    'prn (sci/copy-var io/prn cljns)
-    'print (sci/copy-var io/print cljns)
-    'println (sci/copy-var io/println cljns)
-    'time (sci/copy-var time cljns)
+   {'time (sci/copy-var time cljns)
     'system-time (sci/copy-var system-time cljns)
     'random-uuid random-uuid
     'read-string (sci/copy-var read-string rns)}
@@ -95,3 +86,6 @@
 (js/document.addEventListener
  "DOMContentLoaded"
  (fn [] (when-not @auto-load-disabled? (eval-script-tags))), false)
+
+(enable-console-print!)
+(sci/alter-var-root sci/print-fn (constantly *print-fn*))
