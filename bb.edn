@@ -1,6 +1,6 @@
 {:tasks
  {:requires ([babashka.fs :as fs]
-             [cheshire.json :as json])
+             [cheshire.core :as json])
 
   clean {:doc "Start from clean slate."
          :task (do (run! fs/delete (fs/list-dir (fs/file "resources" "public" "js") "**.*"))
