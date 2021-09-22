@@ -1,5 +1,8 @@
 {
-  "dependencies": {
+  "name": "scittle",
+  "version": "0.0.3-1",
+  "files": ["dist"],
+  "devDependencies": {
     "react": "17.0.1",
     "react-dom": "17.0.1"
   }

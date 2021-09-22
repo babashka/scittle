@@ -13,3 +13,6 @@ resources/public/js
 gh-pages/
 gh-pages/
 /.lsp
+/dist
+/.clj-kondo/.cache
+/.clj-kondo/rewrite-clj
