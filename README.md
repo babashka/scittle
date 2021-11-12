@@ -1,14 +1,14 @@
 # Scittle
 
-The [Small Clojure Interpreter](https://github.com/borkdude/sci) exposed for usage in script tags.
+The [Small Clojure Interpreter](https://github.com/babashka/sci) exposed for usage in script tags.
 
-See [Github pages](https://borkdude.github.io/scittle) for usage.
+See [Github pages](https://babashka.org/scittle/) for usage.
 
 See
 [babashka-scittle-guestbook](https://github.com/kloimhardt/babashka-scittle-guestbook)
 for a minimal full stack web application.
 
-See [releases](https://github.com/borkdude/scittle/releases) for links to
+See [releases](https://github.com/babashka/scittle/releases) for links to
 [JSDelivr](https://www.jsdelivr.com) to get versioned artifacts.
 
 ## Tasks
