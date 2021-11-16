@@ -41,7 +41,7 @@
           }
         };"
        "if(typeof scittle === 'undefined'){"
-       (append-tag :script {:src "https://borkdude.github.io/scittle/js/scittle.js"
+       (append-tag :script {:src "https://babashka.github.io/scittle/js/scittle.js"
                             :onerror "function(){alert('Error loading ' + this.src)}"
                             :onload "runCode"})
        "} else {
