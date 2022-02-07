@@ -15,6 +15,9 @@
 (fs/copy "resources/public/bookmarklet.html" "gh-pages"
          {:replace-existing true})
 
+(fs/copy "resources/public/wordle.html" "gh-pages"
+         {:replace-existing true})
+
 (fs/copy "resources/public/disable_auto_eval.html" "gh-pages"
          {:replace-existing true})
 
