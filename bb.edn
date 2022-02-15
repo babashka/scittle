@@ -24,7 +24,7 @@
                       (fs/glob "resources/public/js" "*.js")))}
 
   bump-version {:doc "Bumps package.json and pushes new git tag"
-                :task (do #_(shell "npm version patch")
+                :task (do (shell "npm version patch")
                           (shell "git push --atomic origin main"
                                  (str "v" (:version (json/parse-string (slurp "package.json") true)))))}
 
