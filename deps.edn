@@ -2,8 +2,7 @@
 
  :deps
  {org.clojure/clojure {:mvn/version "1.10.3"}
-  babashka/sci        {:git/url "https://github.com/babashka/sci"
-                       :sha "315e5ee6d6ce0b7f6ccac641ed79adde65dea666"}
+  org.babashka/sci {:mvn/version "0.3.0"}
   reagent/reagent {:mvn/version "1.0.0"}
   cljsjs/react {:mvn/version "17.0.2-0"}
   cljsjs/react-dom {:mvn/version "17.0.2-0"}

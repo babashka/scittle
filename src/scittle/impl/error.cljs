@@ -1,7 +1,7 @@
 (ns scittle.impl.error
   (:refer-clojure :exclude [println])
   (:require [clojure.string :as str]
-            [sci.impl.callstack :as cs]))
+            [sci.core :as sci]))
 
 (defn println [& strs]
   (.error js/console (str/join " " strs)))
@@ -19,7 +19,7 @@
 
 (defn print-stacktrace
   [stacktrace {:keys [:verbose?]}]
-  (let [stacktrace (cs/format-stacktrace stacktrace)
+  (let [stacktrace (sci/format-stacktrace stacktrace)
         segments (split-stacktrace stacktrace verbose?)
         [fst snd] segments]
     (run! #(print % "\n") fst)
@@ -58,24 +58,10 @@
   (let [n (- n (count s))]
     (str s (str/join (repeat n " ")))))
 
-(defn print-locals [locals]
-  (let [max-name-length (reduce max 0 (map (comp count str)
-                                           (keys locals)))
-        max-name-length (+ max-name-length 2)]
-    (println
-     (with-out-str (binding [*print-length* 10
-                             *print-level* 2]
-                     (doseq [[k v] locals]
-                       (print (str (right-pad (str k ": ") max-name-length)))
-                       ;; print nil as nil
-                       (prn v)))))))
-
 (defn error-handler [e src-map]
   (let [d (ex-data e)
         sci-error? (isa? (:type d) :sci/error)
-        stacktrace (some->
-                    d :sci.impl/callstack
-                    cs/stacktrace)]
+        stacktrace (sci/stacktrace e)]
     (ruler "Scittle error")
     (when-let [name (.-name e)]
       (when-not (= "Error" name)
@@ -90,15 +76,12 @@
         (println (str "Location: "
                       (when file (str file ":"))
                       line ":" column""))))
-    (when-let [phase (cs/phase e stacktrace)]
+    (when-let [phase (:phase d)]
       (println "Phase:   " phase))
     (when-let [ec (when sci-error?
                       (error-context e src-map))]
         (ruler "Context")
         (println ec))
-    (when-let [locals (not-empty (:locals d))]
-      (ruler "Locals")
-      (print-locals locals))
     (when sci-error?
       (when-let
           [st (let [st (with-out-str
