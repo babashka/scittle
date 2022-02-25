@@ -43,7 +43,7 @@
                     (or (ex-cause e) e)
                     e))))))
 
-(defn register-plugin! [plug-in-name sci-opts]
+(defn ^:export register-plugin! [plug-in-name sci-opts]
   plug-in-name ;; unused for now
   (swap! ctx sci/merge-opts sci-opts))
 
