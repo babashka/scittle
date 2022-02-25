@@ -10,7 +10,7 @@
 
 - Upgrade to SCI 0.3.0
 
-## v0.1.2
+## v0.1.0
 
 - Fixes for `try/catch`
 
