@@ -2,6 +2,8 @@
 
 The [Small Clojure Interpreter](https://github.com/babashka/sci) exposed for usage in script tags.
 
+Try it out on [CodePen](https://codepen.io/Prestance/pen/PoOdZQw)!
+
 See [Github pages](https://babashka.org/scittle/) for usage.
 
 See
