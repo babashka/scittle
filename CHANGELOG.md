@@ -3,7 +3,7 @@
 ## v0.1.2
 
 - Upgrade to SCI 0.3.1
-- Upgrade to Reagent 0.1.2
+- Upgrade to Reagent 1.1.0
 - Add support for Reagent's `create-class` and `with-let`
 
 ## v0.1.1
