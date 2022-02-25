@@ -8,7 +8,8 @@
 
 (def reagent-namespace
   {'atom (sci/copy-var r/atom rns)
-   'as-element (sci/copy-var r/as-element rns)})
+   'as-element (sci/copy-var r/as-element rns)
+   'create-class (sci/copy-var r/create-class rns)})
 
 (def rdns (sci/create-ns 'reagent.dom nil))
 
