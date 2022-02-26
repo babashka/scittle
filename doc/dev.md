@@ -17,10 +17,10 @@ Post a corresponding PR with the smallest change possible to address the
 issue. Then we discuss the PR, make changes as needed and if we reach an
 agreement, the PR will be merged.
 
-### Tests
+<!-- ### Tests -->
 
-Each bug fix, change or new feature should be tested well to prevent future
-regressions.
+<!-- Each bug fix, change or new feature should be tested well to prevent future -->
+<!-- regressions. -->
 
 ### Force-push
 
@@ -37,11 +37,11 @@ reasons:
 
 ## Developing
 
-Run `bb dev` to start shadow-cljs compilation in watch mode. Then run `node out/nbb_main.js` to invoke nbb.
+Run `bb dev` to start shadow-cljs compilation in watch mode.
 
-## Testing
+<!-- ## Testing -->
 
-You can run tests using `bb run-tests` and `bb run-integration-tests`.
+<!-- You can run tests using `bb run-tests` and `bb run-integration-tests`. -->
 
 ## Release
 
