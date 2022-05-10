@@ -1,11 +1,9 @@
 (ns scittle.core
   (:refer-clojure :exclude [time])
   (:require [cljs.reader :refer [read-string]]
-            [clojure.edn :as edn]
             [goog.object :as gobject]
             [goog.string]
             [sci.core :as sci]
-            [sci.nrepl.completions :refer [completions]]
             [scittle.impl.common :refer [cljns]]
             [scittle.impl.error :as error]))
 
@@ -106,37 +104,3 @@
 (enable-console-print!)
 (sci/alter-var-root sci/print-fn (constantly *print-fn*))
 
-(defn nrepl-websocket []
-  (.-ws_nrepl js/window))
-
-(defn nrepl-reply [{:keys [id session]} payload]
-  (.send (nrepl-websocket)
-         (str (assoc payload :id id :session session :ns (str @!last-ns)))))
-
-(defn handle-nrepl-eval [{:keys [code] :as msg}]
-  (let [[kind val] (try [::success (eval-string code)]
-                        (catch :default e
-                          [::error (str e)]))]
-    (case kind
-      ::success
-      (do (nrepl-reply msg {:value (pr-str val)})
-          (nrepl-reply msg {:status ["done"]}))
-      ::error
-      (do
-        (nrepl-reply msg {:err (pr-str val)})
-        (nrepl-reply msg {:ex (pr-str val)
-                          :status ["error" "done"]})))))
-
-(defn handle-nrepl-message [msg]
-  (case (:op msg)
-    :eval (handle-nrepl-eval msg)
-    :complete (nrepl-reply msg (completions (assoc msg :ctx @!sci-ctx)))))
-
-(defn ^:export init-nrepl []
-  (let [ws (nrepl-websocket)]
-    (set! (.-onmessage ws)
-          (fn [event]
-            (handle-nrepl-message (edn/read-string (.-data event)))))
-    (set! (.-onerror ws)
-          (fn [event]
-            (js/console.log event)))))
