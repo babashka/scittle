@@ -2,12 +2,16 @@
 
  :deps
  {org.clojure/clojure {:mvn/version "1.10.3"}
-  org.babashka/sci {:mvn/version "0.3.1"}
+  org.babashka/sci {:mvn/version "0.3.5"}
   reagent/reagent {:mvn/version "1.1.0"}
   cljsjs/react {:mvn/version "17.0.2-0"}
   cljsjs/react-dom {:mvn/version "17.0.2-0"}
   cljsjs/react-dom-server {:mvn/version "17.0.2-0"}
-  cljs-ajax/cljs-ajax {:mvn/version "0.8.3"}}
+  cljs-ajax/cljs-ajax {:mvn/version "0.8.3"}
+
+  io.github.babashka/sci.nrepl
+  #_{:local/root "../sci.nrepl"}
+  {:git/sha "8998f2a4fd25ff02474d7298253e91f059f482b2"}}
 
  :aliases
  {:dev

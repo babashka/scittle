@@ -1,9 +1,11 @@
 (ns scittle.core
   (:refer-clojure :exclude [time])
   (:require [cljs.reader :refer [read-string]]
+            [clojure.edn :as edn]
             [goog.object :as gobject]
             [goog.string]
             [sci.core :as sci]
+            [sci.nrepl.completions :refer [completions]]
             [scittle.impl.common :refer [cljns]]
             [scittle.impl.error :as error]))
 
@@ -29,15 +31,29 @@
    'goog.object {'set gobject/set
                  'get gobject/get}})
 
-(def ctx (atom (sci/init {:namespaces namespaces
+(def !sci-ctx (atom (sci/init {:namespaces namespaces
                           :classes {'js js/window
                                     :allow :all}
                           :disable-arity-checks true})))
 
+
+(def !last-ns (volatile! @sci/ns))
+
+(defn- -eval-string [s]
+  (sci/binding [sci/ns @!last-ns]
+    (let [rdr (sci/reader s)]
+      (loop [res nil]
+        (let [form (sci/parse-next @!sci-ctx rdr)]
+          (if (= :sci.core/eof form)
+            (do
+              (vreset! !last-ns @sci/ns)
+              res)
+            (recur (sci/eval-form @!sci-ctx form))))))))
+
 (defn ^:export eval-string [s]
-  (try (sci/eval-string* @ctx s)
+  (try (-eval-string s)
        (catch :default e
-         (error/error-handler e (:src @ctx))
+         (error/error-handler e (:src @!sci-ctx))
          (let [sci-error? (isa? (:type (ex-data e)) :sci/error)]
            (throw (if sci-error?
                     (or (ex-cause e) e)
@@ -45,14 +61,14 @@
 
 (defn register-plugin! [plug-in-name sci-opts]
   plug-in-name ;; unused for now
-  (swap! ctx sci/merge-opts sci-opts))
+  (swap! !sci-ctx sci/merge-opts sci-opts))
 
 (defn- eval-script-tags* [script-tags]
   (when-let [tag (first script-tags)]
     (if-let [text (not-empty (gobject/get tag "textContent"))]
       (let [scittle-id (str (gensym "scittle-tag-"))]
         (gobject/set tag "scittle_id" scittle-id)
-        (swap! ctx assoc-in [:src scittle-id] text)
+        (swap! !sci-ctx assoc-in [:src scittle-id] text)
         (sci/binding [sci/file scittle-id]
           (eval-string text))
         (eval-script-tags* (rest script-tags)))
@@ -64,7 +80,7 @@
                                     (let [response (gobject/get this "response")]
                                       (gobject/set tag "scittle_id" src)
                                       ;; save source for error messages
-                                      (swap! ctx assoc-in [:src src] response)
+                                      (swap! !sci-ctx assoc-in [:src src] response)
                                       (sci/binding [sci/file src]
                                         (eval-string response)))
                                     (eval-script-tags* (rest script-tags)))))]
@@ -89,3 +105,38 @@
 
 (enable-console-print!)
 (sci/alter-var-root sci/print-fn (constantly *print-fn*))
+
+(defn nrepl-websocket []
+  (.-ws_nrepl js/window))
+
+(defn nrepl-reply [{:keys [id session]} payload]
+  (.send (nrepl-websocket)
+         (str (assoc payload :id id :session session :ns (str @!last-ns)))))
+
+(defn handle-nrepl-eval [{:keys [code] :as msg}]
+  (let [[kind val] (try [::success (eval-string code)]
+                        (catch :default e
+                          [::error (str e)]))]
+    (case kind
+      ::success
+      (do (nrepl-reply msg {:value (pr-str val)})
+          (nrepl-reply msg {:status ["done"]}))
+      ::error
+      (do
+        (nrepl-reply msg {:err (pr-str val)})
+        (nrepl-reply msg {:ex (pr-str val)
+                          :status ["error" "done"]})))))
+
+(defn handle-nrepl-message [msg]
+  (case (:op msg)
+    :eval (handle-nrepl-eval msg)
+    :complete (nrepl-reply msg (completions (assoc msg :ctx @!sci-ctx)))))
+
+(defn ^:export init-nrepl []
+  (let [ws (nrepl-websocket)]
+    (set! (.-onmessage ws)
+          (fn [event]
+            (handle-nrepl-message (edn/read-string (.-data event)))))
+    (set! (.-onerror ws)
+          (fn [event]
+            (js/console.log event)))))
