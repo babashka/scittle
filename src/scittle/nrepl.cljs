@@ -5,10 +5,7 @@
    [scittle.core :refer [!last-ns eval-string !sci-ctx]]))
 
 (defn nrepl-websocket []
-  (when (.-SCITTLE_BROWSER_REPL_PROXY_PORT js/window)
-    (set! (.-ws_nrepl js/window)
-          (new js/WebSocket "ws://localhost:1340/_nrepl"))
-    (.-ws_nrepl js/window)))
+  (.-ws_nrepl js/window))
 
 (defn nrepl-reply [{:keys [id session]} payload]
   (.send (nrepl-websocket)
@@ -31,12 +28,17 @@
 (defn handle-nrepl-message [msg]
   (case (:op msg)
     :eval (handle-nrepl-eval msg)
-    :complete (nrepl-reply msg (completions (assoc msg :ctx @!sci-ctx)))))
+    :complete (let [completions (completions (assoc msg :ctx @!sci-ctx))]
+                (nrepl-reply msg completions))))
+
+(when (.-SCITTLE_BROWSER_REPL_PROXY_PORT js/window)
+  (set! (.-ws_nrepl js/window)
+        (new js/WebSocket "ws://localhost:1340/_nrepl")))
 
 (when-let [ws (nrepl-websocket)]
+  (prn :ws ws)
   (set! (.-onmessage ws)
         (fn [event]
-          (prn :event event)
           (handle-nrepl-message (edn/read-string (.-data event)))))
   (set! (.-onerror ws)
         (fn [event]
