@@ -76,13 +76,14 @@ After cloning this repo to a new dir:
 
 ```
 git fetch origin gh-pages
+git worktree prune
 git worktree add gh-pages gh-pages
 ```
 
 To deploy to Github Pages:
 
 ```
-bb release
+script/release.clj
 ```
 
 To create a new release:
