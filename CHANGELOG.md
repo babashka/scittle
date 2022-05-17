@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.1.2
+## v0.2.8
 
 - Upgrade to SCI 0.3.1
 - Upgrade to Reagent 1.1.0
