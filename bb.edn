@@ -1,4 +1,10 @@
-{:tasks
+{:deps {io.github.babashka/sci.nrepl
+        #_{:local/root "../sci.nrepl"}
+        {:git/sha "c14b5b4ef4390ff206cdb71f763f327799f5e853"}
+        io.github.babashka/http-server
+        {:git/sha "b38c1f16ad2c618adae2c3b102a5520c261a7dd3"}}
+
+ :tasks
  {:requires ([babashka.fs :as fs]
              [cheshire.core :as json]
              [babashka.process :as p :refer [process]])
@@ -8,8 +14,23 @@
                    (fs/delete-tree ".cpcache")
                    (fs/delete-tree ".shadow-cljs"))}
 
+  shadow:watch {:doc "Development build. Starts webserver and watches for changes."
+                :task (clojure "-M:dev -m shadow.cljs.devtools.cli watch main")}
+
+  http-server {:doc "Starts http server for serving static files"
+               :requires ([babashka.http-server :as http])
+               :task (do (http/serve {:port 1341 :dir "resources/public"})
+                         (println "Serving static assets at http://localhost:1341"))}
+
+  browser-nrepl {:doc "Start browser nREPL"
+                 :requires ([sci.nrepl.browser-server :as bp])
+                 :task (bp/start! {})}
+
+  -dev {:depends [shadow:watch browser-nrepl http-server]}
+
   dev {:doc "Development build. Starts webserver and watches for changes."
-       :task (clojure "-M:dev -m shadow.cljs.devtools.cli watch main")}
+       :task (do (run '-dev {:parallel true})
+                 (deref (promise)))}
 
   prod {:doc "Builds production artifacts."
         :task (clojure {:extra-env {"SCI_ELIDE_VARS" "true"}}
