@@ -25,10 +25,9 @@ babashka or Clojure JVM):
 @(promise) ;; wait until process is killed
 ```
 
-### REPL
+### nREPL
 
-To connect to a Scittle REPL from your editor, scittle provides an nREPL
-implementation. To run the nREPL server you need to follow these steps:
+To connect to a Scittle nREPL server from your editor, follow these steps:
 
 In babashka or Clojure JVM, use the
 [sci.nrepl](https://github.com/babashka/sci.nrepl) dependency and run:
@@ -62,7 +61,27 @@ and start evaluating!
 
 See the `resources/public/nrepl.html` file for an example. When you run `bb dev`
 in this repository, and then open `http://localhost:1341/nrepl.html` you should
-be able evaluate expressions in `resources/public/cljs/nrepl_playground.cljs`.
+be able evaluate expressions in
+`resources/public/cljs/nrepl_playground.cljs`. See a demo
+[here](https://twitter.com/borkdude/status/1526285565343281159).
+
+### CIDER
+
+Currently when connecting from CIDER, you need to use this snippet:
+
+```
+(cider-register-cljs-repl-type 'sci-js "(+ 1 2 3)")
+
+(defun mm/cider-connected-hook ()
+  (when (eq 'sci-js cider-cljs-repl-type)
+    (setq-local cider-show-error-buffer nil)
+    (cider-set-repl-type 'cljs)))
+
+(add-hook 'cider-connected-hook #'mm/cider-connected-hook)
+```
+
+Then choose `cider-connect-cljs`, select port `1339`, followed by the `sci-js`
+REPL type.
 
 ## Tasks
 
