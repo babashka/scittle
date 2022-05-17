@@ -51,7 +51,7 @@
 
   npm-publish {:doc "Updates Github pages with new release build."
                :task (do (run 'dist)
-                         (run 'bump-version)
+                         #_(run 'bump-version)
                          (shell "npm publish"))}
 
   gh-pages {:doc "Updates Github pages with new release build."
