@@ -6,7 +6,7 @@ setup described here, can be found in this directory.
 In babashka or Clojure JVM, use the
 [sci.nrepl](https://github.com/babashka/sci.nrepl) dependency and run:
 
-```
+``` clojure
 (require 'sci.nrepl.browser-server :as nrepl)
 (nrepl/start! {:nrepl-port 1339 :websocket-port 1340})
 ```
@@ -19,14 +19,14 @@ browser via the websocket connection.
 In your scittle website, you will need to include the following, in addition to
 the normal routine:
 
-```
+``` html
 <script>var SCITTLE_NREPL_WEBSOCKET_PORT = 1340;</script>
 <script src="https://cdn.jsdelivr.net/npm/scittle@0.2.8/dist/scittle.nrepl.js" type="application/javascript"></script>
 ```
 
 Also include the CLJS file that you want to evaluate with nREPL:
 
-```
+``` html
 <script src="playground.cljs" type="application/x-scittle"></script>
 ```
 
@@ -46,7 +46,7 @@ refreshes.
 
 Currently when connecting from CIDER, you need to use this snippet:
 
-```
+``` elisp
 (cider-register-cljs-repl-type 'sci-js "(+ 1 2 3)")
 
 (defun mm/cider-connected-hook ()
