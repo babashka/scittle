@@ -18,8 +18,24 @@ See [releases](https://github.com/babashka/scittle/releases) for links to
 To connect to a Scittle REPL from your editor, scittle provides an nREPL
 implementation. To run the nREPL server you need to follow these steps:
 
+In babashka or Clojure JVM, use the
+[sci.nrepl](https://github.com/babashka/sci.nrepl) dependency and run:
+
+```
+(require 'sci.nrepl.browser-server :as bp)
+(bp/start! {:nrepl-port 1339 :websocket-port 1340})
 ```
 
+This will run an nREPL server on port 1339 and a websocket server on port 1340.
+Your editor's nREPL client will connect to port 1339 and your browser, running
+scittle, will connect to port 1340.
+
+In your scittle website, you will need to include the following, in addition to
+the normal routine:
+
+```
+<script>var SCITTLE_NREPL_WEBSOCKET_PORT = 1340;</script>
+<script src="js/scittle.nrepl.js" type="application/javascript"></script>
 ```
 
 ## Tasks

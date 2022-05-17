@@ -1,6 +1,6 @@
 {:deps {io.github.babashka/sci.nrepl
-        ;; {:local/root "../sci.nrepl"}
-        {:git/sha "318e39fc356652d749180f3a3efba5eb4b99d304"}}
+        {:local/root "../sci.nrepl"}
+        #_{:git/sha "318e39fc356652d749180f3a3efba5eb4b99d304"}}
 
  :tasks
  {:requires ([babashka.fs :as fs]
@@ -16,11 +16,8 @@
                 :task (clojure "-M:dev -m shadow.cljs.devtools.cli watch main")}
 
   browser-nrepl {:doc "Start browser nREPL"
-                 :requires ([sci.nrepl.browser-proxy :as bp])
-                 :task (do (bp/start-browser-nrepl! {:port 1339})
-                           (bp/serve! {:port 1340})
-                           (println "Started browser nREPL on port 1339")
-                           (deref (promise)))}
+                 :requires ([sci.nrepl.browser-server :as bp])
+                 :task (bp/start! {})}
 
   -dev {:depends [shadow:watch browser-nrepl]}
 

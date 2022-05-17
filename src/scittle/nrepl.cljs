@@ -31,7 +31,7 @@
     :complete (let [completions (completions (assoc msg :ctx @!sci-ctx))]
                 (nrepl-reply msg completions))))
 
-(when (.-SCITTLE_BROWSER_REPL_PROXY_PORT js/window)
+(when (.-SCITTLE_NREPL_WEBSOCKET_PORT js/window)
   (set! (.-ws_nrepl js/window)
         (new js/WebSocket "ws://localhost:1340/_nrepl")))
 
