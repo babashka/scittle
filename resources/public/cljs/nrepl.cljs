@@ -10,4 +10,6 @@
     (.append
      (js/document.createTextNode "there")))))
 
+(defn foo [])
+
 (js/alert "Isn't this cool? :)")

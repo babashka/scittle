@@ -33,6 +33,6 @@ Idea by Arne Brasseur a.k.a [plexus](https://github.com/plexus).
 
 ## License
 
-Copyright © 2021 Michiel Borkent
+Copyright © 2021 - 2022 Michiel Borkent
 
 Distributed under the EPL License. See LICENSE.
