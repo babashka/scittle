@@ -1,6 +1,6 @@
 {:deps {io.github.babashka/sci.nrepl
-        {:local/root "../sci.nrepl"}
-        #_{:git/sha "8998f2a4fd25ff02474d7298253e91f059f482b2"}}
+        ;; {:local/root "../sci.nrepl"}
+        {:git/sha "318e39fc356652d749180f3a3efba5eb4b99d304"}}
 
  :tasks
  {:requires ([babashka.fs :as fs]

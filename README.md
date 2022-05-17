@@ -13,6 +13,15 @@ for a minimal full stack web application.
 See [releases](https://github.com/babashka/scittle/releases) for links to
 [JSDelivr](https://www.jsdelivr.com) to get versioned artifacts.
 
+## REPL
+
+To connect to a Scittle REPL from your editor, scittle provides an nREPL
+implementation. To run the nREPL server you need to follow these steps:
+
+```
+
+```
+
 ## Tasks
 
 Run `bb tasks` to see all available tasks:
