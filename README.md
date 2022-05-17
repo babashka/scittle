@@ -13,7 +13,20 @@ for a minimal full stack web application.
 See [releases](https://github.com/babashka/scittle/releases) for links to
 [JSDelivr](https://www.jsdelivr.com) to get versioned artifacts.
 
-## REPL
+## Developing with scittle
+
+### Serving assets
+
+To serve assets you can use the
+[babashka.http-server](https://github.com/babashka/http-server) dependency:
+
+``` clojure
+(require '[babashka.http-server :as http])
+(http/serve {:port 1341 :dir "resoures/public"}
+@(promise) ;; wait until process is killed
+```
+
+### REPL
 
 To connect to a Scittle REPL from your editor, scittle provides an nREPL
 implementation. To run the nREPL server you need to follow these steps:
@@ -22,8 +35,8 @@ In babashka or Clojure JVM, use the
 [sci.nrepl](https://github.com/babashka/sci.nrepl) dependency and run:
 
 ```
-(require 'sci.nrepl.browser-server :as bp)
-(bp/start! {:nrepl-port 1339 :websocket-port 1340})
+(require 'sci.nrepl.browser-server :as nrepl)
+(nrepl/start! {:nrepl-port 1339 :websocket-port 1340})
 ```
 
 This will run an nREPL server on port 1339 and a websocket server on port 1340.
@@ -35,8 +48,17 @@ the normal routine:
 
 ```
 <script>var SCITTLE_NREPL_WEBSOCKET_PORT = 1340;</script>
-<script src="js/scittle.nrepl.js" type="application/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/scittle@0.2.0/dist/scittle.nrepl.js" type="application/javascript"></script>
 ```
+
+Also include the CLJS file that you want to evaluate with nREPL:
+
+```
+<script src="cljs/script.cljs" type="application/x-scittle"></script>
+```
+
+Then visit `cljs/script.cljs` in your editor and connect to the nREPL server,
+and start evaluating!
 
 ## Tasks
 
