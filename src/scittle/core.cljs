@@ -3,6 +3,7 @@
   (:require [cljs.reader :refer [read-string]]
             [goog.object :as gobject]
             [goog.string]
+            [sci.async :as scia]
             [sci.core :as sci]
             [scittle.impl.common :refer [cljns]]
             [scittle.impl.error :as error]))
@@ -30,32 +31,24 @@
                  'get gobject/get}})
 
 (def !sci-ctx (atom (sci/init {:namespaces namespaces
-                          :classes {'js js/window
-                                    :allow :all}
-                          :disable-arity-checks true})))
+                               :classes {'js js/window
+                                         :allow :all}
+                               :disable-arity-checks true})))
 
 
 (def !last-ns (volatile! @sci/ns))
 
 (defn- -eval-string [s]
-  (sci/binding [sci/ns @!last-ns]
-    (let [rdr (sci/reader s)]
-      (loop [res nil]
-        (let [form (sci/parse-next @!sci-ctx rdr)]
-          (if (= :sci.core/eof form)
-            (do
-              (vreset! !last-ns @sci/ns)
-              res)
-            (recur (sci/eval-form @!sci-ctx form))))))))
+  (scia/eval-string* @!sci-ctx s))
 
 (defn ^:export eval-string [s]
-  (try (-eval-string s)
-       (catch :default e
-         (error/error-handler e (:src @!sci-ctx))
-         (let [sci-error? (isa? (:type (ex-data e)) :sci/error)]
-           (throw (if sci-error?
-                    (or (ex-cause e) e)
-                    e))))))
+  (.catch (-eval-string s)
+          (fn [e]
+            (error/error-handler e (:src @!sci-ctx))
+            (let [sci-error? (isa? (:type (ex-data e)) :sci/error)]
+              (throw (if sci-error?
+                       (or (ex-cause e) e)
+                       e))))))
 
 (defn register-plugin! [plug-in-name sci-opts]
   plug-in-name ;; unused for now
@@ -67,9 +60,9 @@
       (let [scittle-id (str (gensym "scittle-tag-"))]
         (gobject/set tag "scittle_id" scittle-id)
         (swap! !sci-ctx assoc-in [:src scittle-id] text)
-        (sci/binding [sci/file scittle-id]
-          (eval-string text))
-        (eval-script-tags* (rest script-tags)))
+        (-> (sci/binding [sci/file scittle-id]
+              (eval-string text))
+            (.then #(eval-script-tags* (rest script-tags)))))
       (let [src (.getAttribute tag "src")
             req (js/XMLHttpRequest.)
             _ (.open req "GET" src true)
@@ -79,9 +72,9 @@
                                       (gobject/set tag "scittle_id" src)
                                       ;; save source for error messages
                                       (swap! !sci-ctx assoc-in [:src src] response)
-                                      (sci/binding [sci/file src]
-                                        (eval-string response)))
-                                    (eval-script-tags* (rest script-tags)))))]
+                                      (-> (sci/binding [sci/file src]
+                                            (eval-string response))
+                                          (.then #(eval-script-tags* (rest script-tags))))))))]
         (.send req)))))
 
 (defn ^:export eval-script-tags []
@@ -103,4 +96,3 @@
 
 (enable-console-print!)
 (sci/alter-var-root sci/print-fn (constantly *print-fn*))
-
