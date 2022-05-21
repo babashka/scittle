@@ -33,8 +33,13 @@
 (def !sci-ctx (atom (sci/init {:namespaces namespaces
                                :classes {'js js/window
                                          :allow :all}
-                               :disable-arity-checks true})))
-
+                               :disable-arity-checks true
+                               :async-load-fn (fn [{:keys [libname ctx opts]}]
+                                                (-> (js* (str "import('" libname "')"))
+                                                    (.then (fn [mod]
+                                                             (sci/add-class! ctx (:as opts) mod)))
+                                                    (.then (fn [_]
+                                                             {:handled true}))))})))
 
 (def !last-ns (volatile! @sci/ns))
 

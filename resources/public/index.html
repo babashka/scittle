@@ -49,7 +49,11 @@
           (let [response (gobject/get req "response")]
            (set! (.-innerText code) response)
            (.highlightElement js/hljs code))))
-        (.send req)))
+      (.send req)))
+
+      (set! (.-eval_input js/window) (fn []
+      (let [value (.-value (js/document.getElementById "myInput"))]
+        (js/scittle.core.eval_string value))))
 
     </script>
 
@@ -118,6 +122,12 @@
       Click me!
     </button>
 
+    <a name="eval"></a>
+    <h2><a href="#eval">Evaluate</a></h2>
+    <textarea id="myInput" type="textarea">(ns foo (:require [bar]))
+    </textarea>
+    <button onclick="eval_input()">Eval!</button>
+    
     <a name="repl"></a>
     <h2><a href="#nrepl">REPL</a></h2>
 
