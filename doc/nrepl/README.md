@@ -7,7 +7,7 @@ In babashka or Clojure JVM, use the
 [sci.nrepl](https://github.com/babashka/sci.nrepl) dependency and run:
 
 ``` clojure
-(require 'sci.nrepl.browser-server :as nrepl)
+(require '[sci.nrepl.browser-server :as nrepl])
 (nrepl/start! {:nrepl-port 1339 :websocket-port 1340})
 ```
 
