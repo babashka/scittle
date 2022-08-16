@@ -135,6 +135,6 @@
      [(fn []
         [:a {:href (str "?name=" (js/encodeURIComponent @*bookmark-name)
                         "&code=" (js/encodeURIComponent @*code)
-                        " ")} "Copy this link to share ⤴️"])]]))
+                        "%20")} "Copy this link to share ⤴️"])]]))
 
 (rdom/render [workspace] (.getElementById js/document "app"))
