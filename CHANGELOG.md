@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.2.9
+- Add support for promesa
+
 ## v0.2.8
 
 - Upgrade to SCI 0.3.1
