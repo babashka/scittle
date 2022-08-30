@@ -8,6 +8,7 @@
   cljsjs/react-dom {:mvn/version "17.0.2-0"}
   cljsjs/react-dom-server {:mvn/version "17.0.2-0"}
   cljs-ajax/cljs-ajax {:mvn/version "0.8.3"}
+  funcool/promesa {:mvn/version "8.0.450"}
 
   io.github.babashka/sci.nrepl
   #_{:local/root "../sci.nrepl"}
