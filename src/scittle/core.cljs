@@ -4,8 +4,11 @@
             [goog.object :as gobject]
             [goog.string]
             [sci.core :as sci]
+            [sci.impl.unrestrict]
             [scittle.impl.common :refer [cljns]]
             [scittle.impl.error :as error]))
+
+(set! sci.impl.unrestrict/*unrestricted* true)
 
 (clojure.core/defmacro time
   "Evaluates expr and prints the time it took. Returns the value of expr."
@@ -29,11 +32,12 @@
    'goog.object {'set gobject/set
                  'get gobject/get}})
 
-(def !sci-ctx (atom (sci/init {:namespaces namespaces
-                          :classes {'js js/window
-                                    :allow :all}
-                          :disable-arity-checks true})))
-
+(def !sci-ctx
+  (atom (sci/init {:namespaces namespaces
+                   :classes {'js js/window
+                             :allow :all
+                             'Math js/Math}
+                   :ns-aliases {'clojure.pprint 'cljs.pprint}})))
 
 (def !last-ns (volatile! @sci/ns))
 
@@ -103,4 +107,3 @@
 
 (enable-console-print!)
 (sci/alter-var-root sci/print-fn (constantly *print-fn*))
-

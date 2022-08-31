@@ -2,7 +2,9 @@
 
  :deps
  {org.clojure/clojure {:mvn/version "1.10.3"}
-  org.babashka/sci {:mvn/version "0.3.5"}
+  org.babashka/sci {:git/url "https://github.com/babashka/sci"
+                    :git/sha "133a7565749ac6cd5a8308182f0b1c7fc47e8a3d"}
+  #_{:local/root "../babashka/sci"}
   reagent/reagent {:mvn/version "1.1.0"}
   cljsjs/react {:mvn/version "17.0.2-0"}
   cljsjs/react-dom {:mvn/version "17.0.2-0"}
@@ -14,7 +16,7 @@
   #_{:local/root "../sci.nrepl"}
   {:git/sha "e83421ce9349c36df56a2eb936196dbb65b0de63"}
   io.github.babashka/sci.configs
-  {:git/sha "fcd367c6a6115c5c4e41f3a08ee5a8d5b3387a18"}}
+  {:git/sha "63225c8606d593c595d2f10a6fa5bf38103852df"}}
 
  :aliases
  {:dev

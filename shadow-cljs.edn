@@ -18,6 +18,8 @@
                     :depends-on #{:scittle}}
     :scittle.promesa {:entries [scittle.promesa]
                       :depends-on #{:scittle}}
+    :scittle.pprint {:entries [scittle.pprint]
+                     :depends-on #{:scittle}}
     :scittle.reagent {:entries [scittle.reagent]
                       :depends-on #{:scittle}}
     :scittle.cljs-ajax {:entries [scittle.cljs-ajax]
