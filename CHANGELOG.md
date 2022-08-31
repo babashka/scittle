@@ -1,12 +1,12 @@
 # Changelog
 
-## 0.3.9
+## 0.3.10
 
 - Add `scittle.promesa.js` plugin. This gives access to the [promesa](https://cljdoc.org/d/funcool/promesa/8.0.450/doc/user-guide) library.
 - Add `scittle.pprint.js` plugin. This gives access to [cljs.pprint](https://cljs.github.io/api/cljs.pprint/).
 - Improve error messages
 
-## v0.3.9
+## v0.3.10
 
 - Upgrade to SCI 0.3.1
 - Upgrade to Reagent 1.1.0
