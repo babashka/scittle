@@ -30,7 +30,9 @@
     'random-uuid random-uuid
     'read-string (sci/copy-var read-string rns)}
    'goog.object {'set gobject/set
-                 'get gobject/get}})
+                 'get gobject/get}
+   'sci.core {'stacktrace sci/stacktrace
+              'format-stacktrace sci/format-stacktrace}})
 
 (def !sci-ctx
   (atom (sci/init {:namespaces namespaces
@@ -56,10 +58,7 @@
   (try (-eval-string s)
        (catch :default e
          (error/error-handler e (:src @!sci-ctx))
-         (let [sci-error? (isa? (:type (ex-data e)) :sci/error)]
-           (throw (if sci-error?
-                    (or (ex-cause e) e)
-                    e))))))
+         (throw e))))
 
 (defn register-plugin! [plug-in-name sci-opts]
   plug-in-name ;; unused for now
