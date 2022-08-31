@@ -50,13 +50,10 @@
                           (shell "git push --atomic origin main"
                                  (str "v" (:version (json/parse-string (slurp "package.json") true)))))}
 
-  npm-publish {:doc "Updates Github pages with new release build."
+  npm-publish {:doc "Updates NPM ibrary"
                :task (do (run 'dist)
                          (run 'bump-version)
                          (shell "npm publish"))}
-
-  gh-pages {:doc "Updates Github pages with new release build."
-            :task (shell "script/release.clj")}
 
   replace-version {:doc "Ported from bash one-liners. Expects two versions. TODO: port to Clojure."
                    :task
@@ -65,4 +62,7 @@
                                    (format "rg %s --files-with-matches | xargs sed -i '' 's/%s/%s/g'"
                                            prev prev next)]
                                   {:inherit true})
-                         p/check))}}}
+                         p/check))}
+
+  gh-pages {:doc "Updates Github pages with new release build."
+            :task (shell "script/release.clj")}}}
