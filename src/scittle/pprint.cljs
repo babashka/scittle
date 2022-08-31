@@ -1,8 +1,8 @@
-(ns scittle.promesa
+(ns scittle.pprint
   (:require
-   [sci.configs.funcool.promesa :as p]
+   [sci.configs.cljs.pprint :refer [config]]
    [scittle.core :as scittle]))
 
 (scittle/register-plugin!
   ::promesa
-  p/config)
+  config)
