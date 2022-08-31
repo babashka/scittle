@@ -7,6 +7,8 @@
     <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
     <script src="js/scittle.reagent.js" type="application/javascript"></script>
     <script src="js/scittle.cljs-ajax.js" type="application/javascript"></script>
+    <script src="js/scittle.pprint.js" type="application/javascript"></script>
+
     <script type="application/x-scittle">
       (defn my-alert []
        (js/alert "You clicked!"))
@@ -72,7 +74,7 @@
 
     To embed scittle in your website, it is recommended to use the links
     published to
-    the <a href="https://github.com/babashka/scittle/releases/tag/v0.2.8">releases
+    the <a href="https://github.com/babashka/scittle/releases/tag/v0.3.10">releases
       page</a>.
 
     Include <tt>scittle.js</tt> and write a <tt>script</tt> tag
@@ -117,6 +119,12 @@
     <button onclick="make_request()">
       Click me!
     </button>
+
+    <a name="pprint"></a>
+    <h2><a href="#pprint">cljs.pprint plugin</a></h2> To
+    enable <a href="https://cljs.github.io/api/cljs.pprint/">cljs.pprint</a>, in
+    addition to <tt>scittle.js</tt>, you need to
+    include <tt>scittle.pprint.js</tt>.
 
     <a name="repl"></a>
     <h2><a href="#nrepl">REPL</a></h2>
