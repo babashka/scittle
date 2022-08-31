@@ -6,7 +6,7 @@
 - Add `scittle.pprint.js` plugin. This gives access to [cljs.pprint](https://cljs.github.io/api/cljs.pprint/).
 - Improve error messages
 
-## v0.3.10
+## v0.2.8
 
 - Upgrade to SCI 0.3.1
 - Upgrade to Reagent 1.1.0
