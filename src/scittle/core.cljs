@@ -36,7 +36,8 @@
   (atom (sci/init {:namespaces namespaces
                    :classes {'js js/window
                              :allow :all
-                             'Math js/Math}})))
+                             'Math js/Math}
+                   :ns-aliases {'clojure.pprint 'cljs.pprint}})))
 
 (def !last-ns (volatile! @sci/ns))
 
