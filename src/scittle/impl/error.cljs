@@ -69,8 +69,8 @@
     (when-let [m (.-message e)]
       (println (str "Message:  " m)))
     (when-let [d (ex-data (ex-cause e) #_(.getCause e))]
-      (print (str "Data:     "))
-      (prn d))
+      (println (str "Data:     ")
+               (pr-str d)))
     (let [{:keys [:file :line :column]} d]
       (when line
         (println (str "Location: "
