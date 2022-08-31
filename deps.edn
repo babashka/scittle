@@ -3,7 +3,7 @@
  :deps
  {org.clojure/clojure {:mvn/version "1.10.3"}
   org.babashka/sci {:git/url "https://github.com/babashka/sci"
-                    :git/sha "133a7565749ac6cd5a8308182f0b1c7fc47e8a3d"}
+                    :git/sha "6bbfec0ede429fc17cb9ba51a96582b4fcd6ea69"}
   #_{:local/root "../babashka/sci"}
   reagent/reagent {:mvn/version "1.1.0"}
   cljsjs/react {:mvn/version "17.0.2-0"}
