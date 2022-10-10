@@ -29,10 +29,14 @@
       }
     </script>
     <script type="module" type="application/javascript">
-      globalThis.cm = await import('codemirror');
-      globalThis.lc = await import('@nextjournal/lang-clojure');
-      globalThis.cv = await import('@codemirror/view');
-      globalThis.cs = await import('@codemirror/state')
+      import * as cm from 'codemirror';
+      import * as lc from '@nextjournal/lang-clojure'
+      import * as cv from '@codemirror/view';
+      import * as cs from '@codemirror/state';
+      globalThis.cm = cm;
+      globalThis.lc = lc;
+      globalThis.cv = cv;
+      globalThis.cs = cs;
       scittle.core.eval_script_tags();
     </script>
 
