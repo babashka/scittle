@@ -38,8 +38,19 @@
       (require (quote [clojure.string :as str]))
       (def cm
        (let [doc (str/trim "
-(defn foo [x] (js/alert x))
-(foo \"hello\")")]
+(require '[reagent.core :as r]
+         '[reagent.dom :as rdom])
+
+(defonce state (r/atom {:clicks 0}))
+
+(defn my-component []
+  [:div
+    [:p \"Clicks: \" (:clicks @state)]
+    [:p [:button {:on-click #(swap! state update :clicks inc)}
+          \"Click me!\"]]])
+
+(rdom/render [my-component] (.getElementById js/document \"reagent\"))
+")]
         (js/cm.EditorView. #js {:doc doc
                                 :extensions #js [js/cm.basicSetup, (js/lc.clojure)]
                                 :parent (js/document.querySelector "#app")
@@ -47,11 +58,14 @@
       (set! (.-cm_instance js/globalThis) cm)
       (defn eval-me []
        (load-string (-> cm .-state .-doc .toString)))
-      (set! (.-eval_me js/globalThis) eval-me)
+        (set! (.-eval_me js/globalThis) eval-me)
+      (eval-me)
     </script>
   </head>
   <body>
     <div id="app">
+    </div>
+    <div id="reagent">
     </div>
     <button onClick="eval_me()">Eval</button>
   </body>
