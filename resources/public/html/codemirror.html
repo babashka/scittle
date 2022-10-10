@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.5.9/dist/es-module-shims.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/scittle@0.3.10/dist/scittle.js" type="application/javascript"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "codemirror": "https://cdn.jsdelivr.net/npm/codemirror/dist/index.js",
+          "@codemirror/commands": "https://cdn.jsdelivr.net/npm/@codemirror/commands/dist/index.js",
+          "@codemirror/search": "https://cdn.jsdelivr.net/npm/@codemirror/search/dist/index.js",
+          "@codemirror/autocomplete": "https://cdn.jsdelivr.net/npm/@codemirror/autocomplete/dist/index.js",
+          "@codemirror/lint": "https://cdn.jsdelivr.net/npm/@codemirror/lint/dist/index.js",
+          "crelt": "https://cdn.jsdelivr.net/npm/crelt/index.es.js",
+          "@nextjournal/lang-clojure": "https://cdn.jsdelivr.net/npm/@nextjournal/lang-clojure/dist/index.js",
+          "@nextjournal/lezer-clojure": "https://cdn.jsdelivr.net/npm/@nextjournal/lezer-clojure/dist/index.es.js",
+          "@lezer/highlight": "https://cdn.jsdelivr.net/npm/@lezer/highlight/dist/index.js",
+          "@lezer/lr": "https://cdn.jsdelivr.net/npm/@lezer/lr/dist/index.js",
+          "@lezer/common": "https://cdn.jsdelivr.net/npm/@lezer/common/dist/index.js",
+          "@codemirror/language": "https://cdn.jsdelivr.net/npm/@codemirror/language/dist/index.js",
+          "@codemirror/state": "https://cdn.jsdelivr.net/npm/@codemirror/state/dist/index.js",
+          "@codemirror/view": "https://cdn.jsdelivr.net/npm/@codemirror/view/dist/index.js",
+          "style-mod": "https://cdn.jsdelivr.net/npm/style-mod/src/style-mod.js",
+          "w3c-keyname": "https://cdn.jsdelivr.net/npm/w3c-keyname/index.es.js"
+        }
+      }
+    </script>
+    <script type="module" type="application/javascript">
+      import * as cm from 'codemirror'
+      import * as lc from '@nextjournal/lang-clojure'
+      globalThis.cm = cm;
+      globalThis.lc = lc;
+    </script>
+    <script id="code" type="application/x-scittle">
+      (require (quote [clojure.string :as str]))
+      (def cm
+       (let [doc (str/trim "
+(defn foo [x] (js/alert x))
+(foo \"hello\")")]
+        (js/cm.EditorView. #js {:doc doc
+                                :extensions #js [js/cm.basicSetup, (js/lc.clojure)]
+                                :parent (js/document.querySelector "#app")
+                               })))
+      (set! (.-cm_instance js/globalThis) cm)
+      (defn eval-me []
+       (load-string (-> cm .-state .-doc .toString)))
+      (set! (.-eval_me js/globalThis) eval-me)
+    </script>
+  </head>
+  <body>
+    <div id="app">
+    </div>
+    <button onClick="eval_me()">Eval</button>
+  </body>
+</html>
