@@ -2,7 +2,7 @@
   <head>
     <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.1/dist/es-module-shims.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/scittle@0.3.10/dist/scittle.js"></script>
-    <script>scittle.core.disable_auto_eval(); console.log('yolo!')</script>
+    <script>scittle.core.disable_auto_eval();</script>
     <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/scittle@0.3.10/dist/scittle.reagent.js">    </script>
@@ -31,42 +31,18 @@
     <script type="module" type="application/javascript">
       globalThis.cm = await import('codemirror');
       globalThis.lc = await import('@nextjournal/lang-clojure');
+      globalThis.cv = await import('@codemirror/view');
+      globalThis.cs = await import('@codemirror/state')
       scittle.core.eval_script_tags();
     </script>
 
-    <script type="application/x-scittle">
-      (require (quote [clojure.string :as str]))
-      (def cm
-       (let [doc (str/trim "
-(require '[reagent.core :as r]
-         '[reagent.dom :as rdom])
-
-(defonce state (r/atom {:clicks 0}))
-
-(defn my-component []
-  [:div
-    [:p \"Clicks: \" (:clicks @state)]
-    [:p [:button {:on-click #(swap! state update :clicks inc)}
-          \"Click me!\"]]])
-
-(rdom/render [my-component] (.getElementById js/document \"reagent\"))
-")]
-        (js/cm.EditorView. #js {:doc doc
-                                :extensions #js [js/cm.basicSetup, (js/lc.clojure)]
-                                :parent (js/document.querySelector "#app")
-                               })))
-      (set! (.-cm_instance js/globalThis) cm)
-      (defn eval-me []
-       (load-string (-> cm .-state .-doc .toString)))
-        (set! (.-eval_me js/globalThis) eval-me)
-      (eval-me)
-    </script>
+    <script type="application/x-scittle" src="codemirror.cljs"></script>
   </head>
   <body>
     <div id="app">
     </div>
     <div id="reagent">
     </div>
-    <button onClick="eval_me()">Eval</button>
+    <button id="evalMe" onClick="eval_me()">Eval</button>
   </body>
 </html>
