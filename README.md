@@ -21,7 +21,7 @@ babashka or Clojure JVM):
 
 ``` clojure
 (require '[babashka.http-server :as http])
-(http/serve {:port 1341 :dir "resoures/public"}
+(http/serve {:port 1341 :dir "resoures/public"})
 @(promise) ;; wait until process is killed
 ```
 
