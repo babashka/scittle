@@ -31,9 +31,12 @@
     :complete (let [completions (completions (assoc msg :ctx @!sci-ctx))]
                 (nrepl-reply msg completions))))
 
-(when (.-SCITTLE_NREPL_WEBSOCKET_PORT js/window)
+(defn ws-url [host port path]
+  (str "ws://" host ":" port "/" path))
+
+(when-let [ws-port (.-SCITTLE_NREPL_WEBSOCKET_PORT js/window)]
   (set! (.-ws_nrepl js/window)
-        (new js/WebSocket "ws://localhost:1340/_nrepl")))
+        (new js/WebSocket (ws-url "localhost" ws-port "_nrepl"))))
 
 (when-let [ws (nrepl-websocket)]
   (prn :ws ws)

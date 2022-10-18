@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Fix for [44](https://github.com/babashka/scittle/issues/44): Honoring `SCITTLE_NREPL_WEBSOCKET_PORT` in `scittle.nrepl`
+
 ## v0.3.10
 
 - Add `scittle.promesa.js` plugin. This gives access to the [promesa](https://cljdoc.org/d/funcool/promesa/8.0.450/doc/user-guide) library.
