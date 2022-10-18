@@ -34,7 +34,7 @@
 (defn ws-url [host port path]
   (str "ws://" host ":" port "/" path))
 
-(let [ws-port (or (.-SCITTLE_NREPL_WEBSOCKET_PORT js/window) 1340)]
+(when-let [ws-port (.-SCITTLE_NREPL_WEBSOCKET_PORT js/window)]
   (set! (.-ws_nrepl js/window)
         (new js/WebSocket (ws-url "localhost" ws-port "_nrepl"))))
 
