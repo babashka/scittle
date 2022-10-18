@@ -5,7 +5,8 @@
  :tasks {http-server {:doc "Starts http server for serving static files"
                       :requires ([babashka.http-server :as http])
                       :task (do (http/serve {:port 1341 :dir "."})
-                                (println "Serving static assets at http://localhost:1341"))}
+                                (println "Serving static assets at http://localhost:1341")
+                                (deref (promise)))}
 
          browser-nrepl {:doc "Start browser nREPL"
                         :requires ([sci.nrepl.browser-server :as bp])
