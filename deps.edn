@@ -16,7 +16,7 @@
   #_{:local/root "../sci.nrepl"}
   {:git/sha "e83421ce9349c36df56a2eb936196dbb65b0de63"}
   io.github.babashka/sci.configs
-  {:git/sha "63225c8606d593c595d2f10a6fa5bf38103852df"}}
+  {:git/sha "f5f1bd84d96f6a4be93cc695861649a4a0b3e45b"}}
 
  :aliases
  {:dev
