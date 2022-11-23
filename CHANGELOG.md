@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v0.4.11 (2022-11-23)
 
 - Add `scittle.re-frame` plugin. This gives access to the
   [re-frame](https://github.com/day8/re-frame) library.
