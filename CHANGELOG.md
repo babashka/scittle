@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Fix for [44](https://github.com/babashka/scittle/issues/44): Honoring `SCITTLE_NREPL_WEBSOCKET_PORT` in `scittle.nrepl`
+- Add all public vars of `cljs-ajax` `ajax.core`
 
 ## v0.3.10
 
