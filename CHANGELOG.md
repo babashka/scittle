@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Add `scittle.re-frame` plugin. This gives access to the
+  [re-frame](https://github.com/day8/re-frame) library.
+
 - Fix for [44](https://github.com/babashka/scittle/issues/44): Honoring `SCITTLE_NREPL_WEBSOCKET_PORT` in `scittle.nrepl`
 - Add all public vars of `cljs-ajax` `ajax.core`
 - Upgrade several built-in libraries
