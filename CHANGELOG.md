@@ -8,7 +8,7 @@
 - Add all public vars of `cljs-ajax` `ajax.core`
 - Upgrade several built-in libraries
 
-## v0.3.10
+## v0.4.11
 
 - Add `scittle.promesa.js` plugin. This gives access to the [promesa](https://cljdoc.org/d/funcool/promesa/8.0.450/doc/user-guide) library.
 - Add `scittle.pprint.js` plugin. This gives access to [cljs.pprint](https://cljs.github.io/api/cljs.pprint/).
