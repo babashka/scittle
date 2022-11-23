@@ -16,15 +16,18 @@
 (def cm
   (let [doc (str/trim "
 (require '[reagent.core :as r]
-         '[reagent.dom :as rdom])
+         '[reagent.dom :as rdom]
+         '[re-frame.core :as rf])
 
-(defonce state (r/atom {:clicks 0}))
+(rf/reg-event-fx ::click (fn [{:keys [db]} _] {:db (update db :clicks (fnil inc 0))}))
+(rf/reg-sub ::clicks (fn [db] (:clicks db)))
 
 (defn my-component []
-  [:div
-    [:p \"Clicks: \" (:clicks @state)]
-    [:p [:button {:on-click #(swap! state update :clicks inc)}
-          \"Click me!\"]]])
+  (let [clicks (rf/subscribe [::clicks])]
+    [:div
+      [:p \"Clicks: \" @clicks]
+      [:p [:button {:on-click #(rf/dispatch [::click])}
+            \"Click me!\"]]]))
 
 (rdom/render [my-component] (.getElementById js/document \"reagent\"))
 ")]
