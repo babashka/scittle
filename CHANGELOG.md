@@ -1,5 +1,7 @@
 # Changelog
 
+[Scittle](https://github.com/babashka/scittle): execute Clojure(Script) directly from browser script tags via SCI!
+
 ## v0.4.11 (2022-11-23)
 
 - Add `scittle.re-frame` plugin. This gives access to the
