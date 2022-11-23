@@ -6,6 +6,7 @@
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="js/scittle.reagent.js" type="application/javascript"></script>
+    <!-- <script src="js/scittle.re-frame.js" type="application/javascript"></script> -->
     <script src="js/scittle.cljs-ajax.js" type="application/javascript"></script>
     <script src="js/scittle.pprint.js" type="application/javascript"></script>
 
@@ -20,13 +21,25 @@
 
       (def state (r/atom {:clicks 0}))
 
+      #_(require '[re-frame.core :as rf]
+               '[reagent.dom :as rdom])
+      #_(rf/reg-event-fx ::click (fn [{:keys [db]} [_]] {:db (update db :clicks (fnil inc 0))}))
+      #_(rf/reg-sub ::clicks (fn [db _] (:clicks db)))
+
       (defn my-component []
        [:div
         [:p "Clicks: " (:clicks @state)]
-        [:p [:button {:on-click #(swap! state update :clicks inc)}
+        [:p [:button {:on-click #(do (swap! state update :clicks inc)
+                                     #_(rf/dispatch [::click]))}
              "Click me!"]]])
 
+      #_(defn re-frame-component []
+        (let [clicks (rf/subscribe [::clicks])]
+          [:div "Clicks:" @clicks]))
+
       (rdom/render [my-component] (.getElementById js/document "app"))
+
+      #_(rdom/render [re-frame-component] (.getElementById js/document "re-frame"))
 
       (require '[ajax.core :refer [GET]])
 
@@ -107,6 +120,13 @@
     <pre><code data-type="scittle" data-src="html/reagent.html" class="html"></code></pre>
 
     <div id="app"></div>
+
+
+    <a name="re-frame"></a>
+    <h2><a href="#re-frame">Re-frame plugin</a></h2>
+
+    To enable <a href="https://github.com/day8/re-frame">reagent</a>,
+    in addition to the files needed for reagent, you need to include <tt>scittle.re-frame.js</tt>.
 
     <a name="cljs-ajax"></a>
     <h2><a href="#cljs-ajax">Cljs-ajax plugin</a></h2>
