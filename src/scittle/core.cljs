@@ -60,8 +60,7 @@
          (error/error-handler e (:src @!sci-ctx))
          (throw e))))
 
-(defn register-plugin! [plug-in-name sci-opts]
-  plug-in-name ;; unused for now
+(defn register-plugin! [_plug-in-name sci-opts]
   (swap! !sci-ctx sci/merge-opts sci-opts))
 
 (defn- eval-script-tags* [script-tags]
