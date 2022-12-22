@@ -6,6 +6,8 @@
 
 - Fix `reagent` `with-let` macro with advanced compiled builds
 - Upgrade promesa and shadow-cljs
+- Fix `#queue` literal
+- SCI: performance improvements
 
 ## v0.4.11 (2022-11-23)
 
