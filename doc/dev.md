@@ -89,18 +89,20 @@ script/release.clj
 To create a new NPM release:
 
 - Prepare minor version in `package.json` if it should be bumped
-- Run `bb npm-publish`
+- Run `bb npm-publish`: this will compile, bump minor version, create tag and and push to npm and Github
+- Create Github release with updated links
+
 
 To upgrade examples:
 
 ```
-rg '0.0.1' --files-with-matches | xargs sed -i '' 's/0.0.4.11.1.0/g'
+rg '0.0.1' --files-with-matches | xargs sed -i '' 's/0.0.5.12.1.0/g'
 bb release
 cd gh-pages
-git checkout -b v0.4.11
-git push --set-upstream origin v0.4.11
+git checkout -b v0.5.12
+git push --set-upstream origin v0.5.12
 git checkout gh-pages
 cd ..
 ```
 
-Then make a new release on Github with the `v0.4.11` tag.
+Then make a new release on Github with the `v0.5.12` tag.

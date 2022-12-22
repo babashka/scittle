@@ -55,7 +55,10 @@
                          (run 'bump-version)
                          (shell "npm publish"))}
 
-  replace-version {:doc "Ported from bash one-liners. Expects two versions. TODO: port to Clojure."
+  replace-version {:doc "Ported from bash one-liners. Expects two versions.
+                         TODO: port to Clojure.
+                         TODO: skip changelog.md
+                         "
                    :task
                    (let [[prev next] *command-line-args*]
                      (-> (process ["bash" "-c"
