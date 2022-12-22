@@ -11,15 +11,16 @@
   cljsjs/react-dom {:mvn/version "18.2.0-1"}
   cljsjs/react-dom-server {:mvn/version "18.2.0-1"}
   cljs-ajax/cljs-ajax {:mvn/version "0.8.4"}
-  funcool/promesa {:mvn/version "9.1.540"}
+  funcool/promesa {:mvn/version "10.0.575"}
   io.github.babashka/sci.nrepl
   #_{:local/root "../sci.nrepl"}
   {:git/url "https://github.com/babashka/sci.nrepl"
    :git/sha "b75700da7797f9fc2b4ef1bef9df7230f9fd1e8c"}
   io.github.babashka/sci.configs
+  #_{:local/root "/Users/borkdude/dev/sci.configs"}
   {:git/url "https://github.com/babashka/sci.configs"
-   :git/sha "2717e545e5a61d4cccd85350b9ad6265afc9146c"}}
+   :git/sha "150c224517c5d4ed943287e34f2c3287eace1679"}}
  :aliases
  {:dev
   {:extra-paths ["dev"]
-   :extra-deps  {thheller/shadow-cljs {:mvn/version "2.20.12"}}}}}
+   :extra-deps  {thheller/shadow-cljs {:mvn/version "2.20.15"}}}}}
