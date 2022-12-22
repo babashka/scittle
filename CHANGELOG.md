@@ -2,6 +2,10 @@
 
 [Scittle](https://github.com/babashka/scittle): execute Clojure(Script) directly from browser script tags via SCI!
 
+## v0.5.13 (2022-12-23)
+
+- Fix `cljs.pprint` plugin
+
 ## v0.5.12 (2022-12-23)
 
 - Fix `reagent` `with-let` macro with advanced compiled builds
