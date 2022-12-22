@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <!-- This HTML file is for local debugging -->
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.1/dist/es-module-shims.js"></script>
+    <script src="/js/scittle.js"></script>
+    <script>scittle.core.disable_auto_eval();</script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="/js/scittle.reagent.js">    </script>
+    <script src="/js/scittle.re-frame.js">    </script>
+    <script type="importmap">
+      {
+        "imports": {
+          "codemirror": "https://cdn.jsdelivr.net/npm/codemirror/dist/index.js",
+          "@codemirror/commands": "https://cdn.jsdelivr.net/npm/@codemirror/commands/dist/index.js",
+          "@codemirror/search": "https://cdn.jsdelivr.net/npm/@codemirror/search/dist/index.js",
+          "@codemirror/autocomplete": "https://cdn.jsdelivr.net/npm/@codemirror/autocomplete/dist/index.js",
+          "@codemirror/lint": "https://cdn.jsdelivr.net/npm/@codemirror/lint/dist/index.js",
+          "crelt": "https://cdn.jsdelivr.net/npm/crelt/index.es.js",
+          "@nextjournal/lang-clojure": "https://cdn.jsdelivr.net/npm/@nextjournal/lang-clojure/dist/index.js",
+          "@nextjournal/lezer-clojure": "https://cdn.jsdelivr.net/npm/@nextjournal/lezer-clojure/dist/index.es.js",
+          "@lezer/highlight": "https://cdn.jsdelivr.net/npm/@lezer/highlight/dist/index.js",
+          "@lezer/lr": "https://cdn.jsdelivr.net/npm/@lezer/lr/dist/index.js",
+          "@lezer/common": "https://cdn.jsdelivr.net/npm/@lezer/common/dist/index.js",
+          "@codemirror/language": "https://cdn.jsdelivr.net/npm/@codemirror/language/dist/index.js",
+          "@codemirror/state": "https://cdn.jsdelivr.net/npm/@codemirror/state/dist/index.js",
+          "@codemirror/view": "https://cdn.jsdelivr.net/npm/@codemirror/view/dist/index.js",
+          "style-mod": "https://cdn.jsdelivr.net/npm/style-mod/src/style-mod.js",
+          "w3c-keyname": "https://cdn.jsdelivr.net/npm/w3c-keyname/index.es.js"
+        }
+      }
+    </script>
+    <script type="module" type="application/javascript">
+      import * as cm from 'codemirror';
+      import * as lc from '@nextjournal/lang-clojure'
+      import * as cv from '@codemirror/view';
+      import * as cs from '@codemirror/state';
+      globalThis.cm = cm;
+      globalThis.lc = lc;
+      globalThis.cv = cv;
+      globalThis.cs = cs;
+      scittle.core.eval_script_tags();
+    </script>
+
+    <script type="application/x-scittle" src="/cljs/codemirror.cljs"></script>
+  </head>
+  <body>
+    <h1>Using <a href="https://www.npmjs.com/package/@nextjournal/lang-clojure">@nextjournal/lang-clojure</a> directly from npm in HTML!</h1>
+    <div id="app">
+    </div>
+    <div id="reagent">
+    </div>
+    <button id="evalMe" onClick="eval_me()">Eval</button>
+  </body>
+</html>
