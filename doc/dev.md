@@ -86,7 +86,10 @@ To deploy to Github Pages:
 script/release.clj
 ```
 
-To create a new release:
+To create a new NPM release:
+
+- Prepare minor version in `package.json` if it should be bumped
+- Run `bb npm-publish`
 
 To upgrade examples:
 
