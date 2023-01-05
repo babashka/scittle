@@ -90,20 +90,20 @@ To create a new NPM release:
 
 - Prepare version `package.json`, except patch (if anything should change here)
 - Run `bb npm-publish`: this will compile, bump patch version, create tag and and push to npm and Github
-- Create Github release with updated links
-- `bb replace-version 0.4.11 0.5.13`
+- `bb replace-version 0.4.11 0.5.14`
+- Create Github release with updated links from `doc/links.md`
 - `bb gh-pages`
 
 To upgrade examples:
 
 ```
-rg '0.0.1' --files-with-matches | xargs sed -i '' 's/0.0.5.13.1.0/g'
+rg '0.0.1' --files-with-matches | xargs sed -i '' 's/0.0.5.14.1.0/g'
 bb release
 cd gh-pages
-git checkout -b v0.5.13
-git push --set-upstream origin v0.5.13
+git checkout -b v0.5.14
+git push --set-upstream origin v0.5.14
 git checkout gh-pages
 cd ..
 ```
 
-Then make a new release on Github with the `v0.5.13` tag.
+Then make a new release on Github with the `v0.5.14` tag.
