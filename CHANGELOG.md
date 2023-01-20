@@ -2,6 +2,10 @@
 
 [Scittle](https://github.com/babashka/scittle): execute Clojure(Script) directly from browser script tags via SCI!
 
+## Unreleased
+
+- Use `window.location.hostname` for WebSocket connection
+
 ## v0.5.14 (2023-01-05)
 
 - Fix destructuring in `defmethod` (by upgrading SCI)
