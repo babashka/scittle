@@ -36,7 +36,7 @@
 
 (when-let [ws-port (.-SCITTLE_NREPL_WEBSOCKET_PORT js/window)]
   (set! (.-ws_nrepl js/window)
-        (new js/WebSocket (ws-url "localhost" ws-port "_nrepl"))))
+        (new js/WebSocket (ws-url (.-hostname (.-location js/window)) ws-port "_nrepl"))))
 
 (when-let [ws (nrepl-websocket)]
   (prn :ws ws)
