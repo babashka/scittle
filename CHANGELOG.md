@@ -5,6 +5,7 @@
 ## Unreleased
 
 - Use `window.location.hostname` for WebSocket connection
+- Upgrade sci configs to `bf8d209e`
 
 ## v0.5.14 (2023-01-05)
 
