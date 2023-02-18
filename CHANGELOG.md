@@ -5,7 +5,7 @@
 ## Unreleased
 
 - Use `window.location.hostname` for WebSocket connection
-- Upgrade sci configs to `bf8d209e`
+- Upgrade sci configs to `20f08f18`
 - Update nrepl implementation, implement `eldoc` (`info`, `lookuup`)
 
 ## v0.5.14 (2023-01-05)
