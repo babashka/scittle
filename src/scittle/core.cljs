@@ -36,7 +36,7 @@
 
 (def !sci-ctx
   (atom (sci/init {:namespaces namespaces
-                   :classes {'js js/window
+                   :classes {'js js/globalThis
                              :allow :all
                              'Math js/Math}
                    :ns-aliases {'clojure.pprint 'cljs.pprint}})))
