@@ -16,10 +16,27 @@
     (.dispatch cm #js{:changes #js{:from 0 :to end :insert text}
                             :selection #js{:anchor cursor-pos :head cursor-pos}})))
 
+(defn parse-char [level pos]
+  (case pos
+    \( (inc level)
+    \) (dec level)
+    level))
+
+(defn form-at-cursor
+  "Takes the string of characters before cursor pos."
+  [s]
+  (let [run (rest (reductions parse-char 0 s))]
+    (->> s
+         (take (inc (count (take-while #(not= 0 %) run))))
+         reverse
+         (apply str))))
+
+(form-at-cursor (reverse (take 18 "(map inc (range 8)")))
+
 (defn eval-at-cursor [viewer]
   (let [cursor-pos (some-> cm .-state .-selection .-main .-head)
         code (first (str/split (str (some-> cm .-state .-doc str)) #" => "))]
-    (let [region (str "(do " (.-doc (.-state viewer)) " )")
+    (let [region (form-at-cursor (reverse (take cursor-pos code)))
           region (if (nil? region) nil (eval-string region))]
       (if (nil? region) nil (reset! last-result region)))
     (update-editor! (str (subs code 0 cursor-pos)
@@ -27,9 +44,8 @@
                          (:result @last-result)
                          (reset! eval-tail (subs code cursor-pos (count code))))
                     cursor-pos)
-    (.dispatch cm
-               #js{:selection #js{:anchor cursor-pos
-                                  :head   cursor-pos}})))
+    (.dispatch cm #js{:selection #js{:anchor cursor-pos :head   cursor-pos}}))
+  true)
 
 (defn eval-top-level [viewer]
   (let [region (str "(do " (.-doc (.-state viewer)) " )")
@@ -66,11 +82,44 @@
                   {:key "ArrowRight" :run clear-eval}])))
 
 (def cm
-  (let [doc (str/trim "
-(map inc (range 8))
-")]
+  (let [doc "(map inc (range 8))"]
     (js/cm.EditorView. #js {:doc doc
                             :extensions #js [js/cm.basicSetup, (js/lc.clojure), (.highest js/cs.Prec extension)]
                             :parent (js/document.querySelector "#app")})))
 
 (set! (.-cm_instance js/globalThis) cm)
+
+
+
+(let [code "(map inc (range 8)"
+      cursor-pos 18
+      s '(\space \c \n \i \space \p \a \m \()
+      open-parens 1
+      closed-parens 1]
+  [(rest s)
+   (inc open-parens) closed-parens]
+(drop (count s) code)
+  )
+
+;; god dammit this doesn't work and I have no idea why!
+;; I stepped through it (above) and it works - 
+;; output is `(\( \r \a \n \g \e \space \8 \))`
+;; but in the loop (below), it gives the empty list.
+;; figure this out tomorrow
+
+(let [code "(map inc (range 8)"
+      cursor-pos 18]
+  (loop [s (reverse (take cursor-pos code))
+         open-parens 0
+         closed-parens 0]
+    (cond 
+      (= open-parens closed-parens) 
+      (drop (count s) code)
+      
+      (= \) (first s)) (recur (rest s) open-parens (inc closed-parens))
+      (= \( (first s)) (recur (rest s) (inc open-parens) closed-parens)
+      :else (recur (rest s) open-parens closed-parens))
+
+    
+    ))
+

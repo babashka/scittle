@@ -1,0 +1,415 @@
+; This is the Calva evaluation results output window.
+; TIPS: The keyboard shortcut `ctrl+alt+o o` shows and focuses this window
+;   when connected to a REPL session.
+; Please see https://calva.io/output/ for more info.
+; Happy coding! ♥️
+
+; Jacking in...
+; Connecting using "Babashka" project type.
+; You can make Calva auto-select this.
+;   - See https://calva.io/connect-sequences/
+; 
+; Starting Jack-in Terminal: pushd c:\Users\porko\Documents\GitHub\scittle & bb --nrepl-server 54728 & popd
+; Using host:port 127.0.0.1:54728 ...
+; Hooking up nREPL sessions ...
+; Connected session: clj
+; TIPS:
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj꞉user꞉>  ; Use `alt+enter` to evaluate
+; Jack-in done.
+clj꞉user꞉> 
+"(map inc (range 8))"
+
+clj꞉user꞉> 
+19
+
+clj꞉user꞉> 
+(0)
+
+clj꞉user꞉> 
+; : Could not resolve symbol: cm user 
+clj꞉user꞉> 
+"here              is a string              with newlines"
+
+clj꞉user꞉> 
+"here\n              is a string\n              with newlines"
+
+clj꞉user꞉> 
+"here              is a string              with newlines"
+
+clj꞉user꞉> 
+"(map inc (range 8))"
+
+clj꞉user꞉> 
+(\) \) \8 \space \e \g \n \a \r \( \space \c \n \i \space \p \a \m \()
+
+clj꞉user꞉> 
+(\) \8 \space \e \g \n \a \r \( \space \c \n \i \space \p \a \m \()
+
+clj꞉user꞉> 
+(\( \m \a \p \space \i \n \c \space \( \r \a \n \g \e \space \8 \) \))
+
+clj꞉user꞉> 
+; : Could not resolve symbol: open-parens user 
+clj꞉user꞉> 
+false
+
+clj꞉user꞉> 
+true
+
+clj꞉user꞉> 
+(\8 \space \e \g \n \a \r \( \space \c \n \i \space \p \a \m \()
+
+clj꞉user꞉> 
+false
+
+clj꞉user꞉> 
+true
+
+clj꞉user꞉> 
+2
+
+clj꞉user꞉> 
+[(\8 \space \e \g \n \a \r \( \space \c \n \i \space \p \a \m \() 0 2]
+
+clj꞉user꞉> 
+[(\8 \space \e \g \n \a \r \( \space \c \n \i \space \p \a \m \() 0 2]
+
+clj꞉user꞉> 
+nil
+
+clj꞉user꞉> 
+[(\8 \space \e \g \n \a \r \( \space \c \n \i \space \p \a \m \() 0 2]
+
+clj꞉user꞉> 
+false
+
+clj꞉user꞉> 
+false
+
+clj꞉user꞉> 
+[(\space \e \g \n \a \r \( \space \c \n \i \space \p \a \m \() 0 2]
+
+clj꞉user꞉> 
+[(\e \g \n \a \r \( \space \c \n \i \space \p \a \m \() 0 2]
+
+clj꞉user꞉> 
+()
+
+clj꞉user꞉> 
+[(\e \g \n \a \r \( \space \c \n \i \space \p \a \m \() 0 2]
+
+clj꞉user꞉> 
+[(\8 \space \e \g \n \a \r \( \space \c \n \i \space \p \a \m \() 0 0]
+
+clj꞉user꞉> 
+true
+
+clj꞉user꞉> 
+true
+
+clj꞉user꞉> 
+[(\8 \space \e \g \n \a \r \( \space \c \n \i \space \p \a \m \() 0 1]
+
+clj꞉user꞉> 
+[(\space \e \g \n \a \r \( \space \c \n \i \space \p \a \m \() 0 2]
+
+clj꞉user꞉> 
+[(\e \g \n \a \r \( \space \c \n \i \space \p \a \m \() 0 3]
+
+clj꞉user꞉> 
+[(\g \n \a \r \( \space \c \n \i \space \p \a \m \() 0 4]
+
+clj꞉user꞉> 
+[(\8 \space \e \g \n \a \r \( \space \c \n \i \space \p \a \m \() 0 1]
+
+clj꞉user꞉> 
+[(\space \e \g \n \a \r \( \space \c \n \i \space \p \a \m \() 0 2]
+
+clj꞉user꞉> 
+[(\space \e \g \n \a \r \( \space \c \n \i \space \p \a \m \() 0 1]
+
+clj꞉user꞉> 
+[(\e \g \n \a \r \( \space \c \n \i \space \p \a \m \() 0 1]
+
+clj꞉user꞉> 
+[(\g \n \a \r \( \space \c \n \i \space \p \a \m \() 0 1]
+
+clj꞉user꞉> 
+[(\n \a \r \( \space \c \n \i \space \p \a \m \() 0 1]
+
+clj꞉user꞉> 
+[(\a \r \( \space \c \n \i \space \p \a \m \() 0 1]
+
+clj꞉user꞉> 
+true
+
+clj꞉user꞉> 
+false
+
+clj꞉user꞉> 
+false
+
+clj꞉user꞉> 
+[(\space \c \n \i \space \p \a \m \() 1 1]
+
+clj꞉user꞉> 
+true
+
+clj꞉user꞉> 
+(\( \r \a \n \g \e \space \8 \))
+
+clj꞉user꞉> 
+()
+
+clj꞉user꞉> 
+"fart"
+
+clj꞉user꞉> 
+(\) \8 \space \e \g \n \a \r \( \space \c \n \i \space \p \a \m \()
+
+clj꞉user꞉> 
+18
+
+clj꞉user꞉> 
+(\) \8 \space \e \g \n \a \r \( \space \c \n \i \space \p \a \m \()
+
+clj꞉user꞉> 
+true
+
+clj꞉user꞉> 
+(\) \8 \space \e \g \n \a \r \( \space \c \n \i \space \p \a \m \()
+
+clj꞉user꞉> 
+()
+
+clj꞉user꞉> 
+(\( \r \a \n \g \e \space \8 \))
+
+clj꞉user꞉> 
+#<SciVar@7eff9d7d: 
+  #object[sci.impl.fns$fun$arity_2__7886 0x5159d5b4 "sci.impl.fns$fun$arity_2__7886@5159d5b4"]>
+
+clj꞉user꞉> 
+#<SciVar@5cfbb2c3: 
+  #object[sci.impl.fns$fun$arity_1__7879 0x3b25be5f "sci.impl.fns$fun$arity_1__7879@3b25be5f"]>
+
+clj꞉user꞉> 
+1
+
+clj꞉user꞉> 
+(0 -1 -1 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1)
+
+clj꞉user꞉> 
+(\) \8 \space \e \g \n \a \r \( \space \c \n \i \space \p \a \m \()
+
+clj꞉user꞉> 
+#<SciVar@5cfbb2c3: 
+  #object[sci.impl.fns$fun$arity_1__7879 0x2a6731c2 "sci.impl.fns$fun$arity_1__7879@2a6731c2"]>
+
+clj꞉user꞉> 
+; : java.lang.Character cannot be cast to java.lang.Number user 
+clj꞉user꞉> 
+#<SciVar@5cfbb2c3: 
+  #object[sci.impl.fns$fun$arity_1__7879 0x49d5797b "sci.impl.fns$fun$arity_1__7879@49d5797b"]>
+
+clj꞉user꞉> 
+1
+
+clj꞉user꞉> 
+(0 -1 -1 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1)
+
+clj꞉user꞉> 
+; : java.lang.Character cannot be cast to java.lang.Number user 
+clj꞉user꞉> 
+(0 -1 -1 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1)
+
+clj꞉user꞉> 
+(\( \m \a \p \space \i \n \c \space \( \r \a \n \g \e \space \8 \))
+
+clj꞉user꞉> 
+(\) \8 \space \e \g \n \a \r \( \space \c \n \i \space \p \a \m \()
+
+clj꞉user꞉> 
+(0 -1 -1 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1)
+
+clj꞉user꞉> 
+#<SciVar@7eff9d7d: 
+  #object[sci.impl.fns$fun$arity_2__7886 0x7b6273de "sci.impl.fns$fun$arity_2__7886@7b6273de"]>
+
+clj꞉user꞉> 
+; : clojure.lang.PersistentVector cannot be cast to java.lang.Number user 
+clj꞉user꞉> 
+#<SciVar@7eff9d7d: 
+  #object[sci.impl.fns$fun$arity_2__7886 0x691320a7 "sci.impl.fns$fun$arity_2__7886@691320a7"]>
+
+clj꞉user꞉> 
+; : clojure.lang.PersistentVector cannot be cast to java.lang.Number user 
+clj꞉user꞉> 
+#<SciVar@7eff9d7d: 
+  #object[sci.impl.fns$fun$arity_1__7879 0x550fb3d7 "sci.impl.fns$fun$arity_1__7879@550fb3d7"]>
+
+clj꞉user꞉> 
+; : Wrong number of args (2) passed to: sci.impl.fns/fun/arity-1--7879 user 
+clj꞉user꞉> 
+; : Wrong number of args (2) passed to: sci.impl.fns/fun/arity-1--7879 user 
+clj꞉user꞉> 
+#<SciVar@7eff9d7d: 
+  #object[sci.impl.fns$fun$arity_1__7879 0x223194de "sci.impl.fns$fun$arity_1__7879@223194de"]>
+
+clj꞉user꞉> 
+; : Wrong number of args (2) passed to: sci.impl.fns/fun/arity-1--7879 user 
+clj꞉user꞉> 
+#<SciVar@7eff9d7d: 
+  #object[sci.impl.fns$fun$arity_1__7879 0x4af3318 "sci.impl.fns$fun$arity_1__7879@4af3318"]>
+
+clj꞉user꞉> 
+; : Wrong number of args (2) passed to: sci.impl.fns/fun/arity-1--7879 user 
+clj꞉user꞉> 
+#<SciVar@7eff9d7d: 
+  #object[sci.impl.fns$fun$arity_2__7886 0x1941d1ca "sci.impl.fns$fun$arity_2__7886@1941d1ca"]>
+
+clj꞉user꞉> 
+(["(" 0]
+ [["(" 0] \)]
+ [[["(" 0] \)] \8]
+ [[[["(" 0] \)] \8] \space]
+ [[[[["(" 0] \)] \8] \space] \e]
+ [[[[[["(" 0] \)] \8] \space] \e] \g]
+ [[[[[[["(" 0] \)] \8] \space] \e] \g] \n]
+ [[[[[[[["(" 0] \)] \8] \space] \e] \g] \n] \a]
+ [[[[[[[[["(" 0] \)] \8] \space] \e] \g] \n] \a] \r]
+ [[[[[[[[[["(" 0] \)] \8] \space] \e] \g] \n] \a] \r] \(]
+ [[[[[[[[[[["(" 0] \)] \8] \space] \e] \g] \n] \a] \r] \(] \space]
+ [[[[[[[[[[[["(" 0] \)] \8] \space] \e] \g] \n] \a] \r] \(] \space] \c]
+ [[[[[[[[[[[[["(" 0] \)] \8] \space] \e] \g] \n] \a] \r] \(] \space]
+   \c]
+  \n]
+ [[[[[[[[[[[[[["(" 0] \)] \8] \space] \e] \g] \n] \a] \r] \(] \space]
+    \c]
+   \n]
+  \i]
+ [[[[[[[[[[[[[[["(" 0] \)] \8] \space] \e] \g] \n] \a] \r] \(] \space]
+     \c]
+    \n]
+   \i]
+  \space]
+ [[[[[[[[[[[[[[[["(" 0] \)] \8] \space] \e] \g] \n] \a] \r] \(] \space]
+      \c]
+     \n]
+    \i]
+   \space]
+  \p]
+ [[[[[[[[[[[[[[[[["(" 0] \)] \8] \space] \e] \g] \n] \a] \r] \(]
+        \space]
+       \c]
+      \n]
+     \i]
+    \space]
+   \p]
+  \a]
+ [[[[[[[[[[[[[[[[[["(" 0] \)] \8] \space] \e] \g] \n] \a] \r] \(]
+         \space]
+        \c]
+       \n]
+      \i]
+     \space]
+    \p]
+   \a]
+  \m]
+ [[[[[[[[[[[[[[[[[[["(" 0] \)] \8] \space] \e] \g] \n] \a] \r] \(]
+          \space]
+         \c]
+        \n]
+       \i]
+      \space]
+     \p]
+    \a]
+   \m]
+  \(])
+
+clj꞉user꞉> 
+(\) \8 \space \e \g \n \a \r \( \space \c \n \i \space \p \a \m \()
+
+clj꞉user꞉> 
+#<SciVar@7eff9d7d: 
+  #object[sci.impl.fns$fun$arity_2__7886 0x7f53a803 "sci.impl.fns$fun$arity_2__7886@7f53a803"]>
+
+clj꞉user꞉> 
+#<SciVar@5cfbb2c3: 
+  #object[sci.impl.fns$fun$arity_1__7879 0x79bec427 "sci.impl.fns$fun$arity_1__7879@79bec427"]>
+
+clj꞉user꞉> 
+1
+
+clj꞉user꞉> 
+(0 -1 -1 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1)
+
+clj꞉user꞉> 
+19
+
+clj꞉user꞉> 
+(-1 -1 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1)
+
+clj꞉user꞉> 
+(-1 -1 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1)
+
+clj꞉user꞉> 
+(\) \8 \space \e \g \n \a \r \( \space \c \n \i \space \p \a \m \()
+
+clj꞉user꞉> 
+18
+
+clj꞉user꞉> 
+\)
+
+clj꞉user꞉> 
+-1
+
+clj꞉user꞉> 
+(-1 -1 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1)
+
+clj꞉user꞉> 
+(-1 -1 -1 -1 -1 -1 -1 -1)
+
+clj꞉user꞉> 
+8
+
+clj꞉user꞉> 
+(\) \8 \space \e \g \n \a \r)
+
+clj꞉user꞉> 
+(\r \a \n \g \e \space \8 \))
+
+clj꞉user꞉> 
+(\( \r \a \n \g \e \space \8 \))
+
+clj꞉user꞉> 
+"(range 8)"
+
+clj꞉user꞉> 
+"(range 8)"
+
+clj꞉user꞉> 
+"(range 8)"
+
+clj꞉user꞉> 
+#<SciVar@7d35902f: 
+  #object[sci.impl.fns$fun$arity_1__7879 0x5d4dcb1e "sci.impl.fns$fun$arity_1__7879@5d4dcb1e"]>
+
+clj꞉user꞉> 
+")8 egnar( cni pam("
+
+clj꞉user꞉> 
+"(range 8)"
+
+clj꞉user꞉> 
+; : No reader function for tag js user 
+clj꞉user꞉> 
+; : No reader function for tag js user 
+clj꞉user꞉> 
