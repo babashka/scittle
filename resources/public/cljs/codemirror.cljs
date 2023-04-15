@@ -1,6 +1,7 @@
 (require '[clojure.string :as str]
          '[reagent.core :as r]
          '[reagent.dom :as rdom])
+
 (declare cm)
 
 (defn eval-string [s]
@@ -9,18 +10,8 @@
          (catch js/Error e
            {:error (str (.-message e))}))))
 
-(defn eval-me []
-  (js/scittle.core.eval_string (-> cm .-state .-doc .toString)))
-
-(defonce !viewer (atom ""))
 (defonce last-result (atom ""))
 (defonce eval-tail (atom nil))
-
-(defn myval []
-  (some-> cm .-state .-doc str))
-
-;; export function to use from JavaScript:
-(set! (.-myval js/window) myval)
 
 (defn update-editor! [text cursor-pos]
   (let [end (count (some-> cm .-state .-doc str))]
@@ -82,9 +73,6 @@
 ")]
     (js/cm.EditorView. #js {:doc doc
                             :extensions #js [js/cm.basicSetup, (js/lc.clojure), (.highest js/cs.Prec extension)]
-                            :parent (js/document.querySelector "#app")
-                            #_#_:dispatch (fn [tr] (-> cm (.update #js [tr])) (eval-me))})))
-(set! (.-eval_me js/globalThis) eval-me)
-(set! (.-cm_instance js/globalThis) cm)
+                            :parent (js/document.querySelector "#app")})))
 
-(eval-me)
+(set! (.-cm_instance js/globalThis) cm)
