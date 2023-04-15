@@ -33,7 +33,7 @@
 
 (defn eval-at-cursor [viewer]
   (let [cursor-pos (some-> cm .-state .-selection .-main .-head)
-        code (first (str/split (str (some-> cm .-state .-doc str)) #" => "))]
+        code (some-> cm .-state .-doc str)]
     (let [region (form-at-cursor (reverse (take cursor-pos code)))
           region (if (nil? region) nil (eval-string region))]
       (if (nil? region) nil (reset! last-result region)))
@@ -52,7 +52,12 @@
   true)
 
 (defn eval-cell [viewer]
-  (reset! last-result (eval-string (str "(do " (.-doc (.-state viewer)) " )")))
+  (let [code (some-> cm .-state .-doc str)]
+    (reset! last-result (eval-string (str "(do " (.-doc (.-state viewer)) " )")))
+    (update-editor! (str code
+                         (when-not (= "" (:result @last-result)) " => ")
+                         (:result @last-result))
+                    (count code)))
   true)
 
 (defn clear-eval []
@@ -86,3 +91,19 @@
                             :parent (js/document.querySelector "#app")})))
 
 (set! (.-cm_instance js/globalThis) cm)
+
+;; what is top-level, anyway?
+
+(defn t []
+  (map inc (range 8)))
+
+;; ah, Peter from Calva to the rescue!
+;; > Calva does not check the contents of the form in order to 
+;; determine it as a top-level forms: 
+;; *all forms not enclosed in any other form are top level forms*.
+
+;; so there we have it! 
+;; we parse until we are not enclosed in a form.
+
+;; pretty simple, actually.
+;; the contents of the cell are a series of forms.

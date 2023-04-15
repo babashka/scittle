@@ -413,3 +413,7 @@ clj꞉user꞉> 
 clj꞉user꞉> 
 ; : No reader function for tag js user 
 clj꞉user꞉> 
+#<SciVar@36daf97e: 
+  #object[sci.impl.fns$fun$arity_0__7874 0xa7f89b1 "sci.impl.fns$fun$arity_0__7874@a7f89b1"]>
+
+clj꞉user꞉> 
