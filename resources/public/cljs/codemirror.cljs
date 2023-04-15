@@ -1,6 +1,4 @@
-(require '[clojure.string :as str]
-         '[reagent.core :as r]
-         '[reagent.dom :as rdom])
+(require '[clojure.string :as str])
 
 (declare cm)
 
