@@ -31,8 +31,6 @@
          reverse
          (apply str))))
 
-(form-at-cursor (reverse (take 18 "(map inc (range 8)")))
-
 (defn eval-at-cursor [viewer]
   (let [cursor-pos (some-> cm .-state .-selection .-main .-head)
         code (first (str/split (str (some-> cm .-state .-doc str)) #" => "))]
