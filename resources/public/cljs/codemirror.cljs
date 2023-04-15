@@ -88,38 +88,3 @@
                             :parent (js/document.querySelector "#app")})))
 
 (set! (.-cm_instance js/globalThis) cm)
-
-
-
-(let [code "(map inc (range 8)"
-      cursor-pos 18
-      s '(\space \c \n \i \space \p \a \m \()
-      open-parens 1
-      closed-parens 1]
-  [(rest s)
-   (inc open-parens) closed-parens]
-(drop (count s) code)
-  )
-
-;; god dammit this doesn't work and I have no idea why!
-;; I stepped through it (above) and it works - 
-;; output is `(\( \r \a \n \g \e \space \8 \))`
-;; but in the loop (below), it gives the empty list.
-;; figure this out tomorrow
-
-(let [code "(map inc (range 8)"
-      cursor-pos 18]
-  (loop [s (reverse (take cursor-pos code))
-         open-parens 0
-         closed-parens 0]
-    (cond 
-      (= open-parens closed-parens) 
-      (drop (count s) code)
-      
-      (= \) (first s)) (recur (rest s) open-parens (inc closed-parens))
-      (= \( (first s)) (recur (rest s) (inc open-parens) closed-parens)
-      :else (recur (rest s) open-parens closed-parens))
-
-    
-    ))
-
