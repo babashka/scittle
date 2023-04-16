@@ -105,13 +105,20 @@
   (.of js/cv.keymap
        (clj->js  [{:key (str "Alt-Enter")
                    :run #(eval-cell %)}
-                  {:key  "Mod-Enter"
+                  {:key "Mod-Enter"
                    :run #(eval-top-level %)}
                   {:key "Shift-Enter"
                    :run #(eval-at-cursor %)}
-                  {:key "Escape" :run clear-eval}
-                  {:key "ArrowLeft" :run clear-eval}
-                  {:key "ArrowRight" :run clear-eval}])))
+                  {:key "Escape"
+                   :run clear-eval}
+                  {:key "ArrowLeft"
+                   :run clear-eval}
+                  {:key "ArrowRight"
+                   :run clear-eval}
+                  {:key "ArrowUp"
+                   :run clear-eval}
+                  {:key "ArrowDown"
+                   :run clear-eval}])))
 
 (def cm
   (let [doc "(def n 7)

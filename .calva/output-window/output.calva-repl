@@ -1008,3 +1008,36 @@ clj꞉user꞉> 
 "(defn t [] (map inc (range n)))"
 
 clj꞉user꞉> 
+nil
+
+clj꞉user꞉> 
+#<SciVar@3747c28b: 
+  #object[sci.impl.vars.SciUnbound 0x4509916e "Unbound: #'user/cm"]>
+
+clj꞉user꞉> 
+; : Could not resolve symbol: js/scittle.core.eval_string user 
+clj꞉user꞉> 
+#<SciVar@6011ef44: #<Atom@5ba73157: "">>
+
+clj꞉user꞉> 
+#<SciVar@f3138b6: #<Atom@610832ab: nil>>
+
+clj꞉user꞉> 
+; : No reader function for tag js user 
+clj꞉user꞉> 
+#<SciVar@7eff9d7d: 
+  #object[sci.impl.fns$fun$arity_2__7886 0x6e33f30a "sci.impl.fns$fun$arity_2__7886@6e33f30a"]>
+
+clj꞉user꞉> 
+#<SciVar@7d35902f: 
+  #object[sci.impl.fns$fun$arity_1__7879 0x7dd886a0 "sci.impl.fns$fun$arity_1__7879@7dd886a0"]>
+
+clj꞉user꞉> 
+#<SciVar@4dd7b45f: 
+  #object[sci.impl.fns$fun$arity_1__7879 0x3e87839f "sci.impl.fns$fun$arity_1__7879@3e87839f"]>
+
+clj꞉user꞉> 
+#<SciVar@4570d90e: 
+  #object[sci.impl.fns$fun$arity_1__7879 0x4bb628a2 "sci.impl.fns$fun$arity_1__7879@4bb628a2"]>
+
+clj꞉user꞉> 
