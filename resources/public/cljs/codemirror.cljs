@@ -61,16 +61,15 @@
   true)
 
 (defn clear-eval []
-  (when (not= "" @last-result)
-    (reset! last-result "")
-    (let [code (-> cm
-                   (some-> .-state .-doc str)
-                   str
-                   (str/split #" => ")
-                   first
-                   (str @eval-tail))
-          cursor-pos (some-> cm .-state .-selection .-main .-head)]
-      (update-editor! code (min cursor-pos (count code))))))
+  (let [code       (some-> cm .-state .-doc str)
+        cursor-pos (some-> cm .-state .-selection .-main .-head)
+        result     @last-result
+        splits     (str/split code #" => ")]
+     (when (not= "" @last-result)
+       (update-editor! (str (first splits) (subs (last splits) (count (str (:result result))))) 
+                      cursor-pos)
+       (reset! last-result "")
+       (reset! eval-tail ""))))
 
 (def extension
   (.of js/cv.keymap
@@ -85,7 +84,10 @@
                   {:key "ArrowRight" :run clear-eval}])))
 
 (def cm
-  (let [doc "(map inc (range 8))"]
+  (let [doc "(def n 7)
+
+(defn t []
+  (map inc (range n)))"]
     (js/cm.EditorView. #js {:doc doc
                             :extensions #js [js/cm.basicSetup, (js/lc.clojure), (.highest js/cs.Prec extension)]
                             :parent (js/document.querySelector "#app")})))
@@ -93,6 +95,8 @@
 (set! (.-cm_instance js/globalThis) cm)
 
 ;; what is top-level, anyway?
+
+(def u 7)
 
 (defn t []
   (map inc (range 8)))
@@ -107,3 +111,5 @@
 
 ;; pretty simple, actually.
 ;; the contents of the cell are a series of forms.
+;; evaluate the last one! 
+;; that is, before the cursor

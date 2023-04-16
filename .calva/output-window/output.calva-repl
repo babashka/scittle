@@ -417,3 +417,74 @@ clj꞉user꞉> 
   #object[sci.impl.fns$fun$arity_0__7874 0xa7f89b1 "sci.impl.fns$fun$arity_0__7874@a7f89b1"]>
 
 clj꞉user꞉> 
+; : java.lang.String cannot be cast to java.util.regex.Pattern user 
+clj꞉user꞉> 
+["(def u 7)" "#'user/u\n\n(defn t []\n  (map in" "c (range 8)))"]
+
+clj꞉user꞉> 
+"[\"(def u 7)\" \"\\n\\n(defn t []\\n  (map in\" \"c (range 8)))\"]"
+
+clj꞉user꞉> 
+["(def u 7)" "#'user/u\n\n(defn t []\n  (map in" "c (range 8)))"]
+
+clj꞉user꞉> 
+"(def u 7) => #'user/u\n\n(defn t []\n  (map in => c (range 8)))"
+
+clj꞉user꞉> 
+["(def u 7)" "#'user/u\n\n(defn t []\n  (map in" "c (range 8)))"]
+
+clj꞉user꞉> 
+("(def u 7)" "#'user/u\n\n(defn t []\n  (map in" "c (range 8)))")
+
+clj꞉user꞉> 
+"#'user/u\n\n(defn t []\n  (map in"
+
+clj꞉user꞉> 
+["(def u 7)" "#'user/u\n\n(defn t []\n  (map inc (range 8)))"]
+
+clj꞉user꞉> 
+("(def u 7)" "#'user/u\n\n(defn t []\n  (map inc (range 8)))")
+
+clj꞉user꞉> 
+"#'user/u\n\n(defn t []\n  (map inc (range 8)))"
+
+clj꞉user꞉> 
+["(def u 7)" "#'user/u\n\n(defn t []\n  (map inc (range 8)))"]
+
+clj꞉user꞉> 
+"[\"(def u 7)\" \"\\n\\n(defn t []\\n  (map inc (range 8)))\"]"
+
+clj꞉user꞉> 
+["(def u 7)" "#'user/u\n\n(defn t []\n  (map inc (range 8)))"]
+
+clj꞉user꞉> 
+"\n\n(defn t []\n  (map inc (range 8)))"
+
+clj꞉user꞉> 
+" => "
+
+clj꞉user꞉> 
+"\n\n(defn t []\n  (map inc (range 8)))"
+
+clj꞉user꞉> 
+"[\"(def u 7)\" \"\\n\\n(defn t []\\n  (map inc (range 8)))\"]"
+
+clj꞉user꞉> 
+["(def u 7)" "#'user/u\n\n(defn t []\n  (map inc (range 8)))"]
+
+clj꞉user꞉> 
+["(def u 7)" "#'user/u\n\n(defn t []\n  (map inc (range 8)))"]
+
+clj꞉user꞉> 
+["(def u 7)" "#'user/u\n\n(defn t []\n  (map inc (range 8)))"]
+
+clj꞉user꞉> 
+"\n\n(defn t []\n  (map inc (range 8)))"
+
+clj꞉user꞉> 
+"(def u 7)\n\n(defn t []\n  (map inc (range 8)))"
+
+clj꞉user꞉> 
+"(def u 7)\n\n(defn t []\n  (map inc (range 8)))"
+
+clj꞉user꞉> 
