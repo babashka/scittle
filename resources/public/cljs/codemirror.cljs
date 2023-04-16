@@ -14,7 +14,7 @@
 (defn update-editor! [text cursor-pos]
   (let [end (count (some-> cm .-state .-doc str))]
     (.dispatch cm #js{:changes #js{:from 0 :to end :insert text}
-                            :selection #js{:anchor cursor-pos :head cursor-pos}})))
+                      :selection #js{:anchor cursor-pos :head cursor-pos}})))
 
 (defn parse-char [level pos]
   (case pos
@@ -45,10 +45,40 @@
     (.dispatch cm #js{:selection #js{:anchor cursor-pos :head   cursor-pos}}))
   true)
 
+(defn code-str [s]
+  (str (rest (read-string (str "(do " s ")")))))
+
+(defn code-seq [s]
+  (map str (rest (read-string (str "(do " s ")")))))
+
+;; but we really want to find the center points, not the start points.
+
+(defn find-center [[start s]]
+  [(+ start (int (/ (count s) 2))) s])
+
+;; then just pick the one with the closest center point to the cursor,
+;; and evaluate it!
+
+(defn abs [v]
+  (if (neg? v) (- v) v))
+
+(defn top-level [s pos]
+  (first (nfirst
+          (sort-by #(abs (- pos (first %)))
+                   (map find-center
+                        (map vector
+                             (map #(str/last-index-of (code-str s) %) (code-seq s))
+                             (code-seq s)))))))
+
 (defn eval-top-level [viewer]
-  (let [region (str "(do " (.-doc (.-state viewer)) " )")
-        region (if (nil? region) nil (eval-string region))]
-    (if (nil? region) nil (reset! last-result region)))
+  (let [code (some-> cm .-state .-doc str)
+        cursor-pos (some-> cm .-state .-selection .-main .-head)
+        result (reset! last-result (eval-string (top-level code cursor-pos)))]
+    (update-editor! (str (subs code 0 cursor-pos)
+                         (when-not (= "" (:result @last-result)) " => ")
+                         (:result result)
+                         (subs code cursor-pos))
+                    cursor-pos))
   true)
 
 (defn eval-cell [viewer]
@@ -65,11 +95,11 @@
         cursor-pos (some-> cm .-state .-selection .-main .-head)
         result     @last-result
         splits     (str/split code #" => ")]
-     (when (not= "" @last-result)
-       (update-editor! (str (first splits) (subs (last splits) (count (str (:result result))))) 
+    (when (not= "" @last-result)
+      (update-editor! (str (first splits) (subs (last splits) (count (str (:result result)))))
                       cursor-pos)
-       (reset! last-result "")
-       (reset! eval-tail ""))))
+      (reset! last-result "")
+      (reset! eval-tail ""))))
 
 (def extension
   (.of js/cv.keymap
@@ -86,30 +116,10 @@
 (def cm
   (let [doc "(def n 7)
 
-(defn t []
+(defn r []
   (map inc (range n)))"]
     (js/cm.EditorView. #js {:doc doc
                             :extensions #js [js/cm.basicSetup, (js/lc.clojure), (.highest js/cs.Prec extension)]
                             :parent (js/document.querySelector "#app")})))
 
 (set! (.-cm_instance js/globalThis) cm)
-
-;; what is top-level, anyway?
-
-(def u 7)
-
-(defn t []
-  (map inc (range 8)))
-
-;; ah, Peter from Calva to the rescue!
-;; > Calva does not check the contents of the form in order to 
-;; determine it as a top-level forms: 
-;; *all forms not enclosed in any other form are top level forms*.
-
-;; so there we have it! 
-;; we parse until we are not enclosed in a form.
-
-;; pretty simple, actually.
-;; the contents of the cell are a series of forms.
-;; evaluate the last one! 
-;; that is, before the cursor

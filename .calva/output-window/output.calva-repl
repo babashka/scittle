@@ -488,3 +488,523 @@ clj꞉user꞉> 
 "(def u 7)\n\n(defn t []\n  (map inc (range 8)))"
 
 clj꞉user꞉> 
+#<SciVar@2a2cfbdf: "(def n 7)\n\n(defn t []\n  (map inc (range n)))">
+
+clj꞉user꞉> 
+(def n 7)
+
+clj꞉user꞉> 
+(def n 7)
+
+clj꞉user꞉> 
+(def n 7)
+
+clj꞉user꞉> 
+; : count not supported on this type: Character user 
+clj꞉user꞉> 
+(def n 7)
+
+clj꞉user꞉> 
+"(def n 7)"
+
+clj꞉user꞉> 
+"\n\n(defn t []\n  (map inc (range n)))"
+
+clj꞉user꞉> 
+"(defn t []\n  (map inc (range n)))"
+
+clj꞉user꞉> 
+#<SciVar@1987336d: 
+  #object[sci.impl.fns$fun$arity_1__7879 0x5abce9fb "sci.impl.fns$fun$arity_1__7879@5abce9fb"]>
+
+clj꞉user꞉> 
+"(defn t []\n  (map inc (range n)))"
+
+clj꞉user꞉> 
+#<SciVar@2a2cfbdf: "(def n 7)\n\n(defn t []\n  (map inc (range n)))">
+
+clj꞉user꞉> 
+"(def n 7)\n\n(defn t []\n  (map inc (range n)))"
+
+clj꞉user꞉> 
+#<SciVar@6b2b5225: 3>
+
+clj꞉user꞉> 
+3
+
+clj꞉user꞉> 
+#<SciVar@1987336d: 
+  #object[sci.impl.fns$fun$arity_1__7879 0x13741ba4 "sci.impl.fns$fun$arity_1__7879@13741ba4"]>
+
+clj꞉user꞉> 
+#<SciVar@2a2cfbdf: "(def n 7)\n\n(defn t []\n  (map inc (range n)))">
+
+clj꞉user꞉> 
+(do (def n 7) (defn t [] (map inc (range n))))
+
+clj꞉user꞉> 
+do
+
+clj꞉user꞉> 
+(def n 7)
+
+clj꞉user꞉> 
+3
+
+clj꞉user꞉> 
+((def n 7) (defn t [] (map inc (range n))))
+
+clj꞉user꞉> 
+\f
+
+clj꞉user꞉> 
+\n
+
+clj꞉user꞉> 
+\d
+
+clj꞉user꞉> 
+\space
+
+clj꞉user꞉> 
+\t
+
+clj꞉user꞉> 
+\t
+
+clj꞉user꞉> 
+((def n 7) (defn t [] (map inc (range n))))
+
+clj꞉user꞉> 
+\t
+
+clj꞉user꞉> 
+#<SciVar@6b2b5225: 17>
+
+clj꞉user꞉> 
+((def n 7) (defn t [] (map inc (range n))))
+
+clj꞉user꞉> 
+""
+
+clj꞉user꞉> 
+" t"
+
+clj꞉user꞉> 
+"(def n 7)\n\n(defn t []\n  (map inc (range n)))"
+
+clj꞉user꞉> 
+" t"
+
+clj꞉user꞉> 
+()
+
+clj꞉user꞉> 
+()
+
+clj꞉user꞉> 
+" t"
+
+clj꞉user꞉> 
+; : Don't know how to create ISeq from: java.lang.Character user 
+clj꞉user꞉> 
+()
+
+clj꞉user꞉> 
+(\space \t)
+
+clj꞉user꞉> 
+"(def n 7)\n\n(defn t []\n  (map inc (range n)))"
+
+clj꞉user꞉> 
+((def n 7) (defn t [] (map inc (range n))))
+
+clj꞉user꞉> 
+(def n 7)
+
+clj꞉user꞉> 
+0
+
+clj꞉user꞉> 
+((def n 7) (defn t [] (map inc (range n))))
+
+clj꞉user꞉> 
+nil
+
+clj꞉user꞉> 
+nil
+
+clj꞉user꞉> 
+"(def n 7)\n\n(defn t []\n  (map inc (range n)))"
+
+clj꞉user꞉> 
+()
+
+clj꞉user꞉> 
+(\( \d \e \f \space \n \space \7 \) \newline)
+
+clj꞉user꞉> 
+(\n
+ \space
+ \7
+ \)
+ \newline
+ \newline
+ \(
+ \d
+ \e
+ \f
+ \n
+ \space
+ \t
+ \space
+ \[
+ \]
+ \newline
+ \space
+ \space
+ \(
+ \m
+ \a
+ \p
+ \space
+ \i
+ \n
+ \c
+ \space
+ \(
+ \r
+ \a
+ \n
+ \g
+ \e
+ \space
+ \n
+ \)
+ \)
+ \))
+
+clj꞉user꞉> 
+(\)
+ \newline
+ \newline
+ \(
+ \d
+ \e
+ \f
+ \n
+ \space
+ \t
+ \space
+ \[
+ \]
+ \newline
+ \space
+ \space
+ \(
+ \m
+ \a
+ \p
+ \space
+ \i
+ \n
+ \c
+ \space
+ \(
+ \r
+ \a
+ \n
+ \g
+ \e
+ \space
+ \n
+ \)
+ \)
+ \))
+
+clj꞉user꞉> 
+(\(
+ \d
+ \e
+ \f
+ \space
+ \n
+ \space
+ \7
+ \)
+ \newline
+ \newline
+ \(
+ \d
+ \e
+ \f
+ \n
+ \space
+ \t
+ \space
+ \[
+ \]
+ \newline
+ \space
+ \space
+ \(
+ \m
+ \a
+ \p
+ \space
+ \i
+ \n
+ \c
+ \space
+ \(
+ \r
+ \a
+ \n
+ \g
+ \e
+ \space
+ \n
+ \)
+ \)
+ \))
+
+clj꞉user꞉> 
+(\(
+ \d
+ \e
+ \f
+ \space
+ \n
+ \space
+ \7
+ \)
+ \newline
+ \newline
+ \(
+ \d
+ \e
+ \f
+ \n
+ \space
+ \t
+ \space
+ \[
+ \]
+ \newline
+ \space
+ \space
+ \(
+ \m
+ \a
+ \p
+ \space
+ \i
+ \n
+ \c
+ \space
+ \(
+ \r
+ \a
+ \n
+ \g
+ \e
+ \space
+ \n
+ \)
+ \)
+ \))
+
+clj꞉user꞉> 
+(\)
+ \newline
+ \newline
+ \(
+ \d
+ \e
+ \f
+ \n
+ \space
+ \t
+ \space
+ \[
+ \]
+ \newline
+ \space
+ \space
+ \(
+ \m
+ \a
+ \p
+ \space
+ \i
+ \n
+ \c
+ \space
+ \(
+ \r
+ \a
+ \n
+ \g
+ \e
+ \space
+ \n
+ \)
+ \)
+ \))
+
+clj꞉user꞉> 
+(\) \) \))
+
+clj꞉user꞉> 
+nil
+
+clj꞉user꞉> 
+"(def n 7)\n\n(defn t []\n  (map inc (range n)))"
+
+clj꞉user꞉> 
+((def n 7) (defn t [] (map inc (range n))))
+
+clj꞉user꞉> 
+"((def n 7) (defn t [] (map inc (range n))))"
+
+clj꞉user꞉> 
+#<SciVar@4dd7b45f: "((def n 7) (defn t [] (map inc (range n))))">
+
+clj꞉user꞉> 
+1
+
+clj꞉user꞉> 
+"(def n 7)"
+
+clj꞉user꞉> 
+"((def n 7) (defn t [] (map inc (range n))))"
+
+clj꞉user꞉> 
+((def n 7) (defn t [] (map inc (range n))))
+
+clj꞉user꞉> 
+(defn t [] (map inc (range n)))
+
+clj꞉user꞉> 
+("(def n 7)" "(defn t [] (map inc (range n)))")
+
+clj꞉user꞉> 
+#<SciVar@4570d90e: ("(def n 7)" "(defn t [] (map inc (range n)))")>
+
+clj꞉user꞉> 
+("(def n 7)" "(defn t [] (map inc (range n)))")
+
+clj꞉user꞉> 
+"(defn t [] (map inc (range n)))"
+
+clj꞉user꞉> 
+11
+
+clj꞉user꞉> 
+(1 11)
+
+clj꞉user꞉> 
+{"(def n 7)" 1, "(defn t [] (map inc (range n)))" 11}
+
+clj꞉user꞉> 
+{1 "(def n 7)", 11 "(defn t [] (map inc (range n)))"}
+
+clj꞉user꞉> 
+([1 "(def n 7)"] [11 "(defn t [] (map inc (range n)))"])
+
+clj꞉user꞉> 
+; : Could not resolve symbol: s user 
+clj꞉user꞉> 
+10/9
+
+clj꞉user꞉> 
+1
+
+clj꞉user꞉> 
+5
+
+clj꞉user꞉> 
+26
+
+clj꞉user꞉> 
+#<SciVar@27494622: 
+  #object[sci.impl.fns$fun$arity_1__7879 0x41fb547b "sci.impl.fns$fun$arity_1__7879@41fb547b"]>
+
+clj꞉user꞉> 
+(5 26)
+
+clj꞉user꞉> 
+#<SciVar@27494622: 
+  #object[sci.impl.fns$fun$arity_1__7879 0x39376fb1 "sci.impl.fns$fun$arity_1__7879@39376fb1"]>
+
+clj꞉user꞉> 
+([5 "(def n 7)"] [26 "(defn t [] (map inc (range n)))"])
+
+clj꞉user꞉> 
+#<SciVar@192f50c2: 
+  #object[sci.impl.fns$fun$arity_2__7886 0x7f499d1f "sci.impl.fns$fun$arity_2__7886@7f499d1f"]>
+
+clj꞉user꞉> 
+([26 "(defn t [] (map inc (range n)))"] [5 "(def n 7)"])
+
+clj꞉user꞉> 
+([26 "(defn t [] (map inc (range n)))"] [5 "(def n 7)"])
+
+clj꞉user꞉> 
+([26 "(defn t [] (map inc (range n)))"] [5 "(def n 7)"])
+
+clj꞉user꞉> 
+([26 "(defn t [] (map inc (range n)))"] [5 "(def n 7)"])
+
+clj꞉user꞉> 
+-25
+
+clj꞉user꞉> 
+25
+
+clj꞉user꞉> 
+#<SciVar@192f50c2: 
+  #object[sci.impl.fns$fun$arity_2__7886 0x6c44d57b "sci.impl.fns$fun$arity_2__7886@6c44d57b"]>
+
+clj꞉user꞉> 
+([26 "(defn t [] (map inc (range n)))"] [5 "(def n 7)"])
+
+clj꞉user꞉> 
+([5 "(def n 7)"] [26 "(defn t [] (map inc (range n)))"])
+
+clj꞉user꞉> 
+#<SciVar@192f50c2: 
+  #object[sci.impl.fns$fun$arity_2__7886 0x7c392ec9 "sci.impl.fns$fun$arity_2__7886@7c392ec9"]>
+
+clj꞉user꞉> 
+[5 "(def n 7)"]
+
+clj꞉user꞉> 
+#<SciVar@192f50c2: 
+  #object[sci.impl.fns$fun$arity_2__7886 0x2c0e8a15 "sci.impl.fns$fun$arity_2__7886@2c0e8a15"]>
+
+clj꞉user꞉> 
+("(def n 7)")
+
+clj꞉user꞉> 
+#<SciVar@192f50c2: 
+  #object[sci.impl.fns$fun$arity_2__7886 0x56770638 "sci.impl.fns$fun$arity_2__7886@56770638"]>
+
+clj꞉user꞉> 
+"(def n 7)"
+
+clj꞉user꞉> 
+#<SciVar@4570d90e: 
+  #object[sci.impl.fns$fun$arity_1__7879 0x489acd41 "sci.impl.fns$fun$arity_1__7879@489acd41"]>
+
+clj꞉user꞉> 
+#<SciVar@192f50c2: 
+  #object[sci.impl.fns$fun$arity_2__7886 0x408950ad "sci.impl.fns$fun$arity_2__7886@408950ad"]>
+
+clj꞉user꞉> 
+"(def n 7)"
+
+clj꞉user꞉> 
+"(defn t [] (map inc (range n)))"
+
+clj꞉user꞉> 
