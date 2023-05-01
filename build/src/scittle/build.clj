@@ -43,9 +43,7 @@
              feature-configs))
       cmd')))
 
-(defn build
-  "Build scittle shadow builds using clojure cmd and commandline args. Features on
-  classpath are automatically added"
+(defn- build*
   [cmd args]
   (let [building-outside-scittle? (not (fs/exists? "shadow-cljs.edn"))
         scittle-dir (when building-outside-scittle?
@@ -61,9 +59,14 @@
     (when building-outside-scittle?
       (fs/delete "shadow-cljs.edn"))))
 
-(defn release
-  "Compiles release build."
-  [args & {:keys [wrap-cmd-fn] :or {wrap-cmd-fn identity}}]
-  (build (wrap-cmd-fn "-M -m shadow.cljs.devtools.cli --force-spawn release main")
-         args)
-  (run! fs/delete (fs/glob "lib" "**.map")))
+(defn build
+  "Build scittle shadow builds using clojure cmd and commandline args. Features on
+  classpath are automatically added.
+
+  Options:
+
+  * :action - compile action, defaults to release, but may also be compile or watch"
+  [args & {:keys [wrap-cmd-fn action] :or {wrap-cmd-fn identity
+                                           action "release"}}]
+  (build* (wrap-cmd-fn (format "-M -m shadow.cljs.devtools.cli --force-spawn %s main" action))
+          args))
