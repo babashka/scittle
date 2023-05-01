@@ -1,0 +1,69 @@
+(ns scittle.build
+  "Provides bb tasks for building and releasing scittle"
+  (:require
+   [babashka.classpath :as classpath]
+   [babashka.fs :as fs]
+   [babashka.tasks :refer [clojure]]
+   [clojure.edn :as edn]
+   [clojure.string :as str]))
+
+(defn- feature-files
+  []
+  (filter fs/exists?
+          (map (fn [d]
+                 (fs/file d "scittle_features.edn"))
+               (classpath/split-classpath (classpath/get-classpath)))))
+
+(defn- read-configs
+  [files]
+  (->> files
+       (mapcat (comp edn/read-string slurp str))))
+
+(defn- build-cmd [cmd scittle-dir]
+  (let [files (feature-files)
+        feature-configs (read-configs files)
+        ;; Each ./src/scittle_features.edn has a ./deps.edn
+        feature-dirs (map (comp fs/parent fs/parent) files)
+        cmd' (if (seq files)
+               (format "-Sdeps '%s' %s"
+                       {:deps
+                        (merge (into {}
+                                     (map (fn [dir]
+                                            [(symbol (str (fs/file-name dir) "/deps"))
+                                             {:local/root (str dir)}])
+                                          feature-dirs))
+                               {'scittle/deps {:local/root scittle-dir}})}
+                       cmd)
+               cmd)]
+    (when (seq feature-configs)
+      (println "Building features:" (str/join ", " (map :name feature-configs)) "..."))
+    (if (seq feature-configs)
+      (apply str cmd'
+        (map (fn [m] (format " --config-merge '%s'" (pr-str (:shadow-config m))))
+             feature-configs))
+      cmd')))
+
+(defn build
+  "Build scittle shadow builds using clojure cmd and commandline args. Features on
+  classpath are automatically added"
+  [cmd args]
+  (let [building-outside-scittle? (not (fs/exists? "shadow-cljs.edn"))
+        scittle-dir (when building-outside-scittle?
+                  (->> (classpath/get-classpath)
+                       classpath/split-classpath
+                       ;; Pull out scittle from local/root or git/url
+                       (some #(when (re-find #"(scittle/[0-9a-f]+|scittle)/src" %) %))
+                       fs/parent))]
+    (when building-outside-scittle?
+      (fs/copy (fs/file scittle-dir "shadow-cljs.edn") "shadow-cljs.edn"))
+    (apply clojure {:extra-env {"SCI_ELIDE_VARS" "true"}}
+           (build-cmd cmd (str scittle-dir)) args)
+    (when building-outside-scittle?
+      (fs/delete "shadow-cljs.edn"))))
+
+(defn release
+  "Compiles release build."
+  [args & {:keys [wrap-cmd-fn] :or {wrap-cmd-fn identity}}]
+  (build (wrap-cmd-fn "-M -m shadow.cljs.devtools.cli --force-spawn release main")
+         args)
+  (run! fs/delete (fs/glob "lib" "**.map")))

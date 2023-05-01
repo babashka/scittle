@@ -2,10 +2,13 @@
         #_{:local/root "../sci.nrepl"}
         {:git/sha "2f8a9ed2d39a1b09d2b4d34d95494b56468f4a23"}
         io.github.babashka/http-server
-        {:git/sha "b38c1f16ad2c618adae2c3b102a5520c261a7dd3"}}
+        {:git/sha "b38c1f16ad2c618adae2c3b102a5520c261a7dd3"}
+        io.github.scittle/build
+        {:local/root "build"}}
 
  :tasks
- {:requires ([babashka.fs :as fs]
+ {:requires ([scittle.build :as build]
+             [babashka.fs :as fs]
              [cheshire.core :as json]
              [babashka.process :as p :refer [process]])
 
@@ -34,7 +37,8 @@
                  (deref (promise)))}
 
   prod {:doc "Builds production artifacts."
-        :task (clojure {:extra-env {"SCI_ELIDE_VARS" "true"}}
+        :task (build/release *command-line-args* #_{:wrap-cmd-fn nil #_wrap-cmd})
+        #_(clojure {:extra-env {"SCI_ELIDE_VARS" "true"}}
                        "-M:dev -m shadow.cljs.devtools.cli release main")}
 
   dist {:doc "Prepare dist folder for npm package"

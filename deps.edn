@@ -2,6 +2,7 @@
 
  :deps
  {org.clojure/clojure {:mvn/version "1.11.1"}
+  thheller/shadow-cljs {:mvn/version "2.20.15"}
   org.babashka/sci {:git/url "https://github.com/babashka/sci"
                     :git/sha "a85c488ee45700bcbe67bc01ab1c27407fff7887"}
   #_{:local/root "../babashka/sci"}
@@ -23,4 +24,4 @@
  :aliases
  {:dev
   {:extra-paths ["dev"]
-   :extra-deps  {thheller/shadow-cljs {:mvn/version "2.20.15"}}}}}
+   :extra-deps  {}}}}
