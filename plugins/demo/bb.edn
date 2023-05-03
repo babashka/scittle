@@ -11,8 +11,7 @@
          :requires ([babashka.http-server :as http])
          :task (do (http/serve {:port 1341 :dir "resources/public"})
                    (println "Serving static assets at http://localhost:1341"))}
-  -dev {:depends [watch serve]
-        :parallel true}
+  -dev {:depends [watch serve]}
   dev {:doc "Run compilation in watch mode and start http server"
        :task (do (run '-dev {:parallel true})
                  (deref (promise)))}
