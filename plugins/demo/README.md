@@ -20,7 +20,7 @@ Available plugins are in the `plugins` directory inside the top level directory 
 
 Writing a plugin involves writing
 
-- SCI configuration (this can be shared with users in the [sci.configs](https://github.com/babashka/sci.configs) project
+- SCI configuration (this can be shared via the [sci.configs](https://github.com/babashka/sci.configs) project too)
 - Adding a `scittle_plugin.edn` file on the plugin's classpath (e.g. in the `src` directory). This EDN file contains:
   - `:name`, name of the plugin
   - `:namespaces`: the namespaces exposed to SCI
