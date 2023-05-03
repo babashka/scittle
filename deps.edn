@@ -1,5 +1,4 @@
 {:paths ["src" "resources"]
-
  :deps
  {org.clojure/clojure {:mvn/version "1.11.1"}
   thheller/shadow-cljs {:mvn/version "2.20.15"}
@@ -20,7 +19,7 @@
   io.github.babashka/sci.configs
   #_{:local/root "/Users/borkdude/dev/sci.configs"}
   {:git/url "https://github.com/babashka/sci.configs"
-   :git/sha "bf8d209e4aeabb92cb1be04e3d8f789583d5f449"}}
+   :git/sha "33bd51e53700b224b4cb5bda59eb21b62f962745"}}
  :aliases
  {:dev
   {:extra-paths ["dev"]

@@ -11,7 +11,7 @@
   []
   (filter fs/exists?
           (map (fn [d]
-                 (fs/file d "scittle_features.edn"))
+                 (fs/file d "scittle_plugin.edn"))
                (classpath/split-classpath (classpath/get-classpath)))))
 
 (defn- read-configs
@@ -21,8 +21,9 @@
 
 (defn- build-cmd [cmd scittle-dir]
   (let [files (feature-files)
+        _ (prn :files files)
         feature-configs (read-configs files)
-        ;; Each ./src/scittle_features.edn has a ./deps.edn
+        ;; Each ./src/scittle_plugin.edn has a ./deps.edn
         feature-dirs (map (comp fs/parent fs/parent) files)
         cmd' (if (seq files)
                (format "-Sdeps '%s' %s"
@@ -35,6 +36,7 @@
                                {'scittle/deps {:local/root scittle-dir}})}
                        cmd)
                cmd)]
+    (prn :cmd' cmd')
     (when (seq feature-configs)
       (println "Building features:" (str/join ", " (map :name feature-configs)) "..."))
     (if (seq feature-configs)
@@ -54,8 +56,8 @@
                        fs/parent))]
     (when building-outside-scittle?
       (fs/copy (fs/file scittle-dir "shadow-cljs.edn") "shadow-cljs.edn"))
-    (apply clojure {:extra-env {"SCI_ELIDE_VARS" "true"}}
-           (build-cmd cmd (str scittle-dir)) args)
+    (let [cmd (build-cmd cmd (str scittle-dir))]
+      (apply clojure {:extra-env {"SCI_ELIDE_VARS" "true"}} cmd args))
     (when building-outside-scittle?
       (fs/delete "shadow-cljs.edn"))))
 

@@ -1,0 +1,3 @@
+{:deps
+ {datascript/datascript {:mvn/version "1.3.12"}
+  io.github.babashka/sci.configs {:git/sha "33bd51e53700b224b4cb5bda59eb21b62f962745"}}}
