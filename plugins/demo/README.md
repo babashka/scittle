@@ -2,6 +2,8 @@
 
 A demo project of a custom scittle build.
 
+To produce release `.js` files, run: `bb release`.
+
 See:
 
 - `bb.edn` with
