@@ -1,0 +1,4 @@
+{:deps {acme/custom.scittle {:local/root "."}}
+ :tasks {:requires ([scittle.build :as build])
+         release {:task (build/build {})}}}
+x
