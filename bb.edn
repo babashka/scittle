@@ -2,10 +2,14 @@
         #_{:local/root "../sci.nrepl"}
         {:git/sha "2f8a9ed2d39a1b09d2b4d34d95494b56468f4a23"}
         io.github.babashka/http-server
-        {:git/sha "b38c1f16ad2c618adae2c3b102a5520c261a7dd3"}}
+        {:git/sha "b38c1f16ad2c618adae2c3b102a5520c261a7dd3"}
+        io.github.scittle/build
+        {:local/root "build"}
+        io.github.babashka/scittle.datascript {:local/root "plugins/datascript"}}
 
  :tasks
- {:requires ([babashka.fs :as fs]
+ {:requires ([scittle.build :as build]
+             [babashka.fs :as fs]
              [cheshire.core :as json]
              [babashka.process :as p :refer [process]])
 
@@ -15,8 +19,7 @@
                    (fs/delete-tree ".shadow-cljs"))}
 
   shadow:watch {:doc "Development build. Starts webserver and watches for changes."
-                :task (clojure {:extra-env {"SCI_ELIDE_VARS" "true"}}
-                       "-M:dev -m shadow.cljs.devtools.cli watch main")}
+                :task (build/build *command-line-args* {:action "watch"})}
 
   http-server {:doc "Starts http server for serving static files"
                :requires ([babashka.http-server :as http])
@@ -34,8 +37,7 @@
                  (deref (promise)))}
 
   prod {:doc "Builds production artifacts."
-        :task (clojure {:extra-env {"SCI_ELIDE_VARS" "true"}}
-                       "-M:dev -m shadow.cljs.devtools.cli release main")}
+        :task (build/build *command-line-args*)}
 
   dist {:doc "Prepare dist folder for npm package"
         :depends [prod]

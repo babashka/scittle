@@ -1,0 +1,20 @@
+{:deps {io.github.babashka/scittle.build {:local/root "../../build"}
+        ;; datascript plugin
+        io.github.babashka/scittle.datascript {:local/root "../../plugins/datascript"}
+        io.github.babashka/http-server
+        {:git/sha "b38c1f16ad2c618adae2c3b102a5520c261a7dd3"}}
+ :tasks
+ {:requires ([scittle.build :as build])
+  watch   {:doc "Watch build"
+           :task (build/build {:action "watch"})}
+  serve {:doc "Starts http server for serving static files"
+         :requires ([babashka.http-server :as http])
+         :task (do (http/serve {:port 1341 :dir "resources/public"})
+                   (println "Serving static assets at http://localhost:1341"))}
+  -dev {:depends [watch serve]
+        :parallel true}
+  dev {:doc "Run compilation in watch mode and start http server"
+       :task (do (run '-dev {:parallel true})
+                 (deref (promise)))}
+  release {:doc "Release build (advanced compiled JS)"
+           :task (build/build {})}}}
