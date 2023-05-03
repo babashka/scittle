@@ -1,5 +1,1 @@
-{:deps
- {io.github.babashka/scittle {:local/root "../.."}
-  io.github.babashka/scittle.build {:local/root "../../build"}
-  ;; datascript plugin
-  io.github.babashka/scittle.datascript {:local/root "../../plugins/datascript"}}}
+{:deps {io.github.babashka/scittle {:local/root "../.."}}}

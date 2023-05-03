@@ -21,7 +21,6 @@
 
 (defn- build-cmd [cmd scittle-dir]
   (let [files (feature-files)
-        _ (prn :files files)
         feature-configs (read-configs files)
         ;; Each ./src/scittle_plugin.edn has a ./deps.edn
         feature-dirs (map (comp fs/parent fs/parent) files)
@@ -36,7 +35,6 @@
                                {'scittle/deps {:local/root scittle-dir}})}
                        cmd)
                cmd)]
-    (prn :cmd' cmd')
     (when (seq feature-configs)
       (println "Building features:" (str/join ", " (map :name feature-configs)) "..."))
     (if (seq feature-configs)
@@ -46,7 +44,7 @@
       cmd')))
 
 (defn- build*
-  [cmd args]
+  [cmd]
   (let [building-outside-scittle? (not (fs/exists? "shadow-cljs.edn"))
         scittle-dir (when building-outside-scittle?
                   (->> (classpath/get-classpath)
@@ -57,7 +55,8 @@
     (when building-outside-scittle?
       (fs/copy (fs/file scittle-dir "shadow-cljs.edn") "shadow-cljs.edn"))
     (let [cmd (build-cmd cmd (str scittle-dir))]
-      (apply clojure {:extra-env {"SCI_ELIDE_VARS" "true"}} cmd args))
+      (println "> clojure" cmd)
+      (clojure {:extra-env {"SCI_ELIDE_VARS" "true"}} cmd))
     (when building-outside-scittle?
       (fs/delete "shadow-cljs.edn"))))
 
@@ -68,7 +67,5 @@
   Options:
 
   * :action - compile action, defaults to release, but may also be compile or watch"
-  [args & {:keys [wrap-cmd-fn action] :or {wrap-cmd-fn identity
-                                           action "release"}}]
-  (build* (wrap-cmd-fn (format "-M -m shadow.cljs.devtools.cli --force-spawn %s main" action))
-          args))
+  [{:keys [action] :or {action "release"}}]
+  (build* (format "-M -m shadow.cljs.devtools.cli --force-spawn %s main" action)))
