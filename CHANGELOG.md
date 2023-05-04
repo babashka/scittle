@@ -9,7 +9,7 @@
 - Upgrade `sci.configs` to `"33bd51e53700b224b4cb5bda59eb21b62f962745"`
 - Update nREPL implementation: implement `eldoc` (`info`, `lookup`) ([@benjamin-asdf](https://github.com/benjamin-asdf))
 
-## v0.5.14 (2023-01-05)
+## v0.6.15 (2023-01-05)
 
 - Fix destructuring in `defmethod` (by upgrading SCI)
 
