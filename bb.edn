@@ -4,8 +4,7 @@
         io.github.babashka/http-server
         {:git/sha "b38c1f16ad2c618adae2c3b102a5520c261a7dd3"}
         io.github.scittle/build
-        {:local/root "build"}
-        io.github.babashka/scittle.datascript {:local/root "plugins/datascript"}}
+        {:local/root "build"}}
 
  :tasks
  {:requires ([scittle.build :as build]
