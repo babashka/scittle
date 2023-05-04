@@ -94,16 +94,16 @@ To create a new NPM release:
 - Create Github release with updated links from `doc/links.md`
 - `bb gh-pages`
 
-To upgrade examples:
+<!-- To upgrade examples: -->
 
-```
-rg '0.0.1' --files-with-matches | xargs sed -i '' 's/0.0.6.15.1.0/g'
-bb release
-cd gh-pages
-git checkout -b v0.6.15
-git push --set-upstream origin v0.6.15
-git checkout gh-pages
-cd ..
-```
+<!-- ``` -->
+<!-- rg '0.0.1' --files-with-matches | xargs sed -i '' 's/0.0.6.15.1.0/g' -->
+<!-- bb release -->
+<!-- cd gh-pages -->
+<!-- git checkout -b v0.6.15 -->
+<!-- git push --set-upstream origin v0.6.15 -->
+<!-- git checkout gh-pages -->
+<!-- cd .. -->
+<!-- ``` -->
 
-Then make a new release on Github with the `v0.6.15` tag.
+<!-- Then make a new release on Github with the `v0.6.15` tag. -->
