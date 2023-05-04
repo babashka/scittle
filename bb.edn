@@ -36,7 +36,8 @@
                  (deref (promise)))}
 
   prod {:doc "Builds production artifacts."
-        :task (build/build *command-line-args*)}
+        :task (build/build {})
+        :depends [clean]}
 
   dist {:doc "Prepare dist folder for npm package"
         :depends [prod]
