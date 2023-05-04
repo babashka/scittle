@@ -2,7 +2,7 @@
 
 [Scittle](https://github.com/babashka/scittle): execute Clojure(Script) directly from browser script tags via SCI!
 
-## Unreleased
+## v0.6.15 (2023-05-04)
 
 - #58: build system for creating scittle distribution with custom libraries. See [plugins/demo](plugins/demo).
 - Use `window.location.hostname` for WebSocket connection instead of hardcoding `"localhost"` ([@pyrmont](https://github.com/pyrmont))
