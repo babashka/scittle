@@ -18,7 +18,8 @@
                    (fs/delete-tree ".shadow-cljs"))}
 
   shadow:watch {:doc "Development build. Starts webserver and watches for changes."
-                :task (build/build *command-line-args* {:action "watch"})}
+                :task (build/build {:action "watch"
+                                    :args *command-line-args*})}
 
   http-server {:doc "Starts http server for serving static files"
                :requires ([babashka.http-server :as http])
