@@ -6,7 +6,8 @@
             [sci.core :as sci]
             [sci.impl.unrestrict]
             [scittle.impl.common :refer [cljns]]
-            [scittle.impl.error :as error]))
+            [scittle.impl.error :as error]
+            [clojure.string :as str]))
 
 (set! sci.impl.unrestrict/*unrestricted* true)
 
@@ -65,15 +66,8 @@
 
 (defn- eval-script-tags* [script-tags]
   (when-let [tag (first script-tags)]
-    (if-let [text (not-empty (gobject/get tag "textContent"))]
-      (let [scittle-id (str (gensym "scittle-tag-"))]
-        (gobject/set tag "scittle_id" scittle-id)
-        (swap! !sci-ctx assoc-in [:src scittle-id] text)
-        (sci/binding [sci/file scittle-id]
-          (eval-string text))
-        (eval-script-tags* (rest script-tags)))
-      (let [src (.getAttribute tag "src")
-            req (js/XMLHttpRequest.)
+    (if-let [src (.getAttribute tag "src")]
+      (let [req (js/XMLHttpRequest.)
             _ (.open req "GET" src true)
             _ (gobject/set req "onload"
                            (fn [] (this-as this
@@ -84,7 +78,15 @@
                                       (sci/binding [sci/file src]
                                         (eval-string response)))
                                     (eval-script-tags* (rest script-tags)))))]
-        (.send req)))))
+        (.send req))
+      (if-let [text (not-empty (str/trim (gobject/get tag "textContent")))]
+        (let [scittle-id (str (gensym "scittle-tag-"))]
+          (gobject/set tag "scittle_id" scittle-id)
+          (swap! !sci-ctx assoc-in [:src scittle-id] text)
+          (sci/binding [sci/file scittle-id]
+            (eval-string text))
+          (eval-script-tags* (rest script-tags)))
+        (eval-script-tags* (rest script-tags))))))
 
 (defn ^:export eval-script-tags []
   (let [script-tags (js/document.querySelectorAll "script[type='application/x-scittle']")]
