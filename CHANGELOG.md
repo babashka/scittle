@@ -5,6 +5,7 @@
 ## Unreleased
 
 - [#69](https://github.com/babashka/babashka/issues/69): executing script tag with src + whitespace doesn't work
+- [#72](https://github.com/babashka/babashka/issues/72): add clojure 1.11 functions like `update-vals`
 
 ## v0.6.15 (2023-05-04)
 

@@ -28,8 +28,18 @@
   {'clojure.core
    {'time (sci/copy-var time cljns)
     'system-time (sci/copy-var system-time cljns)
-    'random-uuid random-uuid
-    'read-string (sci/copy-var read-string rns)}
+    'random-uuid (sci/copy-var random-uuid cljns)
+    'read-string (sci/copy-var read-string cljns)
+    'update-keys (sci/copy-var update-keys cljns)
+    'update-vals (sci/copy-var update-vals cljns)
+    'parse-boolean (sci/copy-var parse-boolean cljns)
+    'parse-double (sci/copy-var parse-double cljns)
+    'parse-long (sci/copy-var parse-long cljns)
+    'parse-uuid (sci/copy-var parse-uuid cljns)
+    'NaN? (sci/copy-var NaN? cljns)
+    'infinite? (sci/copy-var infinite? cljns)
+    'iteration (sci/copy-var iteration cljns)
+    'abs (sci/copy-var abs cljns)}
    'goog.object {'set gobject/set
                  'get gobject/get}
    'sci.core {'stacktrace sci/stacktrace
