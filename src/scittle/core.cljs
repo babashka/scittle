@@ -4,6 +4,7 @@
             [goog.object :as gobject]
             [goog.string]
             [sci.core :as sci]
+            [sci.ctx-store :as store]
             [sci.impl.unrestrict]
             [scittle.impl.common :refer [cljns]]
             [scittle.impl.error :as error]
@@ -45,12 +46,12 @@
    'sci.core {'stacktrace sci/stacktrace
               'format-stacktrace sci/format-stacktrace}})
 
-(def !sci-ctx
-  (atom (sci/init {:namespaces namespaces
+(store/reset-ctx!
+  (sci/init {:namespaces namespaces
                    :classes {'js js/globalThis
                              :allow :all
                              'Math js/Math}
-                   :ns-aliases {'clojure.pprint 'cljs.pprint}})))
+                   :ns-aliases {'clojure.pprint 'cljs.pprint}}))
 
 (def !last-ns (volatile! @sci/ns))
 
@@ -58,21 +59,21 @@
   (sci/binding [sci/ns @!last-ns]
     (let [rdr (sci/reader s)]
       (loop [res nil]
-        (let [form (sci/parse-next @!sci-ctx rdr)]
+        (let [form (sci/parse-next (store/get-ctx) rdr)]
           (if (= :sci.core/eof form)
             (do
               (vreset! !last-ns @sci/ns)
               res)
-            (recur (sci/eval-form @!sci-ctx form))))))))
+            (recur (sci/eval-form (store/get-ctx) form))))))))
 
 (defn ^:export eval-string [s]
   (try (-eval-string s)
        (catch :default e
-         (error/error-handler e (:src @!sci-ctx))
+         (error/error-handler e (:src (store/get-ctx)))
          (throw e))))
 
 (defn register-plugin! [_plug-in-name sci-opts]
-  (swap! !sci-ctx sci/merge-opts sci-opts))
+  (store/swap-ctx! sci/merge-opts sci-opts))
 
 (defn- eval-script-tags* [script-tags]
   (when-let [tag (first script-tags)]
@@ -84,7 +85,7 @@
                                     (let [response (gobject/get this "response")]
                                       (gobject/set tag "scittle_id" src)
                                       ;; save source for error messages
-                                      (swap! !sci-ctx assoc-in [:src src] response)
+                                      (store/swap-ctx! assoc-in [:src src] response)
                                       (sci/binding [sci/file src]
                                         (eval-string response)))
                                     (eval-script-tags* (rest script-tags)))))]
@@ -92,7 +93,7 @@
       (if-let [text (not-empty (str/trim (gobject/get tag "textContent")))]
         (let [scittle-id (str (gensym "scittle-tag-"))]
           (gobject/set tag "scittle_id" scittle-id)
-          (swap! !sci-ctx assoc-in [:src scittle-id] text)
+          (store/swap-ctx! assoc-in [:src scittle-id] text)
           (sci/binding [sci/file scittle-id]
             (eval-string text))
           (eval-script-tags* (rest script-tags)))

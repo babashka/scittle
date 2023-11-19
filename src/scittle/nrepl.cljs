@@ -1,9 +1,10 @@
 (ns scittle.nrepl
   (:require
    [clojure.edn :as edn]
+   [sci.ctx-store :as store]
    [sci.nrepl.completions :refer [completions]]
    [sci.nrepl.info :refer [info]]
-   [scittle.core :refer [!last-ns eval-string !sci-ctx]]))
+   [scittle.core :refer [!last-ns eval-string]]))
 
 (defn nrepl-websocket []
   (.-ws_nrepl js/window))
@@ -29,7 +30,7 @@
                           :status ["error" "done"]})))))
 
 (defn handle-nrepl-info [msg]
-  (let [info (info (assoc msg :ctx @!sci-ctx))]
+  (let [info (info (assoc msg :ctx (store/get-ctx)))]
     (nrepl-reply msg info)))
 
 (declare ops)
@@ -61,13 +62,13 @@
    :eldoc handle-nrepl-info
    :lookup handle-nrepl-info
    :describe handle-describe
-   :complete (fn [msg] (let [completions (completions (assoc msg :ctx @!sci-ctx))]
+   :complete (fn [msg] (let [completions (completions (assoc msg :ctx (store/get-ctx)))]
                          (nrepl-reply msg completions)))})
 
 (defn handle-nrepl-message [msg]
   (if-let [handler (ops (:op msg))]
     (handler msg)
-    (nrepl-reply (merge msg {:status ["error" "done"] :err "unkown-op"}) (assoc msg :ctx @!sci-ctx))))
+    (nrepl-reply (merge msg {:status ["error" "done"] :err "unkown-op"}) (assoc msg :ctx (store/get-ctx)))))
 
 (defn ws-url [host port path]
   (str "ws://" host ":" port "/" path))
