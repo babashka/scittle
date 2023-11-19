@@ -1,0 +1,9 @@
+[{:name scittle/hoplon
+  :namespaces [hoplon.core
+               hoplon.dom]
+  :js "./scittle.hoplon.js"
+  :shadow-config
+  {:modules
+   {:scittle.hoplon {:init-fn scittle.hoplon/init
+                     :depends-on #{:scittle :scittle.javelin}
+                     :entries [hoplon.core hoplon.goog]}}}}]

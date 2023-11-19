@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="/css/style.css">
+    <!-- <link rel="stylesheet" href="/css/style.css"> -->
     <script src="/js/scittle.js" type="application/javascript"></script>
-    <script src="/js/scittle.datascript.js" type="application/javascript"></script>
+    <script src="/js/scittle.javelin.js" type="application/javascript"></script>
+    <script src="/js/scittle.hoplon.js" type="application/javascript"></script>
     <script type="application/x-scittle">
-      (require '[datascript.core :as d])
-      (prn (ns-publics 'datascript.core))
+      (require '[hoplon.core :as h])
+      (require '[javelin.core :as j])
+
+(j/defc title "From Hoplon")
+(h/body 
+    (h/h1 (h/text "~{title}")))
+
     </script>
   </head>
   <body>
+    <h1>Hello Hoplon!</h1>
   </body>
 </html>
