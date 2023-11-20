@@ -7,7 +7,7 @@
   {:modules
    {:scittle.hoplon {:init-fn scittle.hoplon/init
                      :depends-on #{:scittle :scittle.javelin}
-                     :entries [hoplon.core hoplon.goog]}
+                     :entries [hoplon.core hoplon.dom]}
     :scittle.javelin {:init-fn scittle.javelin/init
                       :depends-on #{:scittle}
                       :entries [javelin.core]}}}}]
