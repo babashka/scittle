@@ -2,7 +2,7 @@
 
 A demo project of a custom scittle build.
 
-This demo project uses the `scittle.datascript` plugin which isn't part of the normal scittle distribution.
+This demo project uses the `scittle.javelin` and `scittle.hoplon` plugins which aren't part of the normal scittle distribution.
 
 To produce release `.js` files, run: `bb release`.
 
