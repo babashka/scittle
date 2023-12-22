@@ -69,7 +69,7 @@
 (defn handle-nrepl-message [msg]
   (if-let [handler (ops (:op msg))]
     (handler msg)
-    (nrepl-reply (merge msg {:status ["error" "done"] :err "unkown-op"}) msg)))
+    (nrepl-reply msg (merge msg {:status ["error" "done"] :err "unkown-op"}))))
 
 (defn ws-url [host port path]
   (str "ws://" host ":" port "/" path))
