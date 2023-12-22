@@ -13,7 +13,8 @@
   (.send (nrepl-websocket)
          (str
           (let [ns (or ns (str @!last-ns))]
-            (assoc payload :id id :session session :ns ns)))))
+            (-> (assoc payload :id id :session session :ns ns)
+                (dissoc :ctx))))))
 
 (defn handle-nrepl-eval [{:keys [code] :as msg}]
   (let [[kind val] (try [::success (eval-string code)]
@@ -68,7 +69,7 @@
 (defn handle-nrepl-message [msg]
   (if-let [handler (ops (:op msg))]
     (handler msg)
-    (nrepl-reply (merge msg {:status ["error" "done"] :err "unkown-op"}) (assoc msg :ctx (store/get-ctx)))))
+    (nrepl-reply (merge msg {:status ["error" "done"] :err "unkown-op"}) msg)))
 
 (defn ws-url [host port path]
   (str "ws://" host ":" port "/" path))
