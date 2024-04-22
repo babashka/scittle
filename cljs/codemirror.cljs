@@ -8,7 +8,6 @@
   (.of js/cv.keymap
        (clj->js [{:key "Mod-Enter"
                   :run (fn []
-                         (prn :hoeooo)
                          (eval-me))}
                  #_{:key (str modifier "-Enter")
                     :shift (partial eval-top-level on-result)
