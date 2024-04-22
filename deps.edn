@@ -19,7 +19,7 @@
   io.github.babashka/sci.configs
   #_{:local/root "/Users/borkdude/dev/sci.configs"}
   {:git/url "https://github.com/babashka/sci.configs"
-   :git/sha "08bab21643bc0c63a5b99c65193c9d24888270b7"}}
+   :git/sha "ffa88d796a3a2fe0a0fce332c6bf56f36b7c5cd7"}}
  :aliases
  {:dev
   {:extra-paths ["dev"]
