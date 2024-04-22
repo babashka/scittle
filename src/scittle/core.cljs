@@ -51,7 +51,8 @@
              :classes {'js js/globalThis
                        :allow :all
                        'Math js/Math}
-             :ns-aliases {'clojure.pprint 'cljs.pprint}}))
+             :ns-aliases {'clojure.pprint 'cljs.pprint}
+             :features #{:scittle :cljs}}))
 
 (def !last-ns (volatile! @sci/ns))
 
