@@ -8,14 +8,14 @@
 - [#72](https://github.com/babashka/babashka/issues/72): add clojure 1.11 functions like `update-vals`
 - #75: Support reader conditionals in source code
 
-## v0.6.15 (2023-05-04)
+## v0.6.16 (2023-05-04)
 
 - [#58](https://github.com/babashka/babashka/issues/58): build system for creating scittle distribution with custom libraries. See [plugins/demo](plugins/demo).
 - Use `window.location.hostname` for WebSocket connection instead of hardcoding `"localhost"` ([@pyrmont](https://github.com/pyrmont))
 - Upgrade `sci.configs` to `"33bd51e53700b224b4cb5bda59eb21b62f962745"`
 - Update nREPL implementation: implement `eldoc` (`info`, `lookup`) ([@benjamin-asdf](https://github.com/benjamin-asdf))
 
-## v0.6.15 (2023-01-05)
+## v0.6.16 (2023-01-05)
 
 - Fix destructuring in `defmethod` (by upgrading SCI)
 
