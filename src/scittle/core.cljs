@@ -12,6 +12,9 @@
 
 (set! sci.impl.unrestrict/*unrestricted* true)
 
+;; make document conditional
+(def ^js doc js/globalThis.document)
+
 (clojure.core/defmacro time
   "Evaluates expr and prints the time it took. Returns the value of expr."
   [expr]
@@ -101,7 +104,7 @@
         (eval-script-tags* (rest script-tags))))))
 
 (defn ^:export eval-script-tags []
-  (let [script-tags (js/document.querySelectorAll "script[type='application/x-scittle']")]
+  (let [script-tags (.querySelectorAll doc "script[type='application/x-scittle']")]
     (eval-script-tags* script-tags)))
 
 (def auto-load-disabled? (volatile! false))
@@ -113,9 +116,10 @@
   []
   (vreset! auto-load-disabled? true))
 
-(js/document.addEventListener
- "DOMContentLoaded"
- (fn [] (when-not @auto-load-disabled? (eval-script-tags))), false)
+(when doc
+  (.addEventListener doc
+   "DOMContentLoaded"
+   (fn [] (when-not @auto-load-disabled? (eval-script-tags))), false))
 
 (enable-console-print!)
 (sci/alter-var-root sci/print-fn (constantly *print-fn*))
