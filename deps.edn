@@ -15,7 +15,7 @@
   io.github.babashka/sci.nrepl
   #_{:local/root "../sci.nrepl"}
   {:git/url "https://github.com/babashka/sci.nrepl"
-   :git/sha "2f8a9ed2d39a1b09d2b4d34d95494b56468f4a23"}
+   :git/sha "75f379c685bbd58c3e23f531339eb144e104937d"}
   io.github.babashka/sci.configs
   #_{:local/root "/Users/borkdude/dev/sci.configs"}
   {:git/url "https://github.com/babashka/sci.configs"
