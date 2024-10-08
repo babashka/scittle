@@ -10,7 +10,7 @@
 <!-- - Create Github release with updated links from `doc/links.md` -->
 <!-- - `bb gh-pages` -->
 
-## v0.6.18 (2024-10-08)
+## v0.6.19 (2024-10-08)
 
 - Add `cljs.pprint/code-dispatch` and `cljs.pprint/with-pprint-dispatch`
 
