@@ -4,7 +4,6 @@
 
 <!-- To create a new NPM release: -->
 
-<!-- - Prepare version `package.json`, except patch (if anything should change here) -->
 <!-- - Run `bb npm-publish`: this will compile, bump patch version, create tag and and push to npm and Github -->
 <!-- - `bb replace-version 0.6.16 0.6.17` -->
 <!-- - Create Github release with updated links from `doc/links.md` -->
