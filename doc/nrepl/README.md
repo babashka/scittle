@@ -44,18 +44,6 @@ refreshes.
 
 ### CIDER
 
-Currently when connecting from CIDER, you need to use this snippet:
-
-``` elisp
-(cider-register-cljs-repl-type 'sci-js "(+ 1 2 3)")
-
-(defun mm/cider-connected-hook ()
-  (when (eq 'sci-js cider-cljs-repl-type)
-    (setq-local cider-show-error-buffer nil)
-    (cider-set-repl-type 'cljs)))
-
-(add-hook 'cider-connected-hook #'mm/cider-connected-hook)
-```
-
-Then choose `cider-connect-cljs`, select port `1339`, followed by the `sci-js`
-REPL type.
+Choose `cider-connect-cljs`, select port `1339`, followed by the `nbb` REPL
+type.  If you use multiple REPLs in your project, choose
+`sesman-link-with-buffer` to choose the right REPL for the right buffer.
