@@ -103,8 +103,10 @@
           (eval-script-tags* (rest script-tags)))
         (eval-script-tags* (rest script-tags))))))
 
-(defn ^:export eval-script-tags []
-  (let [script-tags (.querySelectorAll doc "script[type='application/x-scittle']")]
+(defn ^:export eval-script-tags [& script-tags]
+  (let [script-tags (or script-tags
+                        (.querySelectorAll
+                          doc "script[type='application/x-scittle']"))]
     (eval-script-tags* script-tags)))
 
 (def auto-load-disabled? (volatile! false))
