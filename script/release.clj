@@ -3,6 +3,8 @@
 (require '[babashka.fs :as fs]
          '[babashka.tasks :refer [shell]])
 
+(fs/create-dirs "gh-pages")
+
 (fs/copy "resources/public/index.html" "gh-pages"
          {:replace-existing true})
 
