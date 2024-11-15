@@ -9,6 +9,7 @@
 <!-- - Create Github release with updated links from `doc/links.md` -->
 <!-- - `bb gh-pages` -->
 
+- [#89](https://github.com/babashka/babashka/issues/89): allow `evaluate_script_tags` to specify individual scripts.
 - [#87](https://github.com/babashka/scittle/issues/87): prod build on fresh checkout fails
 
 ## v0.6.19 (2024-10-08)
