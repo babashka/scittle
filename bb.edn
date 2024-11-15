@@ -13,7 +13,7 @@
              [babashka.process :as p :refer [process]])
 
   clean {:doc "Start from clean slate."
-         :task (do (run! fs/delete (fs/list-dir (fs/file "resources" "public" "js") "**.*"))
+         :task (do (fs/delete-tree (fs/file "resources" "public" "js"))
                    (fs/delete-tree ".cpcache")
                    (fs/delete-tree ".shadow-cljs"))}
 
