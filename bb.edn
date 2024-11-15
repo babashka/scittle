@@ -13,9 +13,11 @@
              [babashka.process :as p :refer [process]])
 
   clean {:doc "Start from clean slate."
-         :task (do (run! fs/delete (fs/list-dir (fs/file "resources" "public" "js") "**.*"))
-                   (fs/delete-tree ".cpcache")
-                   (fs/delete-tree ".shadow-cljs"))}
+         :task (let [js-dir (fs/file "resources" "public" "js")]
+                 (when (fs/directory? js-dir)
+                   (run! fs/delete (fs/list-dir js-dir "**.*")))
+                 (fs/delete-tree ".cpcache")
+                 (fs/delete-tree ".shadow-cljs"))}
 
   shadow:watch {:doc "Development build. Starts webserver and watches for changes."
                 :task (build/build {:action "watch"
