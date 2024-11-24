@@ -9,6 +9,8 @@
 <!-- - Create Github release with updated links from `doc/links.md` -->
 <!-- - `bb gh-pages` -->
 
+## v0.6.20 (2024-11-24)
+
 - [#55](https://github.com/babashka/babashka/issues/55): create gh-pages dir before using.
 - [#89](https://github.com/babashka/babashka/issues/89): allow `evaluate_script_tags` to specify individual scripts.
 - [#87](https://github.com/babashka/scittle/issues/87): prod build on fresh checkout fails
