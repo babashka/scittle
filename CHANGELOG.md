@@ -15,28 +15,28 @@
 - [#89](https://github.com/babashka/babashka/issues/89): allow `evaluate_script_tags` to specify individual scripts.
 - [#87](https://github.com/babashka/scittle/issues/87): prod build on fresh checkout fails
 
-## v0.6.20 (2024-10-08)
+## v0.6.19 (2024-10-08)
 
 - Add `cljs.pprint/code-dispatch` and `cljs.pprint/with-pprint-dispatch`
 
-## v0.6.17 (2024-04-30)
+## v0.6.18 (2024-04-30)
 
 - [#77](https://github.com/babashka/babashka/issues/77): make dependency on browser (`js/document`) optional so scittle can run in webworkers, Node.js, etc.
 
-## v0.6.16 (2024-04-22)
+## v0.6.17 (2024-04-22)
 
 - [#69](https://github.com/babashka/babashka/issues/69): executing script tag with src + whitespace doesn't work
 - [#72](https://github.com/babashka/babashka/issues/72): add clojure 1.11 functions like `update-vals`
 - [#75](https://github.com/babashka/babashka/issues/75): Support reader conditionals in source code
 
-## v0.6.15 (2023-05-04)
+## v0.6.16 (2023-05-04)
 
 - [#58](https://github.com/babashka/babashka/issues/58): build system for creating scittle distribution with custom libraries. See [plugins/demo](plugins/demo).
 - Use `window.location.hostname` for WebSocket connection instead of hardcoding `"localhost"` ([@pyrmont](https://github.com/pyrmont))
 - Upgrade `sci.configs` to `"33bd51e53700b224b4cb5bda59eb21b62f962745"`
 - Update nREPL implementation: implement `eldoc` (`info`, `lookup`) ([@benjamin-asdf](https://github.com/benjamin-asdf))
 
-## v0.6.17 (2023-01-05)
+## v0.6.15 (2023-01-05)
 
 - Fix destructuring in `defmethod` (by upgrading SCI)
 

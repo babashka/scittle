@@ -65,7 +65,7 @@
                    :task
                    (let [[prev next] *command-line-args*]
                      (-> (process ["bash" "-c"
-                                   (format "rg %s --files-with-matches | xargs sed -i '' 's/%s/%s/g'"
+                                   (format "rg %s --files-with-matches -g '!/CHANGELOG.md' | xargs sed -i '' 's/%s/%s/g'"
                                            prev prev next)]
                                   {:inherit true})
                          p/check))}
