@@ -5,7 +5,7 @@
 <!-- To create a new NPM release: -->
 
 <!-- - Run `bb npm-publish`: this will compile, bump patch version, create tag and and push to npm and Github -->
-<!-- - `bb replace-version 0.6.16 0.6.17` -->
+<!-- - `bb replace-version 0.6.20 0.6.20` -->
 <!-- - Create Github release with updated links from `doc/links.md` -->
 <!-- - `bb gh-pages` -->
 
@@ -15,7 +15,7 @@
 - [#89](https://github.com/babashka/babashka/issues/89): allow `evaluate_script_tags` to specify individual scripts.
 - [#87](https://github.com/babashka/scittle/issues/87): prod build on fresh checkout fails
 
-## v0.6.19 (2024-10-08)
+## v0.6.20 (2024-10-08)
 
 - Add `cljs.pprint/code-dispatch` and `cljs.pprint/with-pprint-dispatch`
 
