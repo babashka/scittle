@@ -5,11 +5,11 @@
 <!-- To create a new NPM release: -->
 
 <!-- - Run `bb npm-publish`: this will compile, bump patch version, create tag and and push to npm and Github -->
-<!-- - `bb replace-version 0.6.20 0.6.21` -->
+<!-- - `bb replace-version 0.6.21 0.6.22` -->
 <!-- - Create Github release with updated links from `doc/links.md` -->
 <!-- - `bb gh-pages` -->
 
-## v0.6.21 (2024-12-19)
+## v0.6.22 (2024-12-19)
 
 - [#99](https://github.com/babashka/babashka/issues/99): make `js/import` work
 

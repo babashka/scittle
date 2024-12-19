@@ -57,7 +57,7 @@
              :ns-aliases {'clojure.pprint 'cljs.pprint}
              :features #{:scittle :cljs}}))
 
-(unchecked-set js/globalThis "import" (js/eval "(x) => import x"))
+(unchecked-set js/globalThis "import" (js/eval "(x) => import(x)"))
 
 (def !last-ns (volatile! @sci/ns))
 
