@@ -9,6 +9,10 @@
 <!-- - Create Github release with updated links from `doc/links.md` -->
 <!-- - `bb gh-pages` -->
 
+## v0.6.21 (2024-12-19)
+
+- [#99](https://github.com/babashka/babashka/issues/99): make `js/import` work
+
 ## v0.6.20 (2024-11-24)
 
 - [#55](https://github.com/babashka/babashka/issues/55): create gh-pages dir before using.
