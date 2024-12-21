@@ -9,6 +9,8 @@
 <!-- - Create Github release with updated links from `doc/links.md` -->
 <!-- - `bb gh-pages` -->
 
+- [#102](https://github.com/babashka/scittle/issues/102): add `applied-science/js-interop` plugin.
+
 ## v0.6.22 (2024-12-19)
 
 - [#99](https://github.com/babashka/babashka/issues/99): make `js/import` work
