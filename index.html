@@ -3,8 +3,8 @@
   <head>
     <link rel="stylesheet" href="css/style.css">
     <script src="js/scittle.js" type="application/javascript"></script>
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script crossorigin src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="js/scittle.reagent.js" type="application/javascript"></script>
     <!-- <script src="js/scittle.re-frame.js" type="application/javascript"></script> -->
     <script src="js/scittle.cljs-ajax.js" type="application/javascript"></script>
@@ -146,6 +146,19 @@
     enable <a href="https://cljs.github.io/api/cljs.pprint/">cljs.pprint</a>, in
     addition to <tt>scittle.js</tt>, you need to
     include <tt>scittle.pprint.js</tt>.
+
+    <a name="reader-conditional"></a>
+    <h2><a href="#reader-conditional">Target :scittle in cljc</a></h2>
+    You can target scittle in .cljc files (use a script tag to include the cljc file) with the <code>:scittle</code> reader conditional like this:<br>
+
+    <pre><code class="clojure">
+    #?(:scittle
+       (js/console.log "In scittle")
+       :org.babashka/nbb
+       (js/console.log "In nbb")
+       :cljs
+       (js/console.log "In cljs"))
+    </code></pre>
 
     <a name="repl"></a>
     <h2><a href="#nrepl">REPL</a></h2>
