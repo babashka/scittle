@@ -10,6 +10,7 @@
 <!-- - `bb gh-pages` -->
 
 - [#102](https://github.com/babashka/scittle/issues/102): add `applied-science/js-interop` plugin.
+- [#105](https://github.com/babashka/scittle/issues/105): add `goog.string/htmlEscape`.
 
 ## v0.6.22 (2024-12-19)
 
