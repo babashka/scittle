@@ -2,7 +2,7 @@
   (:refer-clojure :exclude [time])
   (:require [cljs.reader :refer [read-string]]
             [goog.object :as gobject]
-            [goog.string]
+            [goog.string :as gstring]
             [sci.core :as sci]
             [sci.ctx-store :as store]
             [sci.impl.unrestrict]
@@ -46,6 +46,7 @@
     'abs (sci/copy-var abs cljns)}
    'goog.object {'set gobject/set
                  'get gobject/get}
+   'goog.string {'htmlEscape gstring/htmlEscape}
    'sci.core {'stacktrace sci/stacktrace
               'format-stacktrace sci/format-stacktrace}})
 
