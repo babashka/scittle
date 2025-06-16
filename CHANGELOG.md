@@ -8,7 +8,7 @@
 <!-- - `bb replace-version 0.6.21 0.6.22` -->
 <!-- - Create Github release with updated links from `doc/links.md` -->
 <!-- - `bb gh-pages` -->
-
+- [#110](https://github.com/babashka/scittle/issues/110): add `reitit` plugin.
 - [#107](https://github.com/babashka/scittle/issues/107): add `replicant` plugin.
 - [#102](https://github.com/babashka/scittle/issues/102): add `applied-science/js-interop` plugin.
 - [#105](https://github.com/babashka/scittle/issues/105): add `goog.string/htmlEscape`.
