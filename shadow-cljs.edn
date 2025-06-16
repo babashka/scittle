@@ -24,6 +24,8 @@
                      :depends-on #{:scittle}}
     :scittle.reagent {:entries [scittle.reagent]
                       :depends-on #{:scittle}}
+    :scittle.replicant {:entries [scittle.replicant]
+                        :depends-on #{:scittle}}
     :scittle.re-frame {:entries [scittle.re-frame]
                        :depends-on #{:scittle.reagent
                                      :scittle}}

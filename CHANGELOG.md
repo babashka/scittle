@@ -9,6 +9,7 @@
 <!-- - Create Github release with updated links from `doc/links.md` -->
 <!-- - `bb gh-pages` -->
 
+- [#107](https://github.com/babashka/scittle/issues/107): add `replicant` plugin.
 - [#102](https://github.com/babashka/scittle/issues/102): add `applied-science/js-interop` plugin.
 - [#105](https://github.com/babashka/scittle/issues/105): add `goog.string/htmlEscape`.
 
