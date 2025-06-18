@@ -25,7 +25,7 @@
 
 (fs/copy "resources/public/codemirror.html" "gh-pages"
          {:replace-existing true})
-         
+
 (fs/copy "resources/public/replicant_tictactoe.html" "gh-pages"
         {:replace-existing true})
 
@@ -65,8 +65,8 @@
                  {:replace-existing true}))
       (fs/glob cljs-source-dir "*.cljs"))
 
-(println "Copying dir resources/public/cljs/replicant-tictactoe")
-(fs/copy-tree (fs/file cljs-source-dir "replicant-tictactoe") (fs/file cljs-target-dir "replicant-tictactoe") {:replace-existing true})
+(println "Copying dir resources/public/cljs/replicant_tictactoe")
+(fs/copy-tree (fs/file cljs-source-dir "replicant_tictactoe") (fs/file cljs-target-dir "replicant_tictactoe") {:replace-existing true})
 
 (run! (fn [f]
         (println "Copying" (str f))
