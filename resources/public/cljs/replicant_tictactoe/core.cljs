@@ -29,5 +29,5 @@
 
     ;; Trigger the first render by initializing the game.
     (start-new-game store)))
-    
+
 (main)
