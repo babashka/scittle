@@ -5,7 +5,7 @@
 <!-- To create a new NPM release: -->
 
 <!-- - Run `bb npm-publish`: this will compile, bump patch version, create tag and and push to npm and Github -->
-<!-- - `bb replace-version 0.6.21 0.6.22` -->
+<!-- - `bb replace-version 0.6.22 0.7.23` -->
 <!-- - Create Github release with updated links from `doc/links.md` -->
 <!-- - `bb gh-pages` -->
 
