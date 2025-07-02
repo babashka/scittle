@@ -29,6 +29,10 @@ babashka or Clojure JVM):
 
 See [doc/nrepl](doc/nrepl).
 
+### Service worker
+
+See [doc/serviceworker.md](doc/serviceworker.md).
+
 ## Tasks
 
 Run `bb tasks` to see all available tasks:
