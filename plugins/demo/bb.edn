@@ -1,6 +1,7 @@
 {:deps {io.github.babashka/scittle.build {:local/root "../../build"}
         ;; datascript plugin
         ; io.github.babashka/scittle.datascript {:local/root "../../plugins/datascript"}
+        io.github.babashka/scittle.dataspex {:local/root "../../plugins/dataspex"}
         io.github.babashka/scittle.javelin {:local/root "../../plugins/javelin"}
         io.github.babashka/scittle.hoplon {:local/root "../../plugins/hoplon"}
         io.github.babashka/http-server

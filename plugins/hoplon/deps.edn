@@ -1,3 +1,4 @@
 {:deps
  {hoplon/hoplon {:mvn/version "7.5.0"}
-  io.github.babashka/sci.configs {:git/sha "aa84a1b4f1fe45735e5b748769309fc842f737c1"}}}
+  io.github.babashka/sci.configs {:git/sha "aa84a1b4f1fe45735e5b748769309fc842f737c1"
+                                  :exclusions [org.babashka/sci]}}}
