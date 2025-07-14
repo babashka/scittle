@@ -1,0 +1,8 @@
+{:deps
+ {no.cjohansen/dataspex {:git/url "https://github.com/cjohansen/dataspex"
+                         :git/sha "02112200651c2bd932907bb69fba1ff50b881741"
+                         :exclusions [ring/ring-core 
+                                      ring/ring-jetty-adapter 
+                                      com.cognitect/transit-clj]}
+  io.github.babashka/sci.configs {:git/sha "aa84a1b4f1fe45735e5b748769309fc842f737c1" 
+                                  :exclusions [org.babashka/sci]}}}

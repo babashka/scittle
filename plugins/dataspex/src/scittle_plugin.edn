@@ -1,0 +1,8 @@
+[{:name scittle/dataspex
+  :namespaces [dataspex.core]
+  :js "./scittle.dataspex.js"
+  :shadow-config
+  {:modules   
+   {:scittle.dataspex {:init-fn scittle.dataspex/init
+                       :depends-on #{:scittle :scittle.datascript}
+                       :entries [dataspex.core]}}}}]
