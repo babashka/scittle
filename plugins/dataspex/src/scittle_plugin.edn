@@ -4,5 +4,5 @@
   :shadow-config
   {:modules   
    {:scittle.dataspex {:init-fn scittle.dataspex/init
-                       :depends-on #{:scittle}
+                       :depends-on #{:scittle :scittle.datascript}
                        :entries [dataspex.core]}}}}]
