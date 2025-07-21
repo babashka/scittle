@@ -11,7 +11,6 @@
         (new js/WebSocket (ws-url (.-hostname (.-location js/window)) ws-port "_nrepl"))))
 
 (when-let [ws (nrepl-server/nrepl-websocket)]
-  (prn :ws ws)
   (set! (.-onmessage ws)
         (fn [event]
           (nrepl-server/handle-nrepl-message (edn/read-string (.-data event)))))
