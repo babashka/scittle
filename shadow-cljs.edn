@@ -6,7 +6,9 @@
 
  :builds
  {:main
-  {:compiler-options {:optimizations :whitespace}
+  {:compiler-options {:optimizations :simple
+                      :pretty-print true
+                      :pseudo-names true}
    :target     :browser
    :js-options
    {:resolve {"react" {:target :global
@@ -31,7 +33,9 @@
                        :depends-on #{:scittle.reagent
                                      :scittle}}
     :scittle.cljs-ajax {:entries [scittle.cljs-ajax]
-                        :depends-on #{:scittle}}}
+                        :depends-on #{:scittle}}
+    :scittle.cljs-devtools {:entries [scittle.cljs-devtools]
+                            :depends-on #{:scittle}}}
    :build-hooks [(shadow.cljs.build-report/hook)]
    :output-dir "resources/public/js"
    :devtools   {:repl-pprint true}}}}

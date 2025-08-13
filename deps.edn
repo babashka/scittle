@@ -1,7 +1,7 @@
 {:paths ["src" "resources"]
  :deps
  {org.clojure/clojure {:mvn/version "1.11.1"}
-  thheller/shadow-cljs {:mvn/version "2.20.15"}
+  thheller/shadow-cljs {:mvn/version "3.1.8"}
   org.babashka/sci {:git/url "https://github.com/babashka/sci"
                     :git/sha "87fa2d2648ef809e8c8c87279c51961dca41ed4d"}
   #_{:local/root "../babashka/sci"}
@@ -21,7 +21,8 @@
   io.github.babashka/sci.configs
   #_{:local/root "/Users/borkdude/dev/sci.configs"}
   {:git/url "https://github.com/babashka/sci.configs"
-   :git/sha "1ade6f94a2902211bed1f876472571da0c5e7278"}}
+   :git/sha "1ade6f94a2902211bed1f876472571da0c5e7278"}
+  binaryage/devtools {:mvn/version "1.0.7"}}
  :aliases
  {:dev
   {:extra-paths ["dev"]
