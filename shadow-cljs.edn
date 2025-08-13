@@ -6,7 +6,8 @@
 
  :builds
  {:main
-  {:target     :browser
+  {:compiler-options {:optimizations :whitespace}
+   :target     :browser
    :js-options
    {:resolve {"react" {:target :global
                        :global "React"}
