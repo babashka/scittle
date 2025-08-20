@@ -6,7 +6,11 @@
 
  :builds
  {:main
-  {:target     :browser
+  {;; for dev build
+   #_#_:compiler-options {:optimizations :simple
+                          :pretty-print true
+                          :pseudo-names true}
+   :target     :browser
    :js-options
    {:resolve {"react" {:target :global
                        :global "React"}
@@ -32,5 +36,5 @@
     :scittle.cljs-ajax {:entries [scittle.cljs-ajax]
                         :depends-on #{:scittle}}}
    :build-hooks [(shadow.cljs.build-report/hook)]
-   :output-dir "resources/public/js"
+   :output-dir "resources/public/js" ;; + "/dev" for dev build
    :devtools   {:repl-pprint true}}}}
