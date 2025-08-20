@@ -7,3 +7,14 @@ https://cdn.jsdelivr.net/npm/scittle@0.7.24/dist/scittle.replicant.js
 https://cdn.jsdelivr.net/npm/scittle@0.7.24/dist/scittle.promesa.js
 https://cdn.jsdelivr.net/npm/scittle@0.7.24/dist/scittle.pprint.js
 https://cdn.jsdelivr.net/npm/scittle@0.7.24/dist/scittle.nrepl.js
+
+https://cdn.jsdelivr.net/npm/scittle@0.7.24/dist/dev/scittle.js
+https://cdn.jsdelivr.net/npm/scittle@0.7.24/dist/dev/scittle.js-interop.js
+https://cdn.jsdelivr.net/npm/scittle@0.7.24/dist/dev/scittle.cljs-ajax.js
+https://cdn.jsdelivr.net/npm/scittle@0.7.24/dist/dev/scittle.reagent.js
+https://cdn.jsdelivr.net/npm/scittle@0.7.24/dist/dev/scittle.re-frame.js
+https://cdn.jsdelivr.net/npm/scittle@0.7.24/dist/dev/scittle.replicant.js
+https://cdn.jsdelivr.net/npm/scittle@0.7.24/dist/dev/scittle.promesa.js
+https://cdn.jsdelivr.net/npm/scittle@0.7.24/dist/dev/scittle.pprint.js
+https://cdn.jsdelivr.net/npm/scittle@0.7.24/dist/dev/scittle.nrepl.js
+https://cdn.jsdelivr.net/npm/scittle@0.7.24/dist/dev/scittle.cljs-devtools.js

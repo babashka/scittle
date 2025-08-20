@@ -78,6 +78,6 @@
                                                          :pretty-print true
                                                          :pseudo-names true}
                                       :output-dir \"resources/public/js/dev\"
-                                      :modules {:scittle.cljs-devtools.dev {:entries [scittle.cljs-devtools]
-                                                                            :depends-on #{:scittle}}}}'"
+                                      :modules {:scittle.cljs-devtools {:entries [scittle.cljs-devtools]
+                                                                        :depends-on #{:scittle}}}}'"
                     (str/join " " args)))))
