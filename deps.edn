@@ -21,7 +21,7 @@
   io.github.babashka/sci.configs
   #_{:local/root "/Users/borkdude/dev/sci.configs"}
   {:git/url "https://github.com/babashka/sci.configs"
-   :git/sha "1ade6f94a2902211bed1f876472571da0c5e7278"}
+   :git/sha "aa84a1b4f1fe45735e5b748769309fc842f737c1"}
   binaryage/devtools {:mvn/version "1.0.7"}}
  :aliases
  {:dev
