@@ -3,6 +3,7 @@
   (:require [cljs.reader :refer [read-string]]
             [goog.object :as gobject]
             [goog.string :as gstring]
+            [goog.string.format]
             [sci.core :as sci]
             [sci.ctx-store :as store]
             [sci.impl.unrestrict]
@@ -46,7 +47,9 @@
     'abs (sci/copy-var abs cljns)}
    'goog.object {'set gobject/set
                  'get gobject/get}
-   'goog.string {'htmlEscape gstring/htmlEscape}
+   'goog.string {'format gstring/format
+                 'htmlEscape gstring/htmlEscape}
+   'goog.string.format {} ;; For cljs compatibility
    'sci.core {'stacktrace sci/stacktrace
               'format-stacktrace sci/format-stacktrace}})
 
