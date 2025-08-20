@@ -72,4 +72,12 @@
   (build* (format "-M -m shadow.cljs.devtools.cli --force-spawn %s main %s" action (str/join " " args)))
   (when (= "release" action)
     (println "Also building dev release build")
-    (build* (format "-M -m shadow.cljs.devtools.cli --force-spawn %s dev %s" action (str/join " " args)))))
+    (build* (format "-M -m shadow.cljs.devtools.cli --force-spawn %s main %s %s"
+                    action
+                    "--config-merge '{:compiler-options {:optimizations :simple
+                                                         :pretty-print true
+                                                         :pseudo-names true}
+                                      :output-dir \"resources/public/js/dev\"
+                                      :modules {:scittle.cljs-devtools.dev {:entries [scittle.cljs-devtools]
+                                                                            :depends-on #{:scittle}}}}'"
+                    (str/join " " args)))))

@@ -6,7 +6,11 @@
 
  :builds
  {:main
-  {:target     :browser
+  {;; for dev build
+   #_#_:compiler-options {:optimizations :simple
+                          :pretty-print true
+                          :pseudo-names true}
+   :target     :browser
    :js-options
    {:resolve {"react" {:target :global
                        :global "React"}
@@ -32,39 +36,5 @@
     :scittle.cljs-ajax {:entries [scittle.cljs-ajax]
                         :depends-on #{:scittle}}}
    :build-hooks [(shadow.cljs.build-report/hook)]
-   :output-dir "resources/public/js"
-   :devtools   {:repl-pprint true}}
-  :dev
-  {:compiler-options {:optimizations :simple
-                      :pretty-print true
-                      :pseudo-names true}
-   :target     :browser
-   :js-options
-   {:resolve {"react" {:target :global
-                       :global "React"}
-              "react-dom" {:target :global
-                           :global "ReactDOM"}}}
-   :modules
-   {:scittle.dev {:entries [scittle.core]}
-    :scittle.nrepl.dev {:entries [scittle.nrepl]
-                    :depends-on #{:scittle.dev}}
-    :scittle.promesa.dev {:entries [scittle.promesa]
-                      :depends-on #{:scittle.dev}}
-    :scittle.js-interop.dev {:entries [scittle.js-interop]
-                        :depends-on #{:scittle.dev}}
-    :scittle.pprint.dev {:entries [scittle.pprint]
-                     :depends-on #{:scittle.dev}}
-    :scittle.reagent.dev {:entries [scittle.reagent]
-                      :depends-on #{:scittle.dev}}
-    :scittle.replicant.dev {:entries [scittle.replicant]
-                        :depends-on #{:scittle.dev}}
-    :scittle.re-frame.dev {:entries [scittle.re-frame]
-                       :depends-on #{:scittle.reagent.dev
-                                     :scittle.dev}}
-    :scittle.cljs-ajax.dev {:entries [scittle.cljs-ajax]
-                        :depends-on #{:scittle.dev}}
-    :scittle.cljs-devtools.dev {:entries [scittle.cljs-devtools]
-                                :depends-on #{:scittle.dev}}}
-   :build-hooks [(shadow.cljs.build-report/hook)]
-   :output-dir "resources/public/js"
+   :output-dir "resources/public/js" ;; + "/dev" for dev build
    :devtools   {:repl-pprint true}}}}
