@@ -46,7 +46,7 @@
                 (fs/delete-tree "dist")
                 (fs/create-dirs "dist")
                 (run! (fn [f] (fs/copy f "dist"))
-                      (fs/glob "resources/public/js" "*.js")))}
+                      (fs/glob "resources/public/js" "*.{js,js.map}")))}
 
   bump-version {:doc "Bumps package.json and pushes new git tag"
                 :task (do (shell "npm version patch")

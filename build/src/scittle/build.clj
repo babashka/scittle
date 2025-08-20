@@ -69,4 +69,7 @@
   * :action - compile action, defaults to release, but may also be compile or watch"
   [{:keys [action
            args] :or {action "release"}}]
-  (build* (format "-M -m shadow.cljs.devtools.cli --force-spawn %s main %s" action (str/join " " args))))
+  (build* (format "-M -m shadow.cljs.devtools.cli --force-spawn %s main %s" action (str/join " " args)))
+  (when (= "release" action)
+    (println "Also building dev release build")
+    (build* (format "-M -m shadow.cljs.devtools.cli --force-spawn %s dev %s" action (str/join " " args)))))
