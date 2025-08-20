@@ -3,7 +3,7 @@
  {org.clojure/clojure {:mvn/version "1.11.1"}
   thheller/shadow-cljs {:mvn/version "3.1.8"}
   org.babashka/sci {:git/url "https://github.com/babashka/sci"
-                    :git/sha "9522bdadafcfbc5b86e3f37117df62634a9d923e"}
+                    :git/sha "f8015f925f77ec5fd65c776d06345328eccf7e25"}
   #_{:local/root "../babashka/sci"}
   reagent/reagent {:mvn/version "1.1.1"}
   no.cjohansen/replicant {:mvn/version "2025.03.27"}
