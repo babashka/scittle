@@ -18,3 +18,4 @@ gh-pages/
 /.clj-kondo/rewrite-clj
 /plugins/demo/resources/public/js/
 .portal
+resources/public/test/scratch.html

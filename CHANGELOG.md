@@ -9,7 +9,10 @@
 <!-- - Create Github release with updated links from `doc/links.md` -->
 <!-- - `bb gh-pages` -->
 
+## v0.7.27 (2025-08-21)
+
 - [#95](https://github.com/babashka/scittle/issues/121): support string requires of `globalThis` js deps ([@chr15m](https://github.com/chr15m))
+- Potentially breaking: `(.-foo-bar {})` now behaves as `{}.foo_bar`, i.e. the property or method name is munged.
 
 ## v0.7.26 (2025-08-20)
 
