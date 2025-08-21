@@ -49,13 +49,19 @@
    'sci.core {'stacktrace sci/stacktrace
               'format-stacktrace sci/format-stacktrace}})
 
+(defn load-fn [{:keys [ctx] :as opts}]
+  (when-let [lib (and (string? (:namespace opts))
+                      (gobject/get js/globalThis (:namespace opts)))]
+    (sci/add-js-lib! ctx (:namespace opts) lib)))
+
 (store/reset-ctx!
   (sci/init {:namespaces namespaces
              :classes {'js js/globalThis
                        :allow :all
                        'Math js/Math}
              :ns-aliases {'clojure.pprint 'cljs.pprint}
-             :features #{:scittle :cljs}}))
+             :features #{:scittle :cljs}
+             :load-fn load-fn}))
 
 (unchecked-set js/globalThis "import" (js/eval "(x) => import(x)"))
 
