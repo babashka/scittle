@@ -3,7 +3,7 @@
 Since `v0.7.27` scittle allows to load libraries from the global enviroment.
 This means you can load a library in a `<script>` tag and use it via `:require` in scittle.
 
-An example. Replace `js/scittle.js` with a CDN version
+An example:
 
 ``` html
 <html>
