@@ -9,6 +9,8 @@
 <!-- - Create Github release with updated links from `doc/links.md` -->
 <!-- - `bb gh-pages` -->
 
+- [#95](https://github.com/babashka/scittle/issues/121): support string requires of `globalThis` js deps ([@chr15m](https://github.com/chr15m))
+
 ## v0.7.26 (2025-08-20)
 
 - [#121](https://github.com/babashka/scittle/issues/121): add `cjohansen/dataspex` plugin ([@jeroenvandijk](https://github.com/jeroenvandijk))
