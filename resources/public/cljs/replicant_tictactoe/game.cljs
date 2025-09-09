@@ -13,10 +13,13 @@
     path))
 
 (defn get-winning-path [{:keys [size tics]} y x]
-  (or (winner? tics (mapv #(vector y %) (range 0 size)))
-      (winner? tics (mapv #(vector % x) (range 0 size)))
-      (when (= y x)
-        (winner? tics (mapv #(vector % %) (range 0 size))))))
+  (let [flip-y (fn [y] (- size 1 y))]
+    (or (winner? tics (mapv #(vector y %) (range 0 size)))
+        (winner? tics (mapv #(vector % x) (range 0 size)))
+        (when (= y x)
+          (winner? tics (mapv #(vector % %) (range 0 size))))
+        (when (= (flip-y y) x)
+          (winner? tics (mapv #(vector (flip-y %) %) (range 0 size)))))))
 
 (defn maybe-conclude [game y x]
   (if-let [path (get-winning-path game y x)]
