@@ -1,9 +1,9 @@
 {:paths ["src" "resources"]
  :deps
- {org.clojure/clojure {:mvn/version "1.11.1"}
+ {org.clojure/clojure {:mvn/version "1.12.2"}
   thheller/shadow-cljs {:mvn/version "3.1.8"}
   org.babashka/sci {:git/url "https://github.com/babashka/sci"
-                    :git/sha "756376056b32198d96dd5b272cee8fc483db60df"}
+                    :git/sha "6758ba028da559c536a06becbbedade7b0ba6448"}
   #_{:local/root "../babashka/sci"}
   reagent/reagent {:mvn/version "1.1.1"}
   no.cjohansen/replicant {:mvn/version "2025.03.27"}
