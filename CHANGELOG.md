@@ -9,6 +9,8 @@
 <!-- - Create Github release with updated links from `doc/links.md` -->
 <!-- - `bb gh-pages` -->
 
+- [#114](https://github.com/babashka/scittle/issues/114): Enable source maps ([@jeroenvandijk](https://github.com/jeroenvandijk))
+
 ## v0.7.28 (2025-09-13)
 
 - [#137](https://github.com/babashka/scittle/issues/137): fix JS interop with reserved JS keyword (incorrectly munged) by bumping SCI
