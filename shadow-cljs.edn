@@ -6,10 +6,13 @@
 
  :builds
  {:main
-  {;; for dev build
-   #_#_:compiler-options {:optimizations :simple
-                          :pretty-print true
-                          :pseudo-names true}
+  {;:compiler-options {:source-map true}
+   ;; for dev build   
+   #_#_
+   :compiler-options {:optimizations :simple
+                      :pretty-print true
+                      :pseudo-names true
+                      :source-map true}
    :target     :browser
    :js-options
    {:resolve {"react" {:target :global
@@ -37,4 +40,5 @@
                         :depends-on #{:scittle}}}
    :build-hooks [(shadow.cljs.build-report/hook)]
    :output-dir "resources/public/js" ;; + "/dev" for dev build
-   :devtools   {:repl-pprint true}}}}
+   :devtools   {:repl-pprint true}
+   }}}
