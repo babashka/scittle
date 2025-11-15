@@ -50,6 +50,7 @@ release Updates Github pages with new release build.
 ## Credits
 
 Idea by Arne Brasseur a.k.a [plexus](https://github.com/plexus).
+Name by Alessandra Stuart (the name occurs first in [this](https://stuartsierra.com/2019/12/21/clojure-start-time-in-2019/) blog post).
 
 ## License
 
