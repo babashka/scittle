@@ -42,6 +42,16 @@ you should be able evaluate expressions in `playground.cljs`. See a demo
 Note that the nREPL server connection stays alive even after the browser window
 refreshes.
 
+### Custom host address
+
+By default, the browser will connect to a websocket on the same host as it is loaded
+from, using `window.location.hostname`. If you need something else you can specify
+that setting the window variable `SCITTLE_NREPL_WEBSOCKET_HOST` like so:
+
+``` html
+<script>var SCITTLE_NREPL_WEBSOCKET_HOST = 'localhost';</script>
+```
+
 ### CIDER
 
 Choose `cider-connect-cljs`, select port `1339`, followed by the `nbb` REPL

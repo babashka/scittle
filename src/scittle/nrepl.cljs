@@ -8,7 +8,9 @@
 
 (when-let [ws-port (.-SCITTLE_NREPL_WEBSOCKET_PORT js/window)]
   (set! (.-ws_nrepl js/window)
-        (new js/WebSocket (ws-url (.-hostname (.-location js/window)) ws-port "_nrepl"))))
+        (new js/WebSocket (ws-url (or (.-SCITTLE_NREPL_WEBSOCKET_HOST js/window)
+                                      (.-hostname (.-location js/window)))
+                                  ws-port "_nrepl"))))
 
 (when-let [ws (nrepl-server/nrepl-websocket)]
   (set! (.-onmessage ws)
