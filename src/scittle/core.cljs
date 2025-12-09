@@ -44,7 +44,8 @@
     'NaN? (sci/copy-var NaN? cljns)
     'infinite? (sci/copy-var infinite? cljns)
     'iteration (sci/copy-var iteration cljns)
-    'abs (sci/copy-var abs cljns)}
+    'abs (sci/copy-var abs cljns)
+    'Cons cljs.core/Cons}
    'goog.object {'set gobject/set
                  'get gobject/get}
    'goog.string {'format gstring/format
