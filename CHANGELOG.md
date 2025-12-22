@@ -11,6 +11,7 @@
 
 - [#114](https://github.com/babashka/scittle/issues/114): Enable source maps ([@jeroenvandijk](https://github.com/jeroenvandijk))
 - [#140](https://github.com/babashka/scittle/issues/140): Enable customizing the nrepl websocket port ([@PEZ](https://github.com/PEZ))
+- Bump shadow-cljs and SCI
 
 ## v0.7.28 (2025-09-13)
 
