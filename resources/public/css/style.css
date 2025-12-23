@@ -1,7 +1,51 @@
+body {
+  font-family: Arial;
+  width: 100%;
+  max-width: 1024px;
+  margin: auto;
+  background-color: #FBFAF8;
+  color: #302F2B;
+  font-size: 18px;
+}
+
+h1 > img {
+  height: 1em;
+  margin-right: 0.25em;
+}
+
+a {
+  color: #2176BC;
+}
+
+button:not(#app button) {
+  display: inline-block;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  background-color: #4299e1;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 16px;
+  border-bottom: 4px solid #2b6cb0;
+  font-weight: 700;
+  color: white;
+  line-height: 26px;
+}
+
+input, textarea {
+  border: 2px solid #888;
+  padding: 0.25em 0.5em;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+code {
+  border-radius: 4px;
+}
+
 div#app
 {
   color:#666;
-  font-family: Arial;
 }
 
 div#app td
