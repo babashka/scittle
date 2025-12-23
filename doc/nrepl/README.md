@@ -21,7 +21,7 @@ the normal routine:
 
 ``` html
 <script>var SCITTLE_NREPL_WEBSOCKET_PORT = 1340;</script>
-<script src="https://cdn.jsdelivr.net/npm/scittle@0.7.28/dist/scittle.nrepl.js" type="application/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/scittle@0.7.30/dist/scittle.nrepl.js" type="application/javascript"></script>
 ```
 
 Also include the CLJS file that you want to evaluate with nREPL:

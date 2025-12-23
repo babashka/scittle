@@ -1,6 +1,6 @@
 # Loading JS libraries
 
-Since `v0.7.28` scittle allows to load libraries from the global enviroment.
+Since `v0.7.30` scittle allows to load libraries from the global enviroment.
 This means you can load a library in a `<script>` tag and use it via `:require` in scittle.
 
 An example:
@@ -8,7 +8,7 @@ An example:
 ``` html
 <html>
   <head>
-    <script src="https://cdn.jsdelivr.net/npm/scittle@0.7.28/dist/scittle.js" type="application/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/scittle@0.7.30/dist/scittle.js" type="application/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
     <script type="application/x-scittle">
       (require '["JSConfetti" :as confetti])
@@ -31,7 +31,7 @@ can then load ES modules, attach them to the global object and manually invoke
 ``` html
 <html>
   <head>
-    <script src="https://cdn.jsdelivr.net/npm/scittle@0.7.28/dist/scittle.js" type="application/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/scittle@0.7.30/dist/scittle.js" type="application/javascript"></script>
     <script>scittle.core.disable_auto_eval()</script>
     <script type="module">
       import confetti from "https://esm.sh/canvas-confetti@1.6.0"
