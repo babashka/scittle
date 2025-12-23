@@ -6,7 +6,7 @@
 
  :builds
  {:main
-  {;:compiler-options {:source-map true}
+  {:compiler-options {:source-map true}
    ;; for dev build   
    #_#_
    :compiler-options {:optimizations :simple
