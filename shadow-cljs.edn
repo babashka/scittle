@@ -7,7 +7,7 @@
  :builds
  {:main
   {:compiler-options {:source-map true}
-   ;; for dev build   
+   ;; for dev build
    #_#_
    :compiler-options {:optimizations :simple
                       :pretty-print true
@@ -20,7 +20,8 @@
               "react-dom" {:target :global
                            :global "ReactDOM"}}}
    :modules
-   {:scittle {:entries [scittle.core]}
+   {:scittle {:entries [scittle.core]
+              :append "globalThis.import = (x) => import(x);"}
     :scittle.nrepl {:entries [scittle.nrepl]
                     :depends-on #{:scittle}}
     :scittle.promesa {:entries [scittle.promesa]
