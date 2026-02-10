@@ -9,6 +9,12 @@
 <!-- - Create Github release with updated links from `doc/links.md` -->
 <!-- - `bb gh-pages` -->
 
+## v0.7.31 (2026-01-10)
+
+- Support `async/await`. See [docs](https://github.com/babashka/sci/blob/master/doc/async-await.md).
+- Implement `js/import` not using `eval`
+- nREPL: print `#<Promise value>` when a promise is evaluated
+
 ## v0.7.30 (2025-12-23)
 
 - [#114](https://github.com/babashka/scittle/issues/114): Enable source maps ([@jeroenvandijk](https://github.com/jeroenvandijk))
