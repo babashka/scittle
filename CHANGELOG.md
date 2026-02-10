@@ -13,6 +13,7 @@
 
 - Support `async/await`. See [docs](https://github.com/babashka/sci/blob/master/doc/async-await.md).
 - Implement `js/import` not using `eval`
+- Support `this-as`
 - nREPL: print `#<Promise value>` when a promise is evaluated
 
 ## v0.7.30 (2025-12-23)
