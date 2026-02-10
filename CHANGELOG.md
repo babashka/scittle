@@ -9,7 +9,7 @@
 <!-- - Create Github release with updated links from `doc/links.md` -->
 <!-- - `bb gh-pages` -->
 
-## v0.7.31 (2026-01-10)
+## v0.8.31 (2026-01-10)
 
 - Support `async/await`. See [docs](https://github.com/babashka/sci/blob/master/doc/async-await.md).
 - Implement `js/import` not using `eval`
