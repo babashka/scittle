@@ -66,10 +66,12 @@
            (.highlightElement js/hljs code))))
         (.send req)))
 
+    (.highlightAll js/hljs)
     </script>
 
     <script src="cljs/script.cljs" type="application/x-scittle"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/languages/clojure.min.js" type="text/javascript"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/zenburn.min.css" integrity="sha512-JPxjD2t82edI35nXydY/erE9jVPpqxEJ++6nYEoZEpX2TRsmp2FpZuQqZa+wBCen5U16QZOkMadGXHCfp+tUdg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   </head>
@@ -77,7 +79,7 @@
     <div style="float: right;">
       <a href="https://gitHub.com/babashka/scittle"><img src="https://img.shields.io/github/stars/babashka/scittle.svg?style=social&label=Star"></a></div>
 
-    <h1>Scittle</h1>
+    <h1><img src='scittle.svg'>Scittle</h1>
     <h2>What is this?</h2>
     <p>This project exposes the <a href="https://github.com/babashka/sci">Small Clojure Interpreter</a> in the
       browser in such a way that you can use it with the <tt>script</tt> tag.</p>
@@ -105,7 +107,7 @@
     When you have a file on your server, say <tt>cljs/script.cljs</tt>, you can load it using the <tt>src</tt> attribute:
 
     <pre><code id="scittle-tag-example" class="html">
-        &lt;script src=&quot;cljs/script.cljs&quot; type=&quot;application/x-scittle&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;cljs/script.cljs&quot; type=&quot;application/x-scittle&quot;&gt;&lt;/script&gt;
     </code></pre>
 
     <script type="text/javascript">hljs.highlightElement(document.getElementById("scittle-tag-example"));</script>
@@ -136,7 +138,6 @@
     in addition to <tt>scittle.js</tt>, you need to include <tt>scittle.cljs-ajax.js</tt>:
 
     <pre><code data-type="scittle" data-src="html/cljs-ajax.html" class="html"></code></pre>
-
     <button onclick="make_request()">
       Click me!
     </button>
@@ -151,20 +152,20 @@
     <h2><a href="#reader-conditional">Target :scittle in cljc</a></h2>
     You can target scittle in .cljc files (use a script tag to include the cljc file) with the <code>:scittle</code> reader conditional like this:<br>
 
-    <pre><code class="clojure">
-    #?(:scittle
-       (js/console.log "In scittle")
-       :org.babashka/nbb
-       (js/console.log "In nbb")
-       :cljs
-       (js/console.log "In cljs"))
+    <pre><code class="language-clojure hljs">
+#?(:scittle
+   (js/console.log "In scittle")
+   :org.babashka/nbb
+   (js/console.log "In nbb")
+   :cljs
+   (js/console.log "In cljs"))
     </code></pre>
 
     <a name="JS libraries"></a>
     <h2><a href="#js-libraries">JS libraries</a></h2>
 
     To use JavaScript libraries with Scittle,
-    see <a href="https://github.com/babashka/scittle/blob/main/doc/js-libraries.md">README.md</a>
+    see <a href="https://github.com/babashka/scittle/blob/main/doc/js-libraries.md">js-libraries.md</a>
 
     <a name="repl"></a>
     <h2><a href="#nrepl">REPL</a></h2>
