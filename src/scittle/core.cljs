@@ -6,12 +6,9 @@
             [goog.string.format]
             [sci.core :as sci]
             [sci.ctx-store :as store]
-            [sci.impl.unrestrict]
             [scittle.impl.common :refer [cljns]]
             [scittle.impl.error :as error]
             [clojure.string :as str]))
-
-(set! sci.impl.unrestrict/*unrestricted* true)
 
 ;; make document conditional
 (def ^js doc js/globalThis.document)
@@ -66,6 +63,7 @@
                        'Math js/Math}
              :ns-aliases {'clojure.pprint 'cljs.pprint}
              :features #{:scittle :cljs}
+             :unrestricted true
              :load-fn load-fn}))
 
 (def !last-ns (volatile! @sci/ns))
