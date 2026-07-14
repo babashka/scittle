@@ -19,3 +19,7 @@ gh-pages/
 /plugins/demo/resources/public/js/
 .portal
 resources/public/test/scratch.html
+test-results/
+playwright-report/
+/blob-report/
+/.playwright/

@@ -9,6 +9,20 @@
 <!-- - Create Github release with updated links from `doc/links.md` -->
 <!-- - `bb gh-pages` -->
 
+## Unreleased
+
+Highlight:
+
+### ClojureScript: JIT compilation
+
+Scittle now bundles a SCI that compiles interpreted function bodies to JavaScript at runtime via `js/Function`. This is enabled by default. Loops, numerical computations and JS interop become much faster due to this.
+
+- Bump SCI to `0.15.56` (ClojureScript JIT, see above)
+- Bump `reagent` to 1.2.0
+- Bump `re-frame` to 1.4.7
+- Bump `replicant` to 2026.06.2
+- Bump `shadow-cljs` to 3.4.11
+
 ## v0.8.31 (2026-01-10)
 
 - Support `async/await`. See [docs](https://github.com/babashka/sci/blob/master/doc/async-await.md).

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="../js/scittle.js" type="application/javascript"></script>
+    <script src="../js/scittle.replicant.js" type="application/javascript"></script>
+    <script crossorigin src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="../js/scittle.reagent.js" type="application/javascript"></script>
+    <script src="../js/scittle.re-frame.js" type="application/javascript"></script>
+    <script type="application/x-scittle">
+      ;; replicant render
+      (require '[replicant.dom :as rep])
+      (rep/render (js/document.getElementById "replicant-app")
+                  [:p {:id "rep"} "replicant-ok"])
+
+      ;; re-frame (+ reagent) render
+      (require '[reagent.dom :as rdom]
+               '[re-frame.core :as rf])
+      (rf/reg-event-db :init (fn [_ _] {:msg "reframe-ok"}))
+      (rf/reg-sub :msg (fn [db _] (:msg db)))
+      (rf/dispatch-sync [:init])
+      (defn view [] [:p {:id "rf"} @(rf/subscribe [:msg])])
+      (rdom/render [view] (js/document.getElementById "reframe-app"))
+    </script>
+  </head>
+  <body>
+    <div id="replicant-app"></div>
+    <div id="reframe-app"></div>
+  </body>
+</html>

@@ -4,8 +4,10 @@
   "files": [
     "dist"
   ],
+  "scripts": {
+    "test": "playwright test"
+  },
   "devDependencies": {
-    "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "@playwright/test": "^1.49.0"
   }
 }

@@ -40,6 +40,10 @@
         :task (build/build {})
         :depends [clean]}
 
+  test {:doc "Runs the Playwright browser smoke test against a prod build."
+        :depends [prod]
+        :task (do (p/check (process ["npx" "playwright" "test"] {:inherit true})))}
+
   dist {:doc "Prepare dist folder for npm package"
         :depends [prod]
         :task (do

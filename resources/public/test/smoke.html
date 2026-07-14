@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="../js/scittle.js" type="application/javascript"></script>
+    <script type="application/x-scittle">
+      (let [results
+            {:loop (loop [i 0 j 100000] (if (zero? j) i (recur (inc i) (dec j))))
+             :fib ((fn fib [n] (if (< n 2) n (+ (fib (- n 1)) (fib (- n 2))))) 15)
+             :iset (let [o (js-obj)] (set! (.-x o) 41) (inc (.-x o)))
+             :case (mapv (fn [k] (case k :a 1 :b 2 0)) [:a :b :c])
+             :throw (try (throw (js/Error. "boom")) (catch :default e (ex-message e)))
+             :interop (.toUpperCase "ab")}]
+        (set! (.-textContent (js/document.getElementById "out")) (pr-str results))
+        (set! (.-textContent (js/document.getElementById "jit"))
+              (str (not (boolean js/globalThis.SCI_DISABLE_JIT)))))
+    </script>
+  </head>
+  <body>
+    <div id="out"></div>
+    <div id="jit"></div>
+  </body>
+</html>
