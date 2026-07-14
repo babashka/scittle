@@ -9,7 +9,7 @@
 <!-- - Create Github release with updated links from `doc/links.md` -->
 <!-- - `bb gh-pages` -->
 
-## Unreleased
+## v0.8.32 (2026-07-14)
 
 Highlight:
 
