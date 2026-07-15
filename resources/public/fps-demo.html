@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scittle JIT FPS demo — 0.8.31 vs 0.8.32</title>
+<style>
+  :root { color-scheme: light dark; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #0e1116;
+    color: #e6edf3;
+  }
+  header { padding: 1.2rem 1.5rem 0.6rem; text-align: center; }
+  header h1 { margin: 0 0 0.3rem; font-size: 1.5rem; }
+  header p { margin: 0.2rem 0; color: #9aa7b4; font-size: 0.9rem; }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+  .panel {
+    border: 1px solid #2a2f37;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #161b22;
+  }
+  .panel h2 {
+    margin: 0;
+    padding: 0.6rem 0.9rem;
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid #2a2f37;
+  }
+  .panel h2 .ver { color: #7ee787; font-family: ui-monospace, monospace; }
+  .old h2 .ver { color: #ffa657; }
+  canvas { display: block; width: 100%; height: auto; background: #000; }
+  .note { text-align: center; color: #6e7781; font-size: 0.8rem; padding-bottom: 1.5rem; max-width: 820px; margin: 0 auto; }
+  code { color: #79c0ff; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Scittle ClojureScript JIT — FPS comparison</h1>
+  <p>Same particle animation, same code, both loaded from the jsDelivr CDN. Left: interpreter. Right: JIT (compiles function bodies to JavaScript at runtime).</p>
+  <p>Each version runs in its own <strong>Web Worker</strong>, rendering to an <code>OffscreenCanvas</code> — genuinely parallel threads, so the frame rates are independent.</p>
+</header>
+
+<div class="grid">
+  <div class="panel old">
+    <h2>Before JIT <span class="ver">scittle 0.8.31</span></h2>
+    <canvas id="old" width="720" height="360"></canvas>
+  </div>
+  <div class="panel">
+    <h2>With JIT <span class="ver">scittle 0.8.32</span></h2>
+    <canvas id="new" width="720" height="360"></canvas>
+  </div>
+</div>
+
+<p class="note">Both workers run the identical hot loop (nested trig + sqrt over ~1800 particles). The only difference is the Scittle version. <code>ms compute</code> is the isolated cost of that loop; the JIT is close to <strong>10× faster</strong>, which is why it holds ~60 fps while the interpreter drops into the 30s. <code>ms draw</code> (the canvas calls) is identical on both — a fair baseline.</p>
+
+<!-- The ClojureScript animation source. type="text/plain" so the browser does not run it here;
+     we read textContent and postMessage it into each worker. -->
+<script type="text/plain" id="anim-src">
+(def version js/globalThis.SCITTLE_VERSION)
+(def accent js/globalThis.ACCENT)
+(def canvas js/globalThis.CANVAS)
+(def ctx (.getContext canvas "2d"))
+(def W (.-width canvas))
+(def H (.-height canvas))
+(def N 1800) ;; particle count
+(def K 22)   ;; extra numeric iterations per particle (amplifies pure compute)
+
+;; particle state in flat typed arrays
+(def xs (js/Float64Array. N))
+(def ys (js/Float64Array. N))
+(def ph (js/Float64Array. N))
+(dotimes [i N]
+  (aset xs i (* (js/Math.random) W))
+  (aset ys i (* (js/Math.random) H))
+  (aset ph i (* (js/Math.random) 6.283)))
+
+;; bookkeeping
+(def frames (atom 0))
+(def acc (atom 0.0))
+(def last-t (atom 0.0))
+(def fps (atom 0.0))
+(def compute-acc (atom 0.0)) ;; ms in numeric loop since last report
+(def compute-ms (atom 0.0))  ;; avg ms/frame in numeric loop
+(def draw-acc (atom 0.0))
+(def draw-ms (atom 0.0))
+;; scratch arrays for computed positions/hues (draw separated from compute)
+(def ox (js/Float64Array. N))
+(def oy (js/Float64Array. N))
+(def oh (js/Float64Array. N))
+
+(defn draw-hud []
+  (set! (.-fillStyle ctx) "rgba(0,0,0,0.6)")
+  (.fillRect ctx 6 6 232 82)
+  (set! (.-fillStyle ctx) accent)
+  (set! (.-font ctx) "600 14px ui-monospace, monospace")
+  (.fillText ctx (str "scittle " version) 14 26)
+  (.fillText ctx (str (.toFixed @fps 1) " fps") 14 44)
+  (.fillText ctx (str (.toFixed @compute-ms 1) " ms compute") 14 62)
+  (.fillText ctx (str (.toFixed @draw-ms 1) " ms draw / " N " particles") 14 80))
+
+(defn step []
+  (let [t (js/performance.now)
+        dt (if (pos? @last-t) (- t @last-t) 16.0)]
+    (reset! last-t t)
+    ;; --- COMPUTE PASS (timed): pure numeric work, results into scratch arrays ---
+    (let [tt (/ t 1000.0)]
+      (loop [i 0]
+        (when (< i N)
+          (let [phase (aget ph i)]
+            ;; pure-compute inner loop — this is what the JIT compiles to JS
+            (loop [k 0
+                   ax 0.0
+                   ay 0.0]
+              (if (< k K)
+                (let [a (+ (* tt 0.9) phase (* k 0.37))]
+                  (recur (inc k)
+                         (+ ax (js/Math.cos (+ a (* 0.5 (js/Math.sin (* a 1.7))))))
+                         (+ ay (js/Math.sin (+ a (* 0.5 (js/Math.cos (* a 1.3))))))))
+                (let [dx (/ ax K)
+                      dy (/ ay K)
+                      nx (+ (aget xs i) (* dx 1.6))
+                      ny (+ (aget ys i) (* dy 1.6))
+                      nx (cond (< nx 0) W (> nx W) 0 :else nx)
+                      ny (cond (< ny 0) H (> ny H) 0 :else ny)
+                      d (js/Math.sqrt (+ (* dx dx) (* dy dy)))
+                      hue (mod (+ (* phase 40) (* tt 60) (* d 60)) 360)]
+                  (aset xs i nx)
+                  (aset ys i ny)
+                  (aset ox i nx)
+                  (aset oy i ny)
+                  (aset oh i hue))))
+            (recur (inc i))))))
+    (swap! compute-acc + (- (js/performance.now) t))
+    ;; --- DRAW PASS (timed separately): canvas ops only ---
+    (let [d0 (js/performance.now)]
+      (set! (.-fillStyle ctx) "rgba(0,0,0,0.2)")
+      (.fillRect ctx 0 0 W H)
+      (loop [i 0]
+        (when (< i N)
+          (set! (.-fillStyle ctx) (str "hsl(" (aget oh i) ",90%,60%)"))
+          (.fillRect ctx (aget ox i) (aget oy i) 2.4 2.4)
+          (recur (inc i))))
+      (swap! draw-acc + (- (js/performance.now) d0)))
+    (swap! frames inc)
+    (swap! acc + dt)
+    (when (>= @acc 250.0)
+      (reset! fps (/ (* @frames 1000.0) @acc))
+      (reset! compute-ms (/ @compute-acc @frames))
+      (reset! draw-ms (/ @draw-acc @frames))
+      (reset! frames 0)
+      (reset! acc 0.0)
+      (reset! compute-acc 0.0)
+      (reset! draw-acc 0.0))
+    (draw-hud)
+    ;; self-schedule, targeting ~60fps (no requestAnimationFrame in a worker)
+    (let [elapsed (- (js/performance.now) t)
+          delay (js/Math.max 0 (- 16.7 elapsed))]
+      (js/setTimeout step delay))))
+
+(step)
+</script>
+
+<script>
+// Worker body: receives {src, version, accent, canvas}, loads the matching Scittle
+// from the CDN, exposes the OffscreenCanvas + params as globals, then evals the CLJS.
+const workerBody = `
+self.onmessage = (e) => {
+  const { src, version, accent, canvas } = e.data;
+  self.SCITTLE_VERSION = version;
+  self.ACCENT = accent;
+  self.CANVAS = canvas;
+  importScripts('https://cdn.jsdelivr.net/npm/scittle@' + version + '/dist/scittle.js');
+  scittle.core.eval_string(src);
+};
+`;
+
+const src = document.getElementById('anim-src').textContent;
+const blobUrl = URL.createObjectURL(new Blob([workerBody], { type: 'application/javascript' }));
+
+function launch(canvasId, version, accent) {
+  const canvas = document.getElementById(canvasId);
+  const offscreen = canvas.transferControlToOffscreen();
+  const w = new Worker(blobUrl);
+  w.postMessage({ src, version, accent, canvas: offscreen }, [offscreen]);
+  return w;
+}
+
+launch('old', '0.8.31', '#ffa657');
+launch('new', '0.8.32', '#7ee787');
+</script>
+</body>
+</html>
