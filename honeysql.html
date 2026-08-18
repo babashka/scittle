@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HoneySQL in Scittle</title>
+<style>
+  body {
+    margin: 0; background: #fff; color: #111827;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+  main { max-width: 820px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+  h1 { font-size: 1.4rem; font-weight: 600; margin: 0 0 0.4rem; }
+  p { color: #6b7280; font-size: 0.9rem; line-height: 1.55; margin: 0.3rem 0 1.2rem; }
+  label { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #9ca3af; margin: 1.2rem 0 0.4rem; }
+  textarea, pre {
+    width: 100%; box-sizing: border-box;
+    font-family: ui-monospace, SFMono-Regular, monospace; font-size: 0.9rem;
+    border: 1px solid #e5e7eb; border-radius: 6px; padding: 0.7rem;
+    background: #fff; color: #111827;
+  }
+  textarea { height: 8rem; resize: vertical; }
+  pre { margin: 0; white-space: pre-wrap; background: #fafafa; min-height: 3rem; }
+  pre.err { color: #cc0040; }
+  .status { font-size: 0.8rem; color: #6b7280; margin-top: 1.5rem; }
+  code { font-family: ui-monospace, SFMono-Regular, monospace; font-size: 0.85em; background: #f3f4f6; padding: 0.1em 0.3em; border-radius: 3px; }
+  .examples button {
+    font: inherit; font-size: 0.8rem; margin: 0 0.4rem 0.4rem 0; padding: 0.25rem 0.6rem;
+    border: 1px solid #e5e7eb; border-radius: 5px; background: #fff; cursor: pointer;
+  }
+</style>
+<script src="js/scittle.js" type="application/javascript"></script>
+
+<!-- HoneySQL sources, in dependency order -->
+<script type="application/x-scittle" src="https://raw.githubusercontent.com/seancorfield/honeysql/v2.7.1437/src/honey/sql/protocols.cljc"></script>
+<script type="application/x-scittle" src="https://raw.githubusercontent.com/seancorfield/honeysql/v2.7.1437/src/honey/sql/util.cljc"></script>
+<!-- Scittle 0.8.33 does not expose the cljs.core type symbols that honey.sql
+     extends the InlineValue protocol on. Intern the missing ones in clojure.core. -->
+<script type="application/x-scittle">
+(doseq [[nm t] {'Keyword (type :x)
+                'Symbol (type 'x)
+                'PersistentVector (type [])
+                'PersistentArrayMap (type {})
+                'PersistentHashMap (type (into {} (map (fn [i] [i i]) (range 20))))}]
+  (when-not (resolve nm)
+    (intern 'clojure.core nm t)))
+</script>
+
+<script type="application/x-scittle" src="https://raw.githubusercontent.com/seancorfield/honeysql/v2.7.1437/src/honey/sql.cljc"></script>
+<script type="application/x-scittle" src="https://raw.githubusercontent.com/seancorfield/honeysql/v2.7.1437/src/honey/sql/helpers.cljc"></script>
+</head>
+<body>
+<main>
+  <h1>HoneySQL in Scittle</h1>
+  <p>HoneySQL 2.7.1437 loaded as <code>.cljc</code> source from GitHub into
+  <a href="https://github.com/babashka/scittle">Scittle</a>, no build step. Type a query map or a
+  <code>honey.sql.helpers</code> expression. The input is evaluated, then passed to
+  <code>honey.sql/format</code>. Several forms are merged into one query.</p>
+
+  <div class="examples">
+    <button data-q="{:select [:id :name] :from [:user] :where [:= :id 1]}">select</button>
+    <button data-q="(h/select :a :b) (h/from :foo) (h/where [:&gt; :n 10] [:like :s &quot;x%&quot;])">helpers</button>
+    <button data-q="{:insert-into :user :values [{:id 1 :name &quot;a&quot;} {:id 2 :name &quot;b&quot;}]}">insert</button>
+    <button data-q="{:select [[[:count :*] :n]] :from [:orders] :group-by [:status] :having [:&gt; [:count :*] 5]}">group by</button>
+  </div>
+
+  <label for="q">query</label>
+  <textarea id="q" spellcheck="false">{:select [:id :name] :from [:user] :where [:= :id 1]}</textarea>
+
+  <label for="out">honey.sql/format</label>
+  <pre id="out"></pre>
+
+  <p class="status" id="status">loading...</p>
+</main>
+
+<script type="application/x-scittle">
+(ns app
+  (:require [honey.sql :as sql]
+            [honey.sql.helpers :as h]))
+
+(def q-el (js/document.getElementById "q"))
+(def out-el (js/document.getElementById "out"))
+(def status-el (js/document.getElementById "status"))
+
+(defn run [text]
+  (let [forms (js/scittle.core.eval_string (str "[" text "]"))
+        query (if (= 1 (count forms))
+                (first forms)
+                (apply merge forms))]
+    (sql/format query)))
+
+(defn render []
+  (let [text (.-value q-el)]
+    (try
+      (let [[sql & params] (run text)]
+        (set! (.-className out-el) "")
+        (set! (.-textContent out-el)
+              (str sql
+                   (when (seq params)
+                     (str "\n\nparams: " (pr-str (vec params)))))))
+      (catch :default e
+        (set! (.-className out-el) "err")
+        (set! (.-textContent out-el) (str (ex-message e)))))))
+
+(.addEventListener q-el "input" render)
+
+(doseq [b (array-seq (js/document.querySelectorAll ".examples button"))]
+  (.addEventListener b "click"
+    (fn [_]
+      (set! (.-value q-el) (.getAttribute b "data-q"))
+      (render))))
+
+(set! (.-textContent status-el)
+      (str "loaded: honey.sql.protocols, honey.sql.util, honey.sql, honey.sql.helpers"))
+
+(render)
+</script>
+</body>
+</html>
