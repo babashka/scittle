@@ -16,7 +16,7 @@ export default defineConfig({
   // serve resources/public statically; the scittle build lands under js/
   webServer: {
     command: `python3 -m http.server ${PORT} --directory resources/public`,
-    url: `http://localhost:${PORT}/test/smoke.html`,
+    url: `http://localhost:${PORT}/js/scittle.js`,
     reuseExistingServer: false,
   },
 });
