@@ -17,6 +17,6 @@ export default defineConfig({
   webServer: {
     command: `python3 -m http.server ${PORT} --directory resources/public`,
     url: `http://localhost:${PORT}/test/smoke.html`,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
   },
 });
