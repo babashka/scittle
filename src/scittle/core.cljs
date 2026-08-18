@@ -42,7 +42,21 @@
     'infinite? (sci/copy-var infinite? cljns)
     'iteration (sci/copy-var iteration cljns)
     'abs (sci/copy-var abs cljns)
-    'Cons cljs.core/Cons}
+    'Cons cljs.core/Cons
+    'Keyword cljs.core/Keyword
+    'Symbol cljs.core/Symbol
+    'UUID cljs.core/UUID
+    'List cljs.core/List
+    'LazySeq cljs.core/LazySeq
+    'MapEntry cljs.core/MapEntry
+    'Range cljs.core/Range
+    'Subvec cljs.core/Subvec
+    'PersistentVector cljs.core/PersistentVector
+    'PersistentArrayMap cljs.core/PersistentArrayMap
+    'PersistentHashMap cljs.core/PersistentHashMap
+    'PersistentTreeMap cljs.core/PersistentTreeMap
+    'PersistentHashSet cljs.core/PersistentHashSet
+    'PersistentTreeSet cljs.core/PersistentTreeSet}
    'goog.object {'set gobject/set
                  'get gobject/get}
    'goog.string {'format gstring/format
