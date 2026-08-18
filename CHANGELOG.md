@@ -12,7 +12,7 @@
 ## v0.8.33 (2026-08-18)
 
 - Bump SCI with JIT fixes + edamame
-- Include helitorus demo to show improved JIT
+- Include [helitorus demo](https://babashka.org/scittle/helitorus.html) to show improved JIT
 
 ## v0.8.32 (2026-07-14)
 
