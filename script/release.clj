@@ -29,6 +29,9 @@
 (fs/copy "resources/public/replicant_tictactoe.html" "gh-pages"
         {:replace-existing true})
 
+(fs/copy "resources/public/helitorus.html" "gh-pages"
+         {:replace-existing true})
+
 (def html-source-dir (fs/file "resources" "public" "html"))
 (def html-target-dir (fs/file "gh-pages" "html"))
 (fs/create-dirs html-target-dir)
