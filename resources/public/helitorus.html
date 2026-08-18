@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scittle helitorus</title>
+<style>
+  :root { color-scheme: light; }
+  body {
+    margin: 0;
+    background: #fff;
+    color: #111827;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  header { padding: 2rem 1.5rem 0.6rem; text-align: center; }
+  header h1 { margin: 0 0 0.5rem; font-size: 1.6rem; font-weight: 600; letter-spacing: -0.01em; }
+  header p { margin: 0.2rem auto; max-width: 720px; color: #6b7280; font-size: 0.92rem; line-height: 1.55; }
+  main { max-width: 940px; margin: 0 auto; padding: 0 1.5rem 3rem; }
+  .stage { border: 1px solid #e5e7eb; border-radius: 8px; background: #fff; overflow: hidden; }
+  canvas { display: block; width: 100%; height: auto; cursor: grab; touch-action: none; }
+  canvas:active { cursor: grabbing; }
+  .hud {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: #e5e7eb;
+    border-top: 1px solid #e5e7eb;
+  }
+  .hud div { background: #fafafa; padding: 0.55rem 0.85rem; }
+  .hud .k { color: #9ca3af; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .hud .v { font-family: ui-monospace, SFMono-Regular, monospace; font-size: 1.05rem; color: #111827; }
+  .hud .v.slow { color: #cc0040; }
+  .controls {
+    display: flex; flex-wrap: wrap; gap: 1.2rem; align-items: center;
+    padding: 1rem 0.2rem; font-size: 0.85rem; color: #6b7280;
+  }
+  .controls label { display: flex; gap: 0.45rem; align-items: center; }
+  .controls input[type=range] { accent-color: #cc0040; }
+  .controls output { font-family: ui-monospace, SFMono-Regular, monospace; color: #111827; min-width: 2.5rem; }
+  a { color: #cc0040; }
+  .note { color: #6b7280; font-size: 0.82rem; line-height: 1.6; max-width: 760px; }
+  code { font-family: ui-monospace, SFMono-Regular, monospace; font-size: 0.85em; background: #f3f4f6; padding: 0.1em 0.3em; border-radius: 3px; }
+</style>
+<!-- ?nojit disables the JIT before scittle loads -->
+<script>
+  if (new URLSearchParams(location.search).has('nojit')) globalThis.SCI_DISABLE_JIT = true;
+</script>
+<script src="js/scittle.js" type="application/javascript"></script>
+</head>
+<body>
+<header>
+  <h1>Helitorus</h1>
+  <p>A helix with <em>n</em> windings around a torus, swept into a tube. Scittle computes the
+  surface, the frame, the projection and the shading of every vertex on every frame. Output is a
+  2D canvas, no WebGL. Drag to turn, scroll to zoom.</p>
+</header>
+
+<main>
+  <div class="stage">
+    <canvas id="view" width="920" height="520"></canvas>
+    <div class="hud">
+      <div><div class="k">fps</div><div class="v" id="fps">-</div></div>
+      <div><div class="k">ms compute</div><div class="v" id="cms">-</div></div>
+      <div><div class="k">ms draw</div><div class="v" id="dms">-</div></div>
+      <div><div class="k">vertices / s</div><div class="v" id="vps">-</div></div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <label>windings <input id="n" type="range" min="3" max="24" step="1" value="14"><output id="n-out">14</output></label>
+    <label>resolution <input id="res" type="range" min="120" max="1200" step="60" value="900"><output id="res-out">900</output></label>
+    <label>thickness <input id="thick" type="range" min="4" max="18" step="1" value="11"><output id="thick-out">0.11</output></label>
+    <span id="mode"></span>
+  </div>
+
+  <p class="note">
+    The surface comes from the
+    <a href="https://github.com/mentat-collective/MathBox.cljs">MathBox.cljs</a> helitorus notebook,
+    where <a href="https://github.com/mentat-collective/emmy">Emmy</a> derives it symbolically.
+    Emmy runs before the page does. What is left at runtime is arithmetic. The tangent here is the
+    analytic derivative of the spine, written out.
+  </p>
+</main>
+
+<script type="application/x-scittle">
+;; spine(theta) = [(R + r cos n*theta) cos theta, (R + r cos n*theta) sin theta, r sin n*theta]
+;; A circle of radius r3 around each spine point, oriented by a frame built from
+;; the spine tangent and the tangent of the flat circle under it.
+
+(def canvas (js/document.getElementById "view"))
+(def ctx (.getContext canvas "2d"))
+(def W (.-width canvas))
+(def H (.-height canvas))
+(def cx (/ W 2.0))
+(def cy (/ H 2.0))
+
+(def jit? (not (boolean js/globalThis.SCI_DISABLE_JIT)))
+
+(def NV 14)          ;; points around the tube cross-section
+(def MAX-NU 1200)    ;; max points along the spine
+(def R 1.0)          ;; major radius
+(def r2 0.30)        ;; minor radius of the torus
+(def dist 4.6)       ;; camera distance
+(def focal 3.2)
+
+;; releasing the pointer keeps the spin and decays it to an idle turn
+(def rot-x (atom 0.55))
+(def rot-y (atom 0.0))
+(def vel-x (atom 0.0))
+(def vel-y (atom 0.45))
+(def zoom (atom 235.0))
+(def dragging (atom false))
+
+(def NU (atom 900))
+(def twists (atom 14))
+(def r3 (atom 0.11))
+
+;; the phi grid is fixed, only its phase moves
+(def cos-phi (js/Float64Array. NV))
+(def sin-phi (js/Float64Array. NV))
+(dotimes [j NV]
+  (let [a (/ (* 6.283185307179586 j) NV)]
+    (aset cos-phi j (js/Math.cos a))
+    (aset sin-phi j (js/Math.sin a))))
+
+(def sx (js/Float64Array. (* MAX-NU NV)))
+(def sy (js/Float64Array. (* MAX-NU NV)))
+(def shade (js/Int32Array. (* MAX-NU NV)))
+(def ring-z (js/Float64Array. MAX-NU))
+;; kept between frames: stays almost sorted, so the insertion sort is cheap
+(def order (js/Int32Array. MAX-NU))
+(def order-nu (atom 0))
+
+(defn reset-order! [nu]
+  (dotimes [i nu] (aset order i i))
+  (reset! order-nu nu))
+
+;; precomputed: building a color string per quad costs more than the shading
+(def palette
+  (into-array
+   (for [i (range 64)]
+     (let [t (/ i 63.0)]
+       (str "hsl(" (+ 337 (* 12 t)) ","
+            (- 100 (* 22 t)) "%,"
+            (+ 17 (* 55 t)) "%)")))))
+
+(defn compute! [t]
+  (let [nu @NU
+        n @twists
+        rr3 @r3
+        r (+ r2 rr3)
+        ;; camera
+        zm @zoom
+        ay @rot-y
+        ax @rot-x
+        cay (js/Math.cos ay) say (js/Math.sin ay)
+        cax (js/Math.cos ax) sax (js/Math.sin ax)
+        ;; the cross-section turns over time
+        po (* t 1.1)
+        cpo (js/Math.cos po)
+        spo (js/Math.sin po)
+        dtheta (/ 6.283185307179586 nu)]
+    (when (not= nu @order-nu) (reset-order! nu))
+    (loop [i 0]
+      (when (< i nu)
+        (let [th (* i dtheta)
+              nth (* n th)
+              cn (js/Math.cos nth)
+              sn (js/Math.sin nth)
+              ct (js/Math.cos th)
+              st (js/Math.sin th)
+              xr (+ R (* r cn))
+              ;; spine
+              px (* xr ct)
+              py (* xr st)
+              pz (* r sn)
+              ;; spine tangent: the theta derivative, written out
+              tx (- (* (- xr) st) (* n r ct sn))
+              ty (- (* xr ct) (* n r st sn))
+              tz (* n r cn)
+              ;; tangent of the flat circle under the spine
+              bx (- st) by ct bz 0.0
+              ;; tube normal: t cross b, normalised
+              nx (- (* ty bz) (* tz by))
+              ny (- (* tz bx) (* tx bz))
+              nz (- (* tx by) (* ty bx))
+              nl (js/Math.sqrt (+ (* nx nx) (* ny ny) (* nz nz)))
+              nx (/ nx nl) ny (/ ny nl) nz (/ nz nl)
+              ;; third axis: n cross t, normalised
+              ux (- (* ny tz) (* nz ty))
+              uy (- (* nz tx) (* nx tz))
+              uz (- (* nx ty) (* ny tx))
+              ul (js/Math.sqrt (+ (* ux ux) (* uy uy) (* uz uz)))
+              ux (/ ux ul) uy (/ uy ul) uz (/ uz ul)
+              base (* i NV)]
+          ;; ring depth, for the painter's ordering below
+          (let [rz (+ (* px say) (* pz cay))]
+            (aset ring-z i (- (* rz cax) (* py sax))))
+          (loop [j 0]
+            (when (< j NV)
+              (let [c0 (aget cos-phi j)
+                    s0 (aget sin-phi j)
+                    ;; rotate the cross-section by the phase
+                    cp (- (* c0 cpo) (* s0 spo))
+                    sp (+ (* s0 cpo) (* c0 spo))
+                    ;; surface normal, then the point
+                    vx (+ (* ux cp) (* nx sp))
+                    vy (+ (* uy cp) (* ny sp))
+                    vz (+ (* uz cp) (* nz sp))
+                    wx (+ px (* rr3 vx))
+                    wy (+ py (* rr3 vy))
+                    wz (+ pz (* rr3 vz))
+                    ;; rotate about Y, then about X
+                    x1 (- (* wx cay) (* wz say))
+                    z1 (+ (* wx say) (* wz cay))
+                    y2 (+ (* wy cax) (* z1 sax))
+                    z2 (- (* z1 cax) (* wy sax))
+                    ;; same rotation on the normal
+                    m1 (- (* vx cay) (* vz say))
+                    q1 (+ (* vx say) (* vz cay))
+                    m2 (+ (* vy cax) (* q1 sax))
+                    q2 (- (* q1 cax) (* vy sax))
+                    ;; perspective divide
+                    k (/ (* zm focal) (+ focal dist z2))
+                    ;; diffuse plus a rim term
+                    lum (+ (* 0.60 (js/Math.max 0.0 (+ (* m1 -0.40) (* m2 -0.62) (* q2 -0.68))))
+                           (* 0.28 (js/Math.max 0.0 (- q2)))
+                           0.12)
+                    idx (js/Math.min 63 (js/Math.max 0 (int (* 63.0 lum))))
+                    o (+ base j)]
+                (aset sx o (+ cx (* x1 k)))
+                (aset sy o (- cy (* y2 k)))
+                (aset shade o idx))
+              (recur (inc j))))
+          (recur (inc i)))))
+    ;; far rings first
+    (loop [i 1]
+      (when (< i nu)
+        (let [v (aget order i)
+              vz (aget ring-z v)]
+          (loop [k (dec i)]
+            (if (and (>= k 0) (< (aget ring-z (aget order k)) vz))
+              (do (aset order (inc k) (aget order k))
+                  (recur (dec k)))
+              (aset order (inc k) v))))
+        (recur (inc i))))))
+
+;; draw pass: one flat-shaded quad per cell, back faces dropped by the sign of
+;; the 2D cross product
+
+(defn draw! []
+  (let [nu @NU]
+    (set! (.-fillStyle ctx) "#ffffff")
+    (.fillRect ctx 0 0 W H)
+    (loop [oi 0]
+      (when (< oi nu)
+        (let [i (aget order oi)
+              i2 (let [x (inc i)] (if (= x nu) 0 x))
+              b1 (* i NV)
+              b2 (* i2 NV)]
+          (loop [j 0]
+            (when (< j NV)
+              (let [j2 (let [x (inc j)] (if (= x NV) 0 x))
+                    a (+ b1 j) b (+ b1 j2)
+                    c (+ b2 j2) d (+ b2 j)
+                    xa (aget sx a) ya (aget sy a)
+                    xb (aget sx b) yb (aget sy b)
+                    xc (aget sx c) yc (aget sy c)]
+                (when (pos? (- (* (- xb xa) (- yc ya))
+                               (* (- yb ya) (- xc xa))))
+                  (set! (.-fillStyle ctx) (aget palette (aget shade a)))
+                  (.beginPath ctx)
+                  (.moveTo ctx xa ya)
+                  (.lineTo ctx xb yb)
+                  (.lineTo ctx xc yc)
+                  (.lineTo ctx (aget sx d) (aget sy d))
+                  (.fill ctx)))
+              (recur (inc j)))))
+        (recur (inc oi))))))
+
+(def frames (atom 0))
+(def acc (atom 0.0))
+(def last-t (atom 0.0))
+(def c-acc (atom 0.0))
+(def d-acc (atom 0.0))
+
+(def fps-el (js/document.getElementById "fps"))
+(def cms-el (js/document.getElementById "cms"))
+(def dms-el (js/document.getElementById "dms"))
+(def vps-el (js/document.getElementById "vps"))
+
+(defn report! [fps cms dms]
+  (set! (.-textContent fps-el) (.toFixed fps 0))
+  (set! (.-className fps-el) (if (< fps 55) "v slow" "v"))
+  (set! (.-textContent cms-el) (.toFixed cms 2))
+  (set! (.-textContent dms-el) (.toFixed dms 2))
+  (set! (.-textContent vps-el)
+        (str (.toFixed (/ (* fps @NU NV) 1000.0) 0) "k")))
+
+(defn advance-camera! [dt]
+  (when-not @dragging
+    (let [decay (js/Math.pow 0.94 (/ dt 16.0))
+          vy (+ (* @vel-y decay) (* 0.16 (- 1.0 decay)))]
+      (reset! vel-y vy)
+      (reset! vel-x (* @vel-x decay))))
+  (swap! rot-y + (* @vel-y (/ dt 1000.0)))
+  (swap! rot-x (fn [v]
+                 (let [v (+ v (* @vel-x (/ dt 1000.0)))]
+                   (js/Math.max -1.45 (js/Math.min 1.45 v))))))
+
+(defn frame [ts]
+  (let [t (/ ts 1000.0)
+        dt (if (pos? @last-t) (- ts @last-t) 16.0)]
+    (reset! last-t ts)
+    (advance-camera! dt)
+    (let [c0 (js/performance.now)]
+      (compute! t)
+      (swap! c-acc + (- (js/performance.now) c0)))
+    (let [d0 (js/performance.now)]
+      (draw!)
+      (swap! d-acc + (- (js/performance.now) d0)))
+    (swap! frames inc)
+    (swap! acc + dt)
+    (when (>= @acc 400.0)
+      (report! (/ (* @frames 1000.0) @acc) (/ @c-acc @frames) (/ @d-acc @frames))
+      (reset! frames 0) (reset! acc 0.0) (reset! c-acc 0.0) (reset! d-acc 0.0)))
+  (js/requestAnimationFrame frame))
+
+;; drag to turn, wheel to zoom
+
+(def last-px (atom 0.0))
+(def last-py (atom 0.0))
+
+(.addEventListener canvas "pointerdown"
+  (fn [e]
+    (reset! dragging true)
+    (reset! vel-x 0.0)
+    (reset! vel-y 0.0)
+    (reset! last-px (.-clientX e))
+    (reset! last-py (.-clientY e))
+    (.setPointerCapture canvas (.-pointerId e))))
+
+(.addEventListener canvas "pointermove"
+  (fn [e]
+    (when @dragging
+      (let [x (.-clientX e)
+            y (.-clientY e)
+            dx (- x @last-px)
+            dy (- y @last-py)]
+        (reset! last-px x)
+        (reset! last-py y)
+        (swap! rot-y + (* dx 0.008))
+        (swap! rot-x (fn [v] (js/Math.max -1.45 (js/Math.min 1.45 (+ v (* dy 0.008))))))
+        ;; remember the throw
+        (reset! vel-y (* dx 0.35))
+        (reset! vel-x (* dy 0.35))))))
+
+(defn end-drag! [e]
+  (when @dragging
+    (reset! dragging false)
+    (.releasePointerCapture canvas (.-pointerId e))))
+
+(.addEventListener canvas "pointerup" end-drag!)
+(.addEventListener canvas "pointercancel" end-drag!)
+
+(.addEventListener canvas "wheel"
+  (fn [e]
+    (.preventDefault e)
+    (swap! zoom (fn [z]
+                  (js/Math.max 110.0
+                    (js/Math.min 460.0
+                      (* z (js/Math.exp (* -0.0012 (.-deltaY e)))))))))
+  #js {:passive false})
+
+;; sliders
+
+(defn on-slider [id f]
+  (let [el (js/document.getElementById id)
+        out (js/document.getElementById (str id "-out"))]
+    (.addEventListener el "input"
+      (fn [_]
+        (let [v (js/parseFloat (.-value el))]
+          (set! (.-textContent out) (f v)))))))
+
+(on-slider "n" (fn [v] (reset! twists v) (str v)))
+(on-slider "res" (fn [v] (reset! NU v) (str v)))
+(on-slider "thick" (fn [v] (reset! r3 (/ v 100.0)) (.toFixed (/ v 100.0) 2)))
+
+(set! (.-innerHTML (js/document.getElementById "mode"))
+      (if jit?
+        "JIT on. <a href=\"?nojit\">Run the interpreter instead.</a>"
+        "JIT off. <a href=\"?\">Turn the JIT back on.</a>"))
+
+(js/requestAnimationFrame frame)
+</script>
+</body>
+</html>
