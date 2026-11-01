@@ -1,6 +1,6 @@
 {:deps {io.github.babashka/sci.nrepl
         #_{:local/root "../sci.nrepl"}
-        {:git/sha "ad5178c63a598d2c7dc7f8fbe4d7786eb505e7c1"}
+        {:git/sha "9bf318526f5c977af33feb38383c93245092c6f3"}
         io.github.babashka/http-server
         {:git/sha "b38c1f16ad2c618adae2c3b102a5520c261a7dd3"}
         io.github.scittle/build
