@@ -50,3 +50,34 @@ test('replicant and re-frame plugins render', async ({ page }) => {
   await expect(page.locator('#rep')).toHaveText('replicant-ok');
   await expect(page.locator('#rf')).toHaveText('reframe-ok');
 });
+
+async function nreplEval(page, code) {
+  const replies = [];
+  let socket;
+  let done;
+  const finished = new Promise((resolve) => { done = resolve; });
+  await page.routeWebSocket(/_nrepl$/, (ws) => {
+    socket = ws;
+    ws.onMessage((reply) => {
+      replies.push(reply);
+      if (reply.includes('"done"')) done();
+    });
+  });
+  await page.goto('/test/nrepl.html');
+  socket.send(`{:op :eval, :code ${JSON.stringify(code)}, :id "1", :session "s"}`);
+  await finished;
+  return replies.join('\n');
+}
+
+test('nREPL eval replies with :out and a :value per form', async ({ page }) => {
+  const replies = await nreplEval(page, '(println "hi") (+ 1 2) (+ 3 4)');
+  expect(replies).toContain(':out "hi"');
+  expect(replies).toContain(':value "nil"');
+  expect(replies).toContain(':value "3"');
+  expect(replies).toContain(':value "7"');
+});
+
+test('nREPL eval replies with the resolved value of a promise', async ({ page }) => {
+  const replies = await nreplEval(page, '(js/Promise.resolve 2)');
+  expect(replies).toContain(':value "#<Promise 2>"');
+});
