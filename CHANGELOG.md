@@ -9,6 +9,11 @@
 <!-- - Create Github release with updated links from `doc/links.md` -->
 <!-- - `bb gh-pages` -->
 
+## Unreleased
+
+- nREPL: send replies to the requesting connection ([sci.nrepl#9](https://github.com/babashka/sci.nrepl/issues/9))
+- nREPL: send `:out`, `:err` and a `:value` per form on eval ([sci.nrepl#10](https://github.com/babashka/sci.nrepl/issues/10))
+
 ## v0.8.33 (2026-08-18)
 
 - Bump SCI with JIT fixes + edamame
