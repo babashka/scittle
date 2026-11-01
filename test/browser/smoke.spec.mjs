@@ -51,7 +51,7 @@ test('replicant and re-frame plugins render', async ({ page }) => {
   await expect(page.locator('#rf')).toHaveText('reframe-ok');
 });
 
-async function nreplEval(page, code) {
+async function nreplRequest(page, message) {
   const replies = [];
   let socket;
   let done;
@@ -64,9 +64,13 @@ async function nreplEval(page, code) {
     });
   });
   await page.goto('/test/nrepl.html');
-  socket.send(`{:op :eval, :code ${JSON.stringify(code)}, :id "1", :session "s"}`);
+  socket.send(message);
   await finished;
   return replies.join('\n');
+}
+
+function nreplEval(page, code) {
+  return nreplRequest(page, `{:op :eval, :code ${JSON.stringify(code)}, :id "1", :session "s"}`);
 }
 
 test('nREPL eval replies with :out and a :value per form', async ({ page }) => {
@@ -80,4 +84,11 @@ test('nREPL eval replies with :out and a :value per form', async ({ page }) => {
 test('nREPL eval replies with the resolved value of a promise', async ({ page }) => {
   const replies = await nreplEval(page, '(js/Promise.resolve 2)');
   expect(replies).toContain(':value "#<Promise 2>"');
+});
+
+test('nREPL unknown op replies with unknown-op status', async ({ page }) => {
+  const replies = await nreplRequest(page, '{:op :frobnicate, :code "(+ 1 2)", :id "1", :session "s"}');
+  expect(replies).toContain(':status ["done" "unknown-op" "error"]');
+  expect(replies).toContain(':op "frobnicate"');
+  expect(replies).not.toContain(':code');
 });

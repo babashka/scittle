@@ -13,6 +13,7 @@
 
 - nREPL: send replies to the requesting connection ([sci.nrepl#9](https://github.com/babashka/sci.nrepl/issues/9))
 - nREPL: send `:out`, `:err` and a `:value` per form on eval ([sci.nrepl#10](https://github.com/babashka/sci.nrepl/issues/10))
+- nREPL: reply to unknown ops with `unknown-op` status ([sci.nrepl#11](https://github.com/babashka/sci.nrepl/issues/11))
 
 ## v0.8.33 (2026-08-18)
 
