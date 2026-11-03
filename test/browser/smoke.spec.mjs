@@ -51,22 +51,27 @@ test('replicant and re-frame plugins render', async ({ page }) => {
   await expect(page.locator('#rf')).toHaveText('reframe-ok');
 });
 
-async function nreplRequest(page, message) {
+async function nreplRequests(page, messages, doneCount = messages.length) {
   const replies = [];
   let socket;
   let done;
+  let doneSeen = 0;
   const finished = new Promise((resolve) => { done = resolve; });
   await page.routeWebSocket(/_nrepl$/, (ws) => {
     socket = ws;
     ws.onMessage((reply) => {
       replies.push(reply);
-      if (reply.includes('"done"')) done();
+      if (reply.includes('"done"') && ++doneSeen === doneCount) done();
     });
   });
   await page.goto('/test/nrepl.html');
-  socket.send(message);
+  for (const message of messages) socket.send(message);
   await finished;
   return replies.join('\n');
+}
+
+function nreplRequest(page, message) {
+  return nreplRequests(page, [message]);
 }
 
 function nreplEval(page, code) {
@@ -84,6 +89,46 @@ test('nREPL eval replies with :out and a :value per form', async ({ page }) => {
 test('nREPL eval replies with the resolved value of a promise', async ({ page }) => {
   const replies = await nreplEval(page, '(js/Promise.resolve 2)');
   expect(replies).toContain(':value "#<Promise 2>"');
+});
+
+test('nREPL eval error replies with :err, :ex and eval-error status', async ({ page }) => {
+  const replies = await nreplEval(page, '(throw (ex-info "boom" {}))');
+  expect(replies).toContain(':err "boom\\n"');
+  expect(replies).toContain(':ex "ExceptionInfo"');
+  expect(replies).toContain(':status ["eval-error"]');
+});
+
+function evalMessage(id, session, code, extra = '') {
+  return `{:op :eval, :code ${JSON.stringify(code)}, :id "${id}", :session "${session}"${extra}}`;
+}
+
+test('nREPL session keeps its namespace and :ns applies to one eval', async ({ page }) => {
+  const replies = await nreplRequests(page, [
+    evalMessage('1', 's', '(ns session-ns)'),
+    evalMessage('2', 's', '(str "in " *ns*)'),
+    evalMessage('3', 's', '(str "with ns " *ns*)', ', :ns "user"'),
+    evalMessage('4', 'other', '(str "other " *ns*)'),
+  ]);
+  expect(replies).toContain(':value "\\"in session-ns\\""');
+  expect(replies).toContain(':value "\\"with ns user\\""');
+  expect(replies).toContain(':value "\\"other user\\""');
+});
+
+test('nREPL clone starts in the namespace of its parent', async ({ page }) => {
+  const replies = await nreplRequests(page, [
+    evalMessage('1', 's', '(ns parent-ns)'),
+    '{:op :clone, :id "2", :session "s", :new-session "t"}',
+    evalMessage('3', 't', '(str "clone " *ns*)'),
+  ], 2);
+  expect(replies).toContain(':value "\\"clone parent-ns\\""');
+});
+
+test('nREPL info without :ns resolves in the session namespace', async ({ page }) => {
+  const replies = await nreplRequests(page, [
+    evalMessage('1', 's', '(ns info-ns) (defn in-info-ns [])'),
+    '{:op :info, :sym "in-info-ns", :id "2", :session "s"}',
+  ]);
+  expect(replies).toContain(':name in-info-ns');
 });
 
 test('nREPL unknown op replies with unknown-op status', async ({ page }) => {
