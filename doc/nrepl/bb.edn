@@ -1,6 +1,6 @@
 {:deps {io.github.babashka/sci.nrepl
         #_{:local/root "/Users/borkdude/dev/sci.nrepl"}
-        {:git/sha "268574fb22dd97ed117d0c2d3719daba269edede"}
+        {:git/sha "a47986d247f6b273fa831145506259e97a0d69ea"}
         io.github.babashka/http-server
         {:git/sha "b38c1f16ad2c618adae2c3b102a5520c261a7dd3"}}
  :tasks {http-server {:doc "Starts http server for serving static files"

@@ -15,6 +15,10 @@
 - nREPL: send `:out`, `:err` and a `:value` per form on eval ([sci.nrepl#10](https://github.com/babashka/sci.nrepl/issues/10))
 - nREPL: reply to unknown ops with `unknown-op` status ([sci.nrepl#11](https://github.com/babashka/sci.nrepl/issues/11))
 - nREPL: add `classpath` op to the browser relay ([sci.nrepl#8](https://github.com/babashka/sci.nrepl/issues/8))
+- nREPL: send eval errors as `:err`, `:ex` and `eval-error` status ([sci.nrepl#18](https://github.com/babashka/sci.nrepl/issues/18))
+- nREPL: keep a namespace per session and honor `:ns` in eval ([sci.nrepl#17](https://github.com/babashka/sci.nrepl/issues/17))
+- nREPL: list `eldoc`, `describe` and `ls-sessions` in `describe` ([sci.nrepl#19](https://github.com/babashka/sci.nrepl/issues/19))
+- nREPL: reply with an error when no page is connected or the page closes ([sci.nrepl#20](https://github.com/babashka/sci.nrepl/issues/20))
 
 ## v0.8.33 (2026-08-18)
 
