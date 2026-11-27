@@ -107,6 +107,7 @@
     (if-let [src (.getAttribute tag "src")]
       (let [req (js/XMLHttpRequest.)
             _ (.open req "GET" src true)
+            _ (.overrideMimeType req "text/plain")
             _ (gobject/set req "onload"
                            (fn [] (this-as this
                                     (let [response (gobject/get this "response")]
