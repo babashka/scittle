@@ -34,7 +34,7 @@
 <!-- HoneySQL sources, in dependency order -->
 <script type="application/x-scittle" src="https://raw.githubusercontent.com/seancorfield/honeysql/v2.7.1437/src/honey/sql/protocols.cljc"></script>
 <script type="application/x-scittle" src="https://raw.githubusercontent.com/seancorfield/honeysql/v2.7.1437/src/honey/sql/util.cljc"></script>
-<!-- Scittle 0.8.33 does not expose the cljs.core type symbols that honey.sql
+<!-- Scittle 0.8.34 does not expose the cljs.core type symbols that honey.sql
      extends the InlineValue protocol on. Intern the missing ones in clojure.core. -->
 <script type="application/x-scittle">
 (doseq [[nm t] {'Keyword (type :x)
