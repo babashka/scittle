@@ -2,7 +2,7 @@
         #_{:local/root "../sci.nrepl"}
         {:git/sha "a47986d247f6b273fa831145506259e97a0d69ea"}
         io.github.babashka/http-server
-        {:git/sha "b38c1f16ad2c618adae2c3b102a5520c261a7dd3"}
+        {:git/sha "cec01d1fbbdc5e71d8b548907db330fc7956629e"}
         io.github.scittle/build
         {:local/root "build"}}
 
