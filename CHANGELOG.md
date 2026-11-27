@@ -9,7 +9,7 @@
 <!-- - Create Github release with updated links from `doc/links.md` -->
 <!-- - `bb gh-pages` -->
 
-## Unreleased
+## v0.8.34 (2026-11-27)
 
 - Fix XML parsing error in Firefox if a script `src` is served without `Content-Type`
 - Bump SCI: fix `recur` in `lazy-seq` and in `reify`, `deftype` and `defrecord` methods ([sci#1145](https://github.com/babashka/sci/issues/1145))
