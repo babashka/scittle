@@ -11,6 +11,7 @@
 
 ## Unreleased
 
+- Fix XML parsing error in Firefox if a script `src` is served without `Content-Type`
 - nREPL: send replies to the requesting connection ([sci.nrepl#9](https://github.com/babashka/sci.nrepl/issues/9))
 - nREPL: send `:out`, `:err` and a `:value` per form on eval ([sci.nrepl#10](https://github.com/babashka/sci.nrepl/issues/10))
 - nREPL: reply to unknown ops with `unknown-op` status ([sci.nrepl#11](https://github.com/babashka/sci.nrepl/issues/11))

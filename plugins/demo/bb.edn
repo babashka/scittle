@@ -5,7 +5,7 @@
         io.github.babashka/scittle.javelin {:local/root "../../plugins/javelin"}
         io.github.babashka/scittle.hoplon {:local/root "../../plugins/hoplon"}
         io.github.babashka/http-server
-        {:git/sha "b38c1f16ad2c618adae2c3b102a5520c261a7dd3"}}
+        {:git/sha "cec01d1fbbdc5e71d8b548907db330fc7956629e"}}
  :tasks
  {:requires ([scittle.build :as build])
   watch   {:doc "Watch build"
